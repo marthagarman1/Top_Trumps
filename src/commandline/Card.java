@@ -1,12 +1,38 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Card{
 
-    private String name, cat1, cat2, cat3, cat4, cat5;
-    private int[] attributes;
+    private String name;
+    private String cat1;
+    private String cat2;
+    private String cat3;
+    private String cat4;
+
+    public void setCat1(String cat1) {
+        this.cat1 = cat1;
+    }
+
+    public void setCat2(String cat2) {
+        this.cat2 = cat2;
+    }
+
+    public void setCat3(String cat3) {
+        this.cat3 = cat3;
+    }
+
+    public void setCat4(String cat4) {
+        this.cat4 = cat4;
+    }
+
+    public void setCat5(String cat5) {
+        this.cat5 = cat5;
+    }
+
+    private String cat5;
+    private ArrayList<Integer> attributes;
+    private String[] attributeNames;
     private ArrayList<Card> deck;
     private Random random;
 
@@ -19,15 +45,16 @@ public class Card{
         this.name = name;
     }
 
-    public int[] getAttributes() {
+
+    public ArrayList<Integer> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(int[] attributes) {
+    public void setAttributes(ArrayList<Integer> attributes) {
         this.attributes = attributes;
     }
 
-    public Card(String name, int[] attributes){
+    public Card(String name, ArrayList<Integer> attributes){
         this.name=name;
         this.attributes=attributes;
     }
@@ -35,7 +62,7 @@ public class Card{
 
 
     //reads input text file and creates deck (arraylist of card objects)
-    public void makeDeck(File file)throws NumberFormatException, IOException {
+    public ArrayList<Card> makeDeck(File file)throws NumberFormatException, IOException {
         BufferedReader reader=null;
         try {
             reader = new BufferedReader(new FileReader(
@@ -43,26 +70,42 @@ public class Card{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        String name="";
+        this.attributeNames= new String[5];
+        attributeNames = makeArray(reader.readLine());
+
         String line;
-        int[] attributes = new int[5];
-
+        deck=new ArrayList<>();
         while((line = reader.readLine()) != null){
-            Card card  = new Card(name, attributes);
-            Scanner scanner = new Scanner(line);
-            //scanner.useDelimiter(",");
-            while(scanner.hasNextInt()) {
-                for (int i = 0; i < attributes.length; i++) {
-                    attributes[i] = Integer.parseInt(scanner.next());
+            String[] lineArray = makeArray(line);
+            String name=lineArray[0];
+            attributes=new ArrayList<Integer>();
+
+                for (int i = 1; i <lineArray.length; i++) {
+                    attributes.add(Integer.parseInt(lineArray[i]));
                 }
+                deck.add(new Card(name, attributes));
+
+
             }
+            reader.close();
+        return deck;
+
+    }
 
 
-            for(int i =0; i<attributes.length; i++){
-                System.out.println(attributes[i]);
-            }
-        }
+    //method to set category names
+    public void setCatNames(String[] names){
+        setCat1(names[1]);
+        setCat2(names[2]);
+        setCat3(names[3]);
+        setCat4(names[4]);
+        setCat5(names[5]);
+    }
 
+    //method to turn a line of text into an array
+    public String[] makeArray(String line){
+        String[] result = line.split(" ");
+        return result;
     }
 
     //draws a random card from the player's deck
@@ -74,9 +117,9 @@ public class Card{
 
     //can print out card's information including name and stats
     public String toString(){
-        return "You drew '" + this.name +"'\n" + cat1 +": "+ attributes[0]+"\n"+
-        cat2 +": "+ attributes[1] +"\n"+cat3 + ": " + attributes[2] + "\n" + cat4+
-        ": "+ attributes[3]+"\n"+ cat5 + ": " + attributes[4];
+        return "You drew '" + this.name +"'\n" + cat1 +": "+ attributes.get(0)+"\n"+
+        cat2 +": "+ attributes.get(1) +"\n"+cat3 + ": " + attributes.get(2) + "\n" + cat4+
+        ": "+ attributes.get(3)+"\n"+ cat5 + ": " + attributes.get(4)+"\n";
     }
 
     //in the event of a draw, adds cards to the common pile
@@ -95,7 +138,7 @@ public class Card{
         int cardsEach = numCards/5;
         int forCommon = numCards%5;
         ArrayList<Card> playerDeck=new ArrayList<Card>();
-        
+
 
         return playerDeck;
     }
