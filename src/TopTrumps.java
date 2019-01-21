@@ -1,6 +1,7 @@
 import commandline.TopTrumpsCLIApplication;
+import java.util.Scanner;  
 
-import online.TopTrumpsOnlineApplication;
+//import online.TopTrumpsOnlineApplication;
 
 
 
@@ -8,11 +9,27 @@ public class TopTrumps {
 
 	/** This is the main class for the TopTrumps Application */
    public static void main(String[] args) {
-   	
+      boolean exit = false; 
+      
       System.out.println("--------------------");
       System.out.println("--- Top Trumps   ---");
       System.out.println("--------------------");
    	
+      do {
+         System.out.println("Do you want to see past results or play a game?" 
+            + "\n\t1: Print Game Statistics"
+            + "\n\t2: Play game"
+            + "\nEnter the number for your selection:"); 
+            
+         if(args[0].equals("1")) {
+         //enter method for sql retrive game stats
+         } else if (args[0].equals("2")) {
+            exit = true;
+         } else {
+            continue; 
+         } 
+      } while (!exit);
+      
    	// command line switches
       boolean onlineMode = false;
       boolean commandLineMode = false;
@@ -37,7 +54,8 @@ public class TopTrumps {
       if (onlineMode) {
       	// Start the online application
          String[] commandArgs = {"server", "TopTrumps.json"};
-         TopTrumpsOnlineApplication.main(commandArgs);
+         //once import is used for online - uncomment
+         //TopTrumpsOnlineApplication.main(commandArgs);
       } else if (commandLineMode) {
       	// Start the command line application
          String[] commandArgs = {String.valueOf(printTestLog)};
