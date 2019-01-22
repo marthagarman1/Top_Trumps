@@ -9,6 +9,7 @@ public class TopTrumps {
 
 	/** This is the main class for the TopTrumps Application */
    public static void main(String[] args) {
+      Scanner scan = new Scanner(System.in);
       boolean exit = false; 
       
       System.out.println("--------------------");
@@ -19,17 +20,22 @@ public class TopTrumps {
          System.out.println("Do you want to see past results or play a game?" 
             + "\n\t1: Print Game Statistics"
             + "\n\t2: Play game"
-            + "\nEnter the number for your selection:"); 
+            + "\nEnter the number for your selection: "); 
             
-         if(args[0].equals("1")) {
+         
+         int userInput = scan.nextInt();
+         
+         
+         if(userInput == 1) {
          //enter method for sql retrive game stats
-         } else if (args[0].equals("2")) {
+         } else if (userInput == 2) {
             exit = true;
          } else {
             continue; 
          } 
       } while (!exit);
-      
+       
+     
    	// command line switches
       boolean onlineMode = false;
       boolean commandLineMode = false;
