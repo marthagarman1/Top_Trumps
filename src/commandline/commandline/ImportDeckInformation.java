@@ -29,7 +29,7 @@ public class ImportDeckInformation{
       }
       this.attributeNames= new String[5];
       attributeNames = makeArray(reader.readLine());
-   
+      
       String line;
       deck=new ArrayList<>();
       while((line = reader.readLine()) != null){
@@ -40,9 +40,10 @@ public class ImportDeckInformation{
          for (int i = 1; i <lineArray.length; i++) {
             attributes.add(Integer.parseInt(lineArray[i]));
          }
-         deck.add(new Card(name, attributes));
+         deck.add(new Card(name, attributeNames, attributes));
       }
       reader.close();
+      
       
    }
    
@@ -53,8 +54,9 @@ public class ImportDeckInformation{
    }
    
    //method to shuffle deck ---REMOVE LATER IF NOT CALLED
-   public void shuffleDeck(ArrayList<Card> deck) {
+   public ArrayList<Card> shuffleDeck(ArrayList<Card> deck) {
       Collections.shuffle(deck);
+      return deck; 
    }
    
    //method to turn a line of text into an array
@@ -63,16 +65,16 @@ public class ImportDeckInformation{
       return result;
    } 
    
-      //Divides arraylist of cards 
-   public ArrayList<Card> divideCards(ArrayList<Card> MainDeck){
-      int numCards = MainDeck.size();
-      int cardsEach = numCards/5;
-      int forCommon = numCards%5;
-      ArrayList<Card> playerDeck=new ArrayList<Card>();
-      for(int i = 0; i < numCards; i++) {
-         
-      }
-      return playerDeck;
-   }
+     //  //Divides arraylist of cards  
+   // public ArrayList<Card> divideCards(ArrayList<Card> MainDeck){
+      // int numCards = MainDeck.size();
+      // int cardsEach = numCards/5;
+      // int forCommon = numCards%5;
+      // ArrayList<Card> playerDeck=new ArrayList<Card>();
+      // for(int i = 0; i < numCards; i++) {
+      //    
+      // }
+      // return playerDeck;
+   // }
 }
 
