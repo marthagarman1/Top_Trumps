@@ -20,10 +20,6 @@ public class Card{
       this.aNames = aNames; 
    }
    
-   public void setAttributeNames(String[] aNames) {
-      this.aNames = aNames; 
-   }
-   
    
    public void setCat1(String cat1) {
       this.cat1 = cat1;
@@ -92,7 +88,7 @@ public class Card{
 
    //can print out card's information including name and stats
    public String toString(){
-      return "\nYou drew '" + this.name + ":"
+      return "\nYou drew '" + this.name + "':"
          + "\n\t> " + aNames[1] + ": " + attributes.get(0) 
          + "\n\t> " + aNames[2] + ": " + attributes.get(1) 
          + "\n\t> " + aNames[3] + ": " + attributes.get(2) 
