@@ -9,6 +9,7 @@ public class Card{
     private String cat2;
     private String cat3;
     private String cat4;
+    private ArrayList<Player> players; //arraylist of player objects represents game participants
 
     public void setCat1(String cat1) {
         this.cat1 = cat1;
@@ -133,14 +134,21 @@ public class Card{
         CommonPile.clear();
     }
 
-    public ArrayList<Card> divideCards(ArrayList<Card> MainDeck){
-        int numCards = MainDeck.size();
-        int cardsEach = numCards/5;
-        int forCommon = numCards%5;
-        ArrayList<Card> playerDeck=new ArrayList<Card>();
+    //deals cards to players
+    public void dealCards(){
+        int numOfPlayers=5;
+        for(int i=0;i<players.size();i++){
+            players.get(i%numOfPlayers).addToDeck(deck.remove(0)); //methods to be written in player class
+        }
+    }
 
-
-        return playerDeck;
+    public ArrayList<Card> shuffleDeck(ArrayList<Card> deck){
+        ArrayList<Card> shuffled = new ArrayList<>();
+        while(deck.size()>0){
+            int index = (int) Math.random()* deck.size();
+            shuffled.add(deck.remove(index));
+        }
+        return shuffled;
     }
 
 
