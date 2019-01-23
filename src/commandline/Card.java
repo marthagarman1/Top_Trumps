@@ -9,6 +9,7 @@ public class Card{
     private String cat2;
     private String cat3;
     private String cat4;
+    private ArrayList<Player> players; //arraylist of player objects represents game participants
 
     public void setCat1(String cat1) {
         this.cat1 = cat1;
@@ -60,39 +61,6 @@ public class Card{
     }
 
 
-
-    //reads input text file and creates deck (arraylist of card objects)
-    public ArrayList<Card> makeDeck(File file)throws NumberFormatException, IOException {
-        BufferedReader reader=null;
-        try {
-            reader = new BufferedReader(new FileReader(
-                    file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        this.attributeNames= new String[5];
-        attributeNames = makeArray(reader.readLine());
-
-        String line;
-        deck=new ArrayList<>();
-        while((line = reader.readLine()) != null){
-            String[] lineArray = makeArray(line);
-            String name=lineArray[0];
-            attributes=new ArrayList<Integer>();
-
-                for (int i = 1; i <lineArray.length; i++) {
-                    attributes.add(Integer.parseInt(lineArray[i]));
-                }
-                deck.add(new Card(name, attributes));
-
-
-            }
-            reader.close();
-        return deck;
-
-    }
-
-
     //method to set category names
     public void setCatNames(String[] names){
         setCat1(names[1]);
@@ -102,11 +70,7 @@ public class Card{
         setCat5(names[5]);
     }
 
-    //method to turn a line of text into an array
-    public String[] makeArray(String line){
-        String[] result = line.split(" ");
-        return result;
-    }
+
 
     //draws a random card from the player's deck
     public Card drawCard(ArrayList<Card> deck){
@@ -133,14 +97,21 @@ public class Card{
         CommonPile.clear();
     }
 
-    public ArrayList<Card> divideCards(ArrayList<Card> MainDeck){
-        int numCards = MainDeck.size();
-        int cardsEach = numCards/5;
-        int forCommon = numCards%5;
-        ArrayList<Card> playerDeck=new ArrayList<Card>();
+    //deals cards to players
+    public void dealCards(){
+        int numOfPlayers=5;
+        for(int i=0;i<players.size();i++){
+            players.get(i%numOfPlayers).addToDeck(deck.remove(0)); //methods to be written in player class
+        }
+    }
 
-
-        return playerDeck;
+    public ArrayList<Card> shuffleDeck(ArrayList<Card> deck){
+        ArrayList<Card> shuffled = new ArrayList<>();
+        while(deck.size()>0){
+            int index = (int) Math.random()* deck.size();
+            shuffled.add(deck.remove(index));
+        }
+        return shuffled;
     }
 
 
