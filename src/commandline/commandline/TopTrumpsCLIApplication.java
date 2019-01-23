@@ -1,7 +1,9 @@
 package commandline;
+//import commandline.ReadInFile;
 import java.io.*;
 import java.util.ArrayList; 
 import java.util.Random; 
+import java.util.Collections;
 
 /**
  * Top Trumps command line application
@@ -26,10 +28,10 @@ public class TopTrumpsCLIApplication {
    	
    	// Loop until the user wants to exit the game
       while (!userWantsToQuit) {
-      
+         //variables
          System.out.println("Lets start the Game:"); 
          ArrayList<Card> deck = new ArrayList<Card>(); 
-         
+         int roundCount = 1; 
       	// ----------------------------------------------------
       	// Add your game logic here based on the requirements
       	// ----------------------------------------------------
@@ -53,16 +55,29 @@ public class TopTrumpsCLIApplication {
          AIPlayer bot3 = new AIPlayer(playerDeck);
          playerDeck = new ArrayList<>(deck.subList(33,40));
          AIPlayer bot4 = new AIPlayer(playerDeck); 
+         
+         
          System.out.print("Bot2's Deck \n" + bot2.printDeck()); 
          System.out.println("Users's Deck \n" + user.printDeck()); 
          
-         // 4. Create new instance of game
-         ArrayList<Player> newGame = new ArrayList<>(); 
-         newGame.add(user);
-         newGame.add(bot1); 
-         newGame.add(bot2); 
-         newGame.add(bot3); 
-         newGame.add(bot4); 
+         // 4. Start new game
+         ArrayList<Player> playerList = new ArrayList<>(); 
+         playerList.add(user);
+         playerList.add(bot1); 
+         playerList.add(bot2); 
+         playerList.add(bot3); 
+         playerList.add(bot4); 
+         
+         //shuffle the array of players
+         Collections.shuffle(playerList);
+         CreateNewGame newGame = new CreateNewGame(playerList); 
+         
+         
+         System.out.println("\n\nRound " + roundCount); 
+         bot4.selectCard();
+         user.selectCard(1); 
+         System.out.println("Round " + roundCount + ": Players have drawn their cards"); 
+         System.out.println("There are " + "x" + " cards in your deck"); 
          
                         
          userWantsToQuit=true; // use this when the user wants to exit the game
