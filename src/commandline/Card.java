@@ -61,39 +61,6 @@ public class Card{
     }
 
 
-
-    //reads input text file and creates deck (arraylist of card objects)
-    public ArrayList<Card> makeDeck(File file)throws NumberFormatException, IOException {
-        BufferedReader reader=null;
-        try {
-            reader = new BufferedReader(new FileReader(
-                    file));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        this.attributeNames= new String[5];
-        attributeNames = makeArray(reader.readLine());
-
-        String line;
-        deck=new ArrayList<>();
-        while((line = reader.readLine()) != null){
-            String[] lineArray = makeArray(line);
-            String name=lineArray[0];
-            attributes=new ArrayList<Integer>();
-
-                for (int i = 1; i <lineArray.length; i++) {
-                    attributes.add(Integer.parseInt(lineArray[i]));
-                }
-                deck.add(new Card(name, attributes));
-
-
-            }
-            reader.close();
-        return deck;
-
-    }
-
-
     //method to set category names
     public void setCatNames(String[] names){
         setCat1(names[1]);
@@ -103,11 +70,7 @@ public class Card{
         setCat5(names[5]);
     }
 
-    //method to turn a line of text into an array
-    public String[] makeArray(String line){
-        String[] result = line.split(" ");
-        return result;
-    }
+
 
     //draws a random card from the player's deck
     public Card drawCard(ArrayList<Card> deck){
