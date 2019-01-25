@@ -10,9 +10,14 @@ import java.util.Date;
 
 public class GameTestLog {
 
-
 	private PrintWriter printToLog;
-
+	private ArrayList<Card> deckOfCar;
+	private ArrayList<Card> deck;
+	private String addRemoveCommunal;
+	private String currentCommunal;
+	private Date dateAndTime;
+	private String winnerOfGame;
+	private String categorySelected;
 
 	public GameTestLog() {
 
@@ -25,11 +30,10 @@ public class GameTestLog {
 
 	// The contents of the complete deck once it has been read in and constructed
 	public void deckList(Card deckCat) {
-
 		printToLog.write("The Deck Catergoies and Attributes: \n"
 				+ "		   |	|	|	|	|	|	|	\n"
 				+ "		   V	V	V	V	V	V	V	\n");
-		ArrayList<Card> deckOfCar = deckCat.getAttributes();
+		deckOfCar = deckCat.getAttributes();
 
 		for (int i = 0; i < deckOfCar.size(); i++) {
 			String card = deckOfCar.get(i).toString();
@@ -46,21 +50,17 @@ public class GameTestLog {
 	// The contents of the user’s deck and the computer’s deck(s) once they have been allocated.
 	public void playersList(ArrayList<Player> players) {
 
-		// print players' name
 		for (int i = 0; i < players.size(); i++) {
 
 			String name = players.get(i).getName();
 			printToLog.write("Player's deck: " + name + "\r\n");
-			ArrayList<Card> deck = players.get(i).playerDeck.getDeck();
+			deck = players.get(i).playerDeck.getDeck();
 
-			// if the player has 0 cards, prints 
 			if (deck.size() == 0) {
 				printToLog.write(name + " has lost!");
 			}
 
-			// Loops through a player's deck of cards and prints each out to the log file
 			for (int j = 0; j < deck.size(); j++) {
-
 				String playerCat = deck.get(j).toString();
 				printToLog.write(playerCat + "\r\n");
 			}
@@ -75,9 +75,8 @@ public class GameTestLog {
 				+ "		   V	V	V	V	V	V	\n");
 
 		for (int i = 0; i < winPile.size(); i++) {
-
-			String communalCard = winPile.get(i).toString();
-			printToLog.write(communalCard + "\n");
+			addRemoveCommunal = winPile.get(i).toString();
+			printToLog.write(addRemoveCommunal + "\n");
 		}
 	}
 
@@ -88,27 +87,24 @@ public class GameTestLog {
 				+ "		   |	|	|	|	|	\n"
 				+ "		   V	V	V	V	V	\n");
 
-
 		for (int i = 0; i < topCards.size(); i++) {
 
-			String communalCard = topCards.get(i).toString();
-			printToLog.write(communalCard + "\r\n");
+			currentCommunal = topCards.get(i).toString();
+			printToLog.write(currentCommunal + "\r\n");
 
 		}
 	}
 
 	// The category selected and corresponding values when a user or computer selects a category
 	public void updatesCat(String category, ArrayList<Player> players) {
-
-		String cat = category;
-
-		printToLog.write("The selected category is: " + category + "\r\n");
+		categorySelected = category;
+		printToLog.write("The selected category is: " + category + "\n");
 
 		for (int i = 0; i < players.size(); i++) {
 
 			String playerName = players.get(i).getName();
 			int value = players.get(i).playerCard.getSelectedValue();
-			printToLog.write(playerName + "'s " + cat + " =" + value + "\r\n");
+			printToLog.write(playerName + "'s " + categorySelected + " and his cards are " + value + "\n");
 		}
 	}
 
@@ -119,20 +115,15 @@ public class GameTestLog {
 				+ "		   V	V	V	\n");
 		playersList(players);
 	}
-
-
 	// The winner of the game
 	public void winofGameAndDate(Player gameWin) {
 
-		Date dateAndTime = Calendar.getInstance().getTime();
-
-		String winnerOfGame = gameWin.getName();
+		dateAndTime = Calendar.getInstance().getTime();
+		winnerOfGame = gameWin.getName();
 		printToLog.write("The winner is " + winnerOfGame + ".\r\n" + dateAndTime);
 	}
-
 	// Close the Print Writer object after a game is over
 	public void close() {
 		printToLog.close();
 	}
-
 }
