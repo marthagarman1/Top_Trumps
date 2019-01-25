@@ -8,8 +8,6 @@ import java.io.FileNotFoundException;
 
 
 
-
-
 public class GameTestLog {
 
 	private PrintWriter printToLog;
@@ -20,6 +18,8 @@ public class GameTestLog {
 	private Date dateAndTime;
 	private String winnerOfGame;
 	private String categorySelected;
+	private String dashes = "---------------------------------------------------------------------------------";
+	
 
 	public GameTestLog() {
 
@@ -29,24 +29,28 @@ public class GameTestLog {
 			System.out.println("Log Test file connot be created");
 		}
 	}
-
+	// Close the Print Writer object after a game is over
+	public void getClose() {
+		printToLog.close();
+	}
 	// The contents of the complete deck once it has been read in and constructed
 	public void deckList(Card deckCat) {
 		printToLog.write("The Deck Catergoies and Attributes: \n"
-				+ "		   |	|	|	|	|	|	|	\n"
-				+ "		   V	V	V	V	V	V	V	\n");
+				+ "		   -------------------------------\n");
 		deckOfCar = deckCat.getAttributes();
 
 		for (int i = 0; i < deckOfCar.size(); i++) {
 			String card = deckOfCar.get(i).toString();
-			printToLog.write(card + "\r\n");
+			printToLog.write(card + "\n");
 		}
+		printToLog.write(dashes);
 	}
 
 	// The contents of the complete deck after it has been shuffled
 	public void completedShuffle(Card deckCat) {
 		printToLog.write("Cards has been shuffeld.\r\n");
 		deckList(deckCat);
+		printToLog.write(dashes);
 	}
 
 	// The contents of the user’s deck and the computer’s deck(s) once they have been allocated.
@@ -67,27 +71,27 @@ public class GameTestLog {
 				printToLog.write(playerCat + "\r\n");
 			}
 		}
+		printToLog.write(dashes);
 	}
 
 	// The contents of the communal pile when cards are added or removed from it.
 	public void communalPile(ArrayList<Card> winPile) {
 
 		printToLog.write("Communal Pile contains: \n"
-				+ "		   |	|	|	|	|	|	\n"
-				+ "		   V	V	V	V	V	V	\n");
+				+ "		  -----------------------\n");
 
 		for (int i = 0; i < winPile.size(); i++) {
 			addRemoveCommunal = winPile.get(i).toString();
 			printToLog.write(addRemoveCommunal + "\n");
 		}
+		printToLog.write(dashes);
 	}
 
 	// The contents of the current cards in play (the cards from the top of the user’s deck and the computer’s deck(s))
 	public void currentCards(ArrayList<Card> topCards) {
 
 		printToLog.write("Current Cards in Game: \n"
-				+ "		   |	|	|	|	|	\n"
-				+ "		   V	V	V	V	V	\n");
+				+ "		  --------------------- \n");
 
 		for (int i = 0; i < topCards.size(); i++) {
 
@@ -95,6 +99,7 @@ public class GameTestLog {
 			printToLog.write(currentCommunal + "\r\n");
 
 		}
+		printToLog.write(dashes);
 	}
 
 	// The category selected and corresponding values when a user or computer selects a category
@@ -108,14 +113,15 @@ public class GameTestLog {
 			int value = players.get(i).playerCard.getSelectedValue();
 			printToLog.write(playerName + "'s " + categorySelected + " and his cards are " + value + "\n");
 		}
+		printToLog.write(dashes);
 	}
-
+	
 	// The contents of each deck after a round
 	public void updateRound(ArrayList<Player> players) {
 		printToLog.write("Updated Round: \n "
-				+ "		   |	|	|	 \n"
-				+ "		   V	V	V	\n");
+				+ "		  -------------\n");
 		playersList(players);
+		printToLog.write(dashes);
 	}
 	// The winner of the game
 	public void winofGameAndDate(Player gameWin) {
@@ -123,9 +129,7 @@ public class GameTestLog {
 		dateAndTime = Calendar.getInstance().getTime();
 		winnerOfGame = gameWin.getName();
 		printToLog.write("The winner is " + winnerOfGame + ".\r\n" + dateAndTime);
+		printToLog.write(dashes);
 	}
-	// Close the Print Writer object after a game is over
-	public void close() {
-		printToLog.close();
-	}
+	
 }
