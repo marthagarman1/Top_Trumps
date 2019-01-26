@@ -1,13 +1,15 @@
 package commandline;
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.*;
 
 public class Game {
 
 public Card commonPile;
-public Card deck;
+public ArrayList<Card> deck;
+public ImportDeckInformation maindeck;
 private Player[] player;
-private Player currentPlayer;
+private ImportDeckInformation currentPlayer;
 private int AIPlayers;
 private int totalRounds;
 private int draws;
@@ -17,11 +19,12 @@ protected static final int STATE_ROUND_WON = 1;
 protected static final int STATE_ROUND_DRAW = 2;
 
 // deck instance containing the full deck of cards read 
-public Game(Card Deck) {
-		this.deck = Deck;
-		commonPile = new Card(deck.getName(), deck.getAttributes());
+public Game(ArrayList<Card> deck) {
+		this.deck = deck;
+		commonPile = new Card((Card)deck.getCategory(), ((Card) deck).getCapacity()); // get from card class
 		}
 
+//Starts the first round of the game
 public void startGame(int numOfAIPlayers) {
 			
        this.AIPlayers = numOfAIPlayers;
@@ -30,25 +33,24 @@ public void startGame(int numOfAIPlayers) {
 	
 // loop if there is at least two players start game
 	   for(int playerNumber = 0; playerNumber < numOfAIPlayers + 1; playerNumber++) {
-	   player[playerNumber] = new Player(playerNumber, new Card(deck.getName(), deck.getAttributes()));
+	   player[playerNumber] = new Player(playerNumber, new Card(deck.size(), deck.getCapacity);  // get from card class
 			}		
-			initialPlayerDecks();
+			distributeCardstoPlayers();
 			currentPlayer = player[randomiseFirstPlayer()];
 			totalRounds = 0;
 			draws = 0;
 		    }
-		
+
 private int randomiseFirstPlayer() {
-	int numOfAIPlayers = 0;
-	return new Random().nextInt(numOfAIPlayers + 1);
-}
-private void initialPlayerDecks() {
+	return new Random().nextInt(AIPlayers + 1);}
+
+private void distributeCardstoPlayers() {  
 				
-			deck.shuffleDeck();
+	        maindeck.shuffleDeck(deck);
 			
-			for(int i = 0, j = 0; i <i deck.getSize(); i++) {
+			for(int i = 0, j = 0; i <i maindeck.; i++) {
 				
-				player[j].getDeck().addCardToTop(deck.dealCard());
+				player[j].getClass()().addCardToTop(deck.d());
 				
 				if(j < AIPlayers) {
 					j++;
@@ -58,25 +60,24 @@ private void initialPlayerDecks() {
 			}
 			}
 		}
-
-public int roundResult(int chosenCategory) {
+public int roundResult(int chosenCategory) { 
 			
-			System.out.println("THIS ROUND:");
+			System.out.println("Result of :");
 			if(currentPlayer == getHumanPlayer()) {
 				
 			}
 			else {
-				System.out.print("PLAYER " + currentPlayer. + " has selected: "); // get the number of the player from player class
+				System.out.print("Player " + currentPlayer. + " has selected: "); // get the number of the player from player class
 			}
-			System.out.println(currentPlayer.getDeck().getCategoryName(chosenCategory) //get deck of the player from player class
-			+ ", on the " + currentPlayer.getDeck().seeTopCard().getTitle() + " ("
+			System.out.println(currentPlayer.getDeck().get(selected) //get deck of the player from player class
+			+ ", on the " + currentPlayer.getDeck().seeTopCard().getName() + " ("
 			+ currentPlayer.getDeck().seeTopCard().getCategoryValue(chosenCategory) + ")");
 			
 			totalRounds++;
 			
 			// Assume current player will win most of the time, so set initial highest value to their choice
 			int highestValue = currentPlayer.getDeck().seeTopCard().getCategoryValue(chosenCategory);
-			Player roundWinner = currentPlayer;
+			Player roundWinner = 5;
 			
 			int comparedPlayerValue = 0;
 			int drawValue = 0;
@@ -109,7 +110,7 @@ public int roundResult(int chosenCategory) {
 			}
 			else {
 				currentPlayer = roundWinner;
-				currentPlayer.wonRound(); // method in the game class
+				currentPlayer.findWinner(); // method in the player class
 				return STATE_ROUND_WON;
 			}
 
@@ -118,7 +119,7 @@ public int roundResult(int chosenCategory) {
 //cards to play in the next round or if not then only the current player will have cards in the next round
 public boolean checkGameWon() {
 			for(int i = 0; i < AIPlayers + 1; i++) {
-				if(player[i] != currentPlayer && player[i].().getSize() > 1) {				
+				if(player[i] != currentPlayer && player[i].getDeck().getsize() > 1) {				
 					return false;		
 				}
 			}
@@ -130,7 +131,7 @@ public void transferCardsToWinner() {
 // Transfer cards from common pile if there are any
 			if(commonPile.hasCard()) {
 				do{
-					currentPlayer.getDeck().addCardToBottom(commonPile.getTopCard());
+					currentPlayer.().addCardToBottom(commonPile.getTopCard());
 				} while(commonPile.hasCard());
 			}
 			
@@ -142,25 +143,26 @@ public void transferCardsToWinner() {
 			}
 		}
 // set the cards of all the player into the common pile
-public void AddCardsToCommonPile() {
+public void transferCardsToCommonPile() {
 			for(int i = 0; i <= AIPlayers; i++) {
-				if(player[i].getCard().hasCard()) {			// Player has at least one card and thus has participated in the round
-					player[i].transferCardTo(CommonPile);
+				if(((Object) player[i].getCard()).hasCard()) {			// Player has at least one card and thus has participated in the round
+					player[i].transferCardTo(commonPile);
 				}
 			}
 			if(!currentPlayer.getCard().hasCard()) {
 				for(int i = 0; i <= AIPlayers; i++) {
-					if(player[i].getCard().hasCard()) {
+					if(player[i].getchosenCard().hasCard()) {
 						currentPlayer = player[i];
 					}
 				}
 			}		
-		}
+}
 		
-		public Card getCommon(){
-			return getCommon();
+		private Card common() {
+			// TODO Auto-generated method stub
+			return null;
 		}
-		
+
 		public Player getCurrentPlayer() {
 			return currentPlayer;
 		}
@@ -184,6 +186,4 @@ public void AddCardsToCommonPile() {
 		public int getNumOfPlayers() {
 			return AIPlayers + 1;
 		}
-	
-	
-}
+		}
