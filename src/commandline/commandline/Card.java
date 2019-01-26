@@ -65,20 +65,6 @@ public class Card{
       this.attributes = attributes;
    }
 
-
-
-
-   //method to set category names
-   public void setCatNames(String[] names){
-      setCat1(names[1]);
-      setCat2(names[2]);
-      setCat3(names[3]);
-      setCat4(names[4]);
-      setCat5(names[5]);
-   }
-
-
-
    //draws a random card from the player's deck
    public Card drawCard(ArrayList<Card> deck){
       int index = random.nextInt(deck.size());
@@ -88,12 +74,13 @@ public class Card{
 
    //can print out card's information including name and stats
    public String toString(){
-      return "\nYou drew '" + this.name + "':"
+      String output = "\nYou drew '" + this.name + "':"
          + "\n\t> " + aNames[1] + ": " + attributes.get(0) 
          + "\n\t> " + aNames[2] + ": " + attributes.get(1) 
          + "\n\t> " + aNames[3] + ": " + attributes.get(2) 
          + "\n\t> " + aNames[4] + ": " + attributes.get(3) 
          + "\n\t> " + aNames[5] + ": " + attributes.get(4);
+      return output;
    }
 
    //in the event of a draw, adds cards to the common pile
@@ -105,6 +92,10 @@ public class Card{
    public void clearCommon(ArrayList<Card> CommonPile, ArrayList<Card> WinnerPile){
       WinnerPile.addAll(CommonPile);
       CommonPile.clear();
+   }
+   
+   public String[] getANames() {
+      return aNames; 
    }
 
 

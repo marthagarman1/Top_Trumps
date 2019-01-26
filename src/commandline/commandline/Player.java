@@ -19,7 +19,19 @@ public abstract class Player {
       
    } 
    
+   public int getNumberCards() {
+      
+      return 1; 
+   }
    
+   public Card drawTopCard() {
+      Card drawn = deck.get(0); 
+      return drawn; 
+   }
+   
+   public int numOfCards() {
+      return deck.size(); 
+   }
 
 }
 

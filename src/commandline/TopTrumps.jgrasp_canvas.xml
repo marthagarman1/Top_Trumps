@@ -8,163 +8,57 @@
     <Show>false</Show>
   </Grid>
   <Scope id="0">
-    <Name>getDeck</Name>
-    <Signature>()Ljava/util/ArrayList;</Signature>
-    <DeclaringType>commandline.ImportDeckInformation</DeclaringType>
+    <Name>&lt;init&gt;</Name>
+    <Signature>(Ljava/util/ArrayList;)V</Signature>
+    <DeclaringType>commandline.HumanPlayer</DeclaringType>
     <Depth>1</Depth>
   </Scope>
-  <Scope id="1">
-    <Name>main</Name>
-    <Signature>([Ljava/lang/String;)V</Signature>
-    <DeclaringType>commandline.TopTrumpsCLIApplication</DeclaringType>
-    <Depth>0</Depth>
-  </Scope>
-  <Scope id="3">
-    <Name>makeDeck</Name>
-    <Signature>(Ljava/io/File;)V</Signature>
-    <DeclaringType>commandline.ImportDeckInformation</DeclaringType>
-    <Depth>2</Depth>
-  </Scope>
-  <Scope id="2">
-    <Name>divideCards</Name>
-    <Signature>(Ljava/util/ArrayList;)Ljava/util/ArrayList;</Signature>
-    <DeclaringType>commandline.ImportDeckInformation</DeclaringType>
-    <Depth>1</Depth>
-  </Scope>
-  <Frame>
-    <Bounds>
-      <AutoSize>true</AutoSize>
-      <X>170</X>
-      <Y>40</Y>
-      <W>530</W>
-      <H>390</H>
-    </Bounds>
-    <Viewer>
-      <ScopeID>0</ScopeID>
-      <Expression>this.deck</Expression>
-      <ViewerClass>jgrasp_viewers.java__util__Collection_ToStringView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>true</AutoSize>
-      <X>20</X>
-      <Y>60</Y>
-      <W>164</W>
-      <H>59</H>
-    </Bounds>
-    <Viewer>
-      <ScopeID>1</ScopeID>
-      <Expression>`local commandline.AIPlayer` bot1</Expression>
-      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>true</AutoSize>
-      <X>80</X>
-      <Y>280</Y>
-      <W>143</W>
-      <H>49</H>
-    </Bounds>
-    <Viewer>
-      <ScopeID>2</ScopeID>
-      <Expression>`local java.util.ArrayList` playerDeck</Expression>
-      <ViewerClass>jgrasp_viewers.java__util__Collection_ToStringView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>false</AutoSize>
-      <X>10</X>
-      <Y>50</Y>
-      <W>151</W>
-      <H>113</H>
-    </Bounds>
-    <PanelSize>
-      <Key>jgrasp_viewers._X_ElementView0</Key>
-      <Order>4</Order>
-      <W>145</W>
-      <H>137</H>
-    </PanelSize>
-    <PanelSize>
-      <Key>jgrasp_viewers._X_BasicView0</Key>
-      <Order>3</Order>
-      <W>595</W>
-      <H>127</H>
-    </PanelSize>
-    <Viewer>
-      <ScopeID>1</ScopeID>
-      <Expression>`local commandline.HumanPlayer` user</Expression>
-      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>true</AutoSize>
-      <X>160</X>
-      <Y>5</Y>
-      <W>122</W>
-      <H>43</H>
-    </Bounds>
-    <Viewer>
-      <ScopeID>3</ScopeID>
-      <Expression>this.deck</Expression>
-      <ViewerClass>jgrasp_viewers.java__util__Collection_ToStringView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>false</AutoSize>
-      <X>20</X>
-      <Y>260</Y>
-      <W>431</W>
-      <H>83</H>
-    </Bounds>
-    <PanelSize>
-      <Key>jgrasp_viewers._X_ElementView0</Key>
-      <Order>4</Order>
-      <W>425</W>
-      <H>107</H>
-    </PanelSize>
-    <Viewer>
-      <ScopeID>1</ScopeID>
-      <Expression>`local commandline.HumanPlayer` user</Expression>
-      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>false</AutoSize>
-      <X>30</X>
-      <Y>120</Y>
-      <W>663</W>
-      <H>107</H>
-    </Bounds>
-    <PanelSize>
-      <Key>jgrasp_viewers._X_ElementView0</Key>
-      <Order>4</Order>
-      <W>663</W>
-      <H>137</H>
-    </PanelSize>
-    <Viewer>
-      <ScopeID>1</ScopeID>
-      <Expression>`local commandline.ImportDeckInformation` fI</Expression>
-      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
-    </Viewer>
-  </Frame>
   <Frame>
     <Bounds>
       <AutoSize>true</AutoSize>
       <X>90</X>
-      <Y>110</Y>
-      <W>134</W>
-      <H>123</H>
+      <Y>50</Y>
+      <W>160</W>
+      <H>93</H>
     </Bounds>
     <Viewer>
-      <ScopeID>3</ScopeID>
-      <Expression>this.attributeNames</Expression>
-      <ViewerClass>jgrasp_viewers._X_A_ToStringView</ViewerClass>
+      <ScopeID>0</ScopeID>
+      <Expression>this.deck</Expression>
+      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
+    </Viewer>
+  </Frame>
+  <Frame>
+    <Bounds>
+      <AutoSize>true</AutoSize>
+      <X>260</X>
+      <Y>60</Y>
+      <W>264</W>
+      <H>93</H>
+    </Bounds>
+    <Viewer>
+      <ScopeID>0</ScopeID>
+      <Expression>`local java.util.ArrayList` deck</Expression>
+      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
+    </Viewer>
+  </Frame>
+  <Frame>
+    <Bounds>
+      <AutoSize>false</AutoSize>
+      <X>60</X>
+      <Y>200</Y>
+      <W>399</W>
+      <H>191</H>
+    </Bounds>
+    <PanelSize>
+      <Key>jgrasp_viewers._X_ElementView0</Key>
+      <Order>4</Order>
+      <W>405</W>
+      <H>227</H>
+    </PanelSize>
+    <Viewer>
+      <ScopeID>0</ScopeID>
+      <Expression>((`cast`commandline.Player) this).deck</Expression>
+      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
     </Viewer>
   </Frame>
   <Size>

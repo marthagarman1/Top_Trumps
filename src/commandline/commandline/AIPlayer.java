@@ -9,10 +9,12 @@ public class AIPlayer extends Player {
       super(deck); 
    }
    
-   public Card selectCard() {
+   
+   //Make AI smarter by choosing largest card in category
+   public String selectCard() {
       Random r = new Random(); 
       int index = r.nextInt(deck.size());
-      Card drawn = deck.get(index);
+      String drawn = deck.get(index).toString(); 
       return drawn; 
    }
    

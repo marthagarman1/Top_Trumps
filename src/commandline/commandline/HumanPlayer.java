@@ -6,13 +6,18 @@ public class HumanPlayer extends Player {
    ArrayList<Card> deck = new ArrayList<>();
    public HumanPlayer (ArrayList<Card> deck) {
       super(deck);
+      this.deck = deck; 
    }
    
-   public Card selectCard(int x) {
-      Card drawn = deck.get(x);
-      return drawn; 
+   //public Card selectCard(int x) {
+      //Card drawn = deck.get(x);
+      //return drawn; 
       
-   }
+   //}
+   
+
+   
+   
 
 }
 
