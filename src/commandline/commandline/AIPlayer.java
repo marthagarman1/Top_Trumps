@@ -5,8 +5,8 @@ import java.util.Random;
 public class AIPlayer extends Player {
     
    //ArrayList<Card> deck = new ArrayList<>();
-   public AIPlayer(ArrayList<Card> deck) {
-      super(deck); 
+   public AIPlayer(ArrayList<Card> deck, String name) {
+      super(deck, name); 
    }
    
    
@@ -17,6 +17,7 @@ public class AIPlayer extends Player {
       String drawn = deck.get(index).toString(); 
       return drawn; 
    }
+   
    
 
 }

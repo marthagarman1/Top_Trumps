@@ -98,7 +98,12 @@ public class Card{
       return aNames; 
    }
 
-
+   
+   
+   public int getStats(int i) {
+      int stats =  attributes.get(i-1);
+      return stats; 
+   }
 
 
 }

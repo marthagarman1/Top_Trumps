@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 public abstract class Player {
    ArrayList<Card> deck = new ArrayList<Card>();
-   
-   public Player(ArrayList<Card> deck) {
+   String name = ""; 
+   public Player(ArrayList<Card> deck, String name) {
       this.deck = deck; 
+      this.name = name; 
    }
    
       
@@ -31,6 +32,18 @@ public abstract class Player {
    
    public int numOfCards() {
       return deck.size(); 
+   }
+   
+   public String getName() {
+      return name; 
+   }
+   
+   public void removeCard(int x) {
+      deck.remove(x); 
+   }
+   
+   public void addCards(ArrayList<Card> commonPile) {
+      deck.addAll(commonPile);
    }
 
 }

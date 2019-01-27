@@ -8,57 +8,46 @@
     <Show>false</Show>
   </Grid>
   <Scope id="0">
-    <Name>&lt;init&gt;</Name>
-    <Signature>(Ljava/util/ArrayList;)V</Signature>
-    <DeclaringType>commandline.HumanPlayer</DeclaringType>
-    <Depth>1</Depth>
+    <Name>main</Name>
+    <Signature>([Ljava/lang/String;)V</Signature>
+    <DeclaringType>commandline.TopTrumpsCLIApplication</DeclaringType>
+    <Depth>0</Depth>
   </Scope>
   <Frame>
     <Bounds>
       <AutoSize>true</AutoSize>
-      <X>90</X>
-      <Y>50</Y>
-      <W>160</W>
-      <H>93</H>
+      <X>50</X>
+      <Y>80</Y>
+      <W>122</W>
+      <H>47</H>
     </Bounds>
+    <LabelLoc>
+      <WO>false</WO>
+    </LabelLoc>
     <Viewer>
       <ScopeID>0</ScopeID>
-      <Expression>this.deck</Expression>
+      <Expression>`local int` currentWinner</Expression>
       <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
     </Viewer>
   </Frame>
   <Frame>
     <Bounds>
       <AutoSize>true</AutoSize>
-      <X>260</X>
-      <Y>60</Y>
-      <W>264</W>
-      <H>93</H>
-    </Bounds>
-    <Viewer>
-      <ScopeID>0</ScopeID>
-      <Expression>`local java.util.ArrayList` deck</Expression>
-      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
-    </Viewer>
-  </Frame>
-  <Frame>
-    <Bounds>
-      <AutoSize>false</AutoSize>
-      <X>60</X>
-      <Y>200</Y>
-      <W>399</W>
-      <H>191</H>
+      <X>50</X>
+      <Y>230</Y>
+      <W>594</W>
+      <H>107</H>
     </Bounds>
     <PanelSize>
       <Key>jgrasp_viewers._X_ElementView0</Key>
       <Order>4</Order>
-      <W>405</W>
-      <H>227</H>
+      <W>555</W>
+      <H>177</H>
     </PanelSize>
     <Viewer>
       <ScopeID>0</ScopeID>
-      <Expression>((`cast`commandline.Player) this).deck</Expression>
-      <ViewerClass>jgrasp_viewers._X_ElementView</ViewerClass>
+      <Expression>`local java.util.ArrayList` commonPile</Expression>
+      <ViewerClass>jgrasp_viewers.java__util__Collection_ToStringView</ViewerClass>
     </Viewer>
   </Frame>
   <Size>

@@ -4,9 +4,11 @@ import java.util.ArrayList;
 public class HumanPlayer extends Player {
    //class variables 
    ArrayList<Card> deck = new ArrayList<>();
-   public HumanPlayer (ArrayList<Card> deck) {
-      super(deck);
+   String name = "";
+   public HumanPlayer (ArrayList<Card> deck, String name) {
+      super(deck, name);
       this.deck = deck; 
+      this.name = name; 
    }
    
    //public Card selectCard(int x) {
