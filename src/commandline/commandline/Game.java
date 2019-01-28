@@ -15,7 +15,7 @@ private int totalRounds;
 private int draws;
 		
 protected static final int HUMAN_PLAYER = 0;
-protected static final int STATE_ROUND_WON = 1;
+protected static final int STATE_ROUND_WON = 2;
 protected static final int STATE_ROUND_DRAW = 2;
 
 // deck instance containing the full deck of cards read 
