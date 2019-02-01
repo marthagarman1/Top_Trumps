@@ -1,0 +1,800 @@
+NEW GAME 
+Contents of new deck:
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2
+--------------------
+ 
+Shuffled Deck: 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2
+--------------------
+ 
+Player You's Deck:
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8
+--------------------
+ 
+AI Player 1's Deck:
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Hornet':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 4
+	> Cargo: 1 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6
+--------------------
+ 
+AI Player 2's Deck:
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Idris':
+	> Size: 8
+	> Speed: 2
+	> Range: 7
+	> Firepower: 10
+	> Cargo: 6 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'Merchantman':
+	> Size: 7
+	> Speed: 3
+	> Range: 5
+	> Firepower: 6
+	> Cargo: 8 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4
+--------------------
+ 
+AI Player 3's Deck:
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'Hurricane':
+	> Size: 2
+	> Speed: 5
+	> Range: 3
+	> Firepower: 5
+	> Cargo: 0 
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2
+--------------------
+ 
+AI Player 4's Deck:
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Constellation':
+	> Size: 4
+	> Speed: 5
+	> Range: 7
+	> Firepower: 3
+	> Cargo: 4 
+'Orion':
+	> Size: 10
+	> Speed: 1
+	> Range: 6
+	> Firepower: 2
+	> Cargo: 9 
+'Hawk':
+	> Size: 1
+	> Speed: 3
+	> Range: 2
+	> Firepower: 4
+	> Cargo: 0 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Carrack':
+	> Size: 6
+	> Speed: 2
+	> Range: 10
+	> Firepower: 4
+	> Cargo: 6 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2
+--------------------
+ 
+Round 1
+Round 1: Players have drawn their cards
+Player Top Card Drawn 
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2
+There are 8 cards in players deck The first player is AI Player 1
+-------------------- lnBot turn:  n3 
+Cards in play this round
+'Avenger':
+	> Size: 2
+	> Speed: 5
+	> Range: 4
+	> Firepower: 3
+	> Cargo: 2 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Vanguard':
+	> Size: 3
+	> Speed: 4
+	> Range: 5
+	> Firepower: 5
+	> Cargo: 2 
+'m50':
+	> Size: 1
+	> Speed: 10
+	> Range: 2
+	> Firepower: 2
+	> Cargo: 0 
+'Sabre':
+	> Size: 2
+	> Speed: 7
+	> Range: 2
+	> Firepower: 5
+	> Cargo: 0
+-------------------- 
+current: 4 
+challenger: 2 Current winner: 0  
+current: 4 
+challenger: 5 Current winner: 2  
+current: 5 
+challenger: 2 Current winner: 2  
+current: 5 
+challenger: 2 Current winner: 2  Round 1: Player AI Player 3 won this round. 
+
+'350r':
+	> Size: 1
+	> Speed: 9
+	> Range: 2
+	> Firepower: 3
+	> Cargo: 0

@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Card{
+public class Card {
    private String[] aNames; 
    private String name;
    private String cat1;
@@ -74,7 +74,7 @@ public class Card{
 
    //can print out card's information including name and stats
    public String toString(){
-      String output = "\nYou drew '" + this.name + "':"
+      String output = "\n'" + this.name + "':"
          + "\n\t> " + aNames[1] + ": " + attributes.get(0) 
          + "\n\t> " + aNames[2] + ": " + attributes.get(1) 
          + "\n\t> " + aNames[3] + ": " + attributes.get(2) 

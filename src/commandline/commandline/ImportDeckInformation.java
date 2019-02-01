@@ -47,8 +47,12 @@ public class ImportDeckInformation{
       
    }
    
-   //method to return the ArrayList<Card> 
    public ArrayList<Card> getDeck() {
+      
+      return deck; 
+   }
+   //method to return the ArrayList<Card> 
+   public ArrayList<Card> getShuffledDeck() {
       Collections.shuffle(this.deck);
       return deck; 
    }
