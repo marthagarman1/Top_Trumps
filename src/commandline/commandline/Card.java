@@ -98,6 +98,9 @@ public class Card {
       return aNames; 
    }
 
+   public String getAName(int c) {
+      return aNames[c]; 
+   }
    
    
    public int getStats(int i) {
