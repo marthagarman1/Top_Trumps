@@ -51,6 +51,14 @@
             #title12 {
                 text-align: center;
                     }
+            .cardsection {
+                        margin: auto;
+                       height: 480px;
+                        width: 200px;
+                        background-color: white;
+                        border: 1px solid blue;
+                            
+                    }
 
             </style>
 
@@ -121,10 +129,11 @@
                     <div class="row text-center" style="padding-left: 6.5%;" >
                         <div class="col-md-2.5">
 
-                    <div class="card border-primary mb-3" style="max-width: 13rem;">
+                    <div class="cardsection" >
               <div class="card-header">Human Player</div>
               <div class="card-body">
-                <h4 class="card-title">Category Name</h4>
+                <h5 class="card-title">Category Name</h5>
+                  <img src="http://www.dcs.gla.ac.uk/~richardm/TopTrumps/350r.jpg" style="max-width: 100%">
                <ul class="list-group">
               <a class="list-group-item d-flex justify-content-between align-items-center" href="MScITProject.html" role="button">
                 Attribute
@@ -146,20 +155,22 @@
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
+                  <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
-                  <p>--------------------------</p>
+               
+                  
               </div>
-                        <div class="card-footer text-muted">Cards Left</div>
+                        
             </div>
 
                         </div>
 
                         <div class="col-md-2.5">
-                    <div class="card border-primary mb-3" style="max-width: 13rem;">
+                    <div class="cardsection" >
               <div class="card-header">AI Player 1</div>
               <div class="card-body">
-                <h4 class="card-title">Category Name</h4>
-
+                <h5 class="card-title">Category Name</h5>
+                  <img src="http://www.dcs.gla.ac.uk/~richardm/TopTrumps/350r.jpg" style="max-width: 100%">
                 <ul class="list-group">
               <a class="list-group-item d-flex justify-content-between align-items-center disabled" href="MScITProject.html" role="button">
                 Attribute
@@ -181,19 +192,21 @@
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
+                    <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
-                  <p>--------------------------</p>
+                
 
               </div>
-                   <div class="card-footer text-muted">Cards Left</div>
+                   
             </div>
                         </div>
 
                         <div class="col-md-2.5">
-                        <div class="card border-primary mb-3" style="max-width: 13rem;">
+                        <div class="cardsection" >
               <div class="card-header">AI Player 2</div>
               <div class="card-body">
-                <h4 class="card-title">Category Name</h4>
+                <h5 class="card-title">Category Name</h5>
+                  <img src="http://www.dcs.gla.ac.uk/~richardm/TopTrumps/350r.jpg" style="max-width: 100%">
                 <ul class="list-group">
               <a class="list-group-item d-flex justify-content-between align-items-center disabled" href="MScITProject.html" role="button">
                 Attribute
@@ -215,18 +228,20 @@
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
+                    <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
-                  <p>--------------------------</p>
+                
 
               </div>
-                            <div class="card-footer text-muted">Cards Left</div>
+                   
             </div>
                         </div>
                             <div class="col-md-2.5">
-                        <div class="card border-primary mb-3" style="max-width: 13rem;">
+                     <div class="cardsection" >
               <div class="card-header">AI Player 3</div>
               <div class="card-body">
-                <h4 class="card-title">Category Name</h4>
+                <h5 class="card-title">Category Name</h5>
+                  <img src="http://www.dcs.gla.ac.uk/~richardm/TopTrumps/350r.jpg" style="max-width: 100%">
                 <ul class="list-group">
               <a class="list-group-item d-flex justify-content-between align-items-center disabled" href="MScITProject.html" role="button">
                 Attribute
@@ -248,18 +263,20 @@
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
+                    <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
-                  <p>--------------------------</p>
+                
 
               </div>
-                            <div class="card-footer text-muted">Cards Left</div>
+                   
             </div>
                         </div>
                         <div class="col-md-2.5">
-                        <div class="card border-primary mb-3" style="max-width: 13rem;">
+              <div class="cardsection" >
               <div class="card-header">AI Player 4</div>
               <div class="card-body">
-                <h4 class="card-title">Category Name</h4>
+                <h5 class="card-title">Category Name</h5>
+                  <img src="http://www.dcs.gla.ac.uk/~richardm/TopTrumps/350r.jpg" style="max-width: 100%">
                 <ul class="list-group">
               <a class="list-group-item d-flex justify-content-between align-items-center disabled" href="MScITProject.html" role="button">
                 Attribute
@@ -281,12 +298,12 @@
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
+                    <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
-
-                  <p>--------------------------</p>
+                
 
               </div>
-                            <div class="card-footer text-muted">Cards Left</div>
+                   
             </div>
                     </div>
                     </div>
