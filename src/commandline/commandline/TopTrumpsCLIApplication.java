@@ -34,21 +34,12 @@ public class TopTrumpsCLIApplication {
    	// Loop until the user wants to exit the game
       while (!userWantsToQuit) {
          //variables
-         //ArrayList<String> users = new ArrayList<String>(); 
-        
-         
          System.out.println("Game Start"); 
          ArrayList<Card> deck = new ArrayList<Card>(); 
          int roundCount = 1; 
          ArrayList<String> fileOutput = new ArrayList<>();
          PrintWriter writer = new PrintWriter("toptrumps.log", "UTF-8");
-         
-          
-      	// ----------------------------------------------------
-      	// Add your game logic here based on the requirements
-      	// ----------------------------------------------------
-      
-         
+
          // 1. Read in file and load information for cards 
          File file = new File("StarCitizenDeck.txt"); 
          ImportDeckInformation fI = new ImportDeckInformation(file); 
@@ -62,22 +53,22 @@ public class TopTrumpsCLIApplication {
         
          
          // 3. Create Players and divide deck between players
-         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));
+         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
          HumanPlayer user = new HumanPlayer(playerDeck, "Player You"); 
          fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString() 
             + "\n--------------------\n");
          
-         playerDeck = new ArrayList<>(deck.subList(8,16));
+         playerDeck = new ArrayList<>(deck.subList(8,16)); //16
          AIPlayer bot1 = new AIPlayer(playerDeck, "AI Player 1");
          fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString() 
             + "\n--------------------\n");
             
-         playerDeck = new ArrayList<>(deck.subList(16,24));
+         playerDeck = new ArrayList<>(deck.subList(16,24)); //24
          AIPlayer bot2 = new AIPlayer(playerDeck, "AI Player 2");
          fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString() 
             + "\n--------------------\n");
             
-         playerDeck = new ArrayList<>(deck.subList(24,32));
+         playerDeck = new ArrayList<>(deck.subList(24,32)); //32
          AIPlayer bot3 = new AIPlayer(playerDeck, "AI Player 3");
          fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString() 
             + "\n--------------------\n");
@@ -86,12 +77,7 @@ public class TopTrumpsCLIApplication {
          AIPlayer bot4 = new AIPlayer(playerDeck, "AI Player 4"); 
          fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString() 
             + "\n--------------------\n");
-         
-         //System.out.print("Bot2's Deck \n" + bot2.printDeck()); 
-         //System.out.println("Users's Deck \n" + user.printDeck()); 
-         
-         //System.out.println("Selected card: " + bot3.selectCard());
-         
+
          // 4. Start new game
          ArrayList<Player> playerList = new ArrayList<>(); 
          playerList.add(user);
@@ -103,9 +89,11 @@ public class TopTrumpsCLIApplication {
          Scanner scan = new Scanner(System.in); 
          String activePlayer = "";
          
-         while(!userWantsToQuit) {
-          //File stats
+         ArrayList<Card> commonPile = new ArrayList<>(); 
          
+         while(!userWantsToQuit) {
+         
+            System.out.println("PlayerList size is " + playerList.size());
          //Start New Round
            //Randomly selects first player during first round. 
             if(roundCount == 1) {
@@ -113,32 +101,24 @@ public class TopTrumpsCLIApplication {
                activePlayer = playerList.get(0).getName();
             }
          
-         
             System.out.println("Round " + roundCount);
             //get all chosen cards from players and make an arraylist of cards
             ArrayList<Card> drawPile = new ArrayList<>(); 
-            ArrayList<Card> commonPile = new ArrayList<>(); 
+          
             
-            // for(int i = 0; i < playersList.size() -1; i++ ) {
-         //       drawPile.add((playerList.get(i)).drawTopCard());
-         //    }
-            
-            drawPile.add((playerList.get(0)).drawTopCard()); //first player adds card
-            drawPile.add((playerList.get(1)).drawTopCard()); 
-            drawPile.add((playerList.get(2)).drawTopCard()); 
-            drawPile.add((playerList.get(3)).drawTopCard());
-            drawPile.add((playerList.get(4)).drawTopCard());
-                        
+            for(int i = 0; i < playerList.size() ; i++ ) {
+               drawPile.add((playerList.get(i)).drawTopCard());
+            }
+               
             fileOutput.add("\nCards in play this round:" + drawPile.toString()
                + "\n--------------------"); 
             
             System.out.println("Round " + roundCount + ": Players have drawn their cards");
-            System.out.println("You drew: " + user.drawTopCard());
-            System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
-            
+            if( user.numOfCards() != 0 ) {
+               System.out.println("You drew: " + user.drawTopCard());
+               System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
+            }
           
-            
-         
             int userChoice = 0;
             if(activePlayer.equalsIgnoreCase("Player You")){
                System.out.print("It is your turn to select a category, " 
@@ -155,20 +135,7 @@ public class TopTrumpsCLIApplication {
                catch (InputMismatchException e) {
                   System.out.print("\nPlease enter number 1 - 5");
                }
-               
-               
-               // fileOutput.add("\nPlayer category, " 
-                  //      + "the categories are: "
-                  //      + "\n\t1: " + (deck.get(0).getANames())[1]
-                  //      + "\n\t2: " + (deck.get(0).getANames())[2]
-                  //      + "\n\t3: " + (deck.get(0).getANames())[3]
-                  //      + "\n\t4: " + (deck.get(0).getANames())[4]
-                  //      + "\n\t5: " + (deck.get(0).getANames())[5]
-                  //      );
-            //    
-            //    
-               // fileOutput.add("USER CHOICE: "+ userChoice);
-               
+     
             } else { //Method for bots to choose category
                Random math = new Random();
                userChoice = math.nextInt((5 - 1) + 1) + 1;
@@ -192,25 +159,22 @@ public class TopTrumpsCLIApplication {
                      System.out.println("No category chosen");  
                   }
             }
-            //System.out.println("catchoice is " + catChoice); 
-            //Category selected and corresponding values when a user or computer selects a category
-            fileOutput.add("\nCatergory selected: " + user.drawTopCard().getAName(catChoice) 
-               + "\nCorresponding Values: "
-               + "\n" + (playerList.get(0)).getName() + ": " + drawPile.get(0).getStats(catChoice) 
-               + "\n" + (playerList.get(1)).getName() + ": " + drawPile.get(1).getStats(catChoice)
-               + "\n" + (playerList.get(2)).getName() + ": " + drawPile.get(2).getStats(catChoice)
-               + "\n" + (playerList.get(3)).getName() + ": " + drawPile.get(3).getStats(catChoice)
-               + "\n" + (playerList.get(4)).getName() + ": " + drawPile.get(4).getStats(catChoice) 
-               + "\n--------------------");
-         
+            
+            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice) 
+               + "\nCorresponding Values: ");
+               
+            for(int i = 0; i < playerList.size(); i++) {
+               fileOutput.add("\n" + (playerList.get(i)).getName() + ": " + drawPile.get(i).getStats(catChoice));
+            }
+            fileOutput.add("\n--------------------");
+               
             System.out.println("PlayerList size is " + playerList.size());
             
             //Compare all cards in chosen category 
             int currentWinner = 0;
             boolean draw = false;
-            for(int i = 0; i < playerList.size()-1; i++) {
-               //System.out.println("current: " + drawPile.get(currentWinner).getStats(catChoice));
-               //System.out.println("challenger: " + drawPile.get(i+1).getStats(catChoice));
+            for(int i = 0; i < playerList.size()-1; i++) { 
+            
                if(drawPile.get(currentWinner).getStats(catChoice) < drawPile.get(i+1).getStats(catChoice)) {
                   currentWinner = i+1;
                   draw = false; 
@@ -218,8 +182,6 @@ public class TopTrumpsCLIApplication {
                   draw = true; //drawn
                   
                }
-               //System.out.println("Current winner: " + currentWinner + " " ); 
-               //fileOutput.add("Current winner: " + currentWinner + " " ); 
             } 
             
              
@@ -228,6 +190,8 @@ public class TopTrumpsCLIApplication {
                System.out.println("Round " + roundCount + ": " 
                   + "This round was a Draw"); 
                commonPile.addAll(drawPile); 
+               fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()  
+                  + "\n--------------------");
                drawPile.clear(); 
             }
             else {
@@ -239,23 +203,30 @@ public class TopTrumpsCLIApplication {
                //winner gets all of common pile cards and then remove all from drawPile
                (playerList.get(currentWinner)).addCards(drawPile);  
                commonPile.clear();
+               fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()  
+                  + "\n--------------------");
+                  
                //print winning card with selected category with an arrow
                System.out.print("The winning card was "); 
-               //System.out.println(drawPile.get(currentWinner));
                drawPile.clear();
                System.out.println(playerList.get(currentWinner).drawTopCard());
                
-               //fileOutput.add("\n" + playerList.get(currentWinner).drawTopCard());
             }
             
             //remove cards at element 0 
-            user.removeCard(0);
-            bot1.removeCard(0);  
-            bot2.removeCard(0);
-            bot3.removeCard(0);
-            bot4.removeCard(0);
-          
+            // for(int i = 0; i < playerList.size(); i++) {
+               // playerList.get(i).removeCard(0);
+            // }
             
+            if (user.numOfCards() != 0 ) {
+               user.removeCard(0);
+            }
+            if ( bot1.numOfCards() != 0 ) { bot1.removeCard(0); }
+            if ( bot2.numOfCards() != 0 ) { bot2.removeCard(0); }
+            if ( bot3.numOfCards() != 0 ) { bot3.removeCard(0); }
+            if ( bot4.numOfCards() != 0 ) { bot4.removeCard(0); }
+            
+         
             System.out.println("\nWould you like to quit? (Y/N)?"); 
             String choice = scan.next(); 
             if(choice.equalsIgnoreCase("Y")) {
@@ -264,38 +235,30 @@ public class TopTrumpsCLIApplication {
             }
            
             roundCount++; 
-            
-            
+           
             //remove players from game who no longer have cards
-            for(int i = 0; i < playerList.size()-1; i++) {
-               if((playerList.get(i)).numOfCards() == 0) {
+            for(int i = 0; i < playerList.size(); i++) {
+               if((playerList.get(i)).numOfCards() == 0 ) {
                   playerList.remove(i);
+                  i = 0;
+                 
                }
             }
          
-         
            //if only one player remains, they are the winner
             if(playerList.size() == 1) {
-               System.out.println("The winner is " + playerList.get(0)); 
+               System.out.println("The winner is " + playerList.get(0).getName()); 
                userWantsToQuit = true; 
+               fileOutput.add("\nThe winner is " + playerList.get(0).getName()); 
             }
             
-            
          }
-         
-       
-         
+
          //print all of string array at once 
          writer.println(fileOutput.toString().replace("[", "").replace("]", "").replace(",","")); 
          writer.close();
       }
    
-      
-   
-   
    }
-   
-   
-   
 
 }

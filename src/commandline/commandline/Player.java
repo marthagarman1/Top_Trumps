@@ -10,6 +10,9 @@ public abstract class Player {
       this.name = name; 
    }
    
+   public ArrayList<Card> getDeck() {
+      return deck; 
+   }
       
    public String printDeck() {
       String output = deck.toString(); 

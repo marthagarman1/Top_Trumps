@@ -21,26 +21,6 @@ public class Card {
    }
    
    
-   public void setCat1(String cat1) {
-      this.cat1 = cat1;
-   }
-
-   public void setCat2(String cat2) {
-      this.cat2 = cat2;
-   }
-
-   public void setCat3(String cat3) {
-      this.cat3 = cat3;
-   }
-
-   public void setCat4(String cat4) {
-      this.cat4 = cat4;
-   }
-
-   public void setCat5(String cat5) {
-      this.cat5 = cat5;
-   }
-
    private String cat5;
    private ArrayList<Integer> attributes;
    private String[] attributeNames;
