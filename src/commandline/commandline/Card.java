@@ -32,25 +32,12 @@ public class Card {
       return name;
    }
 
-   public void setName(String name) {
-      this.name = name;
-   }
 
 
    public ArrayList<Integer> getAttributes() {
       return attributes;
    }
 
-   public void setAttributes(ArrayList<Integer> attributes) {
-      this.attributes = attributes;
-   }
-
-   //draws a random card from the player's deck
-   public Card drawCard(ArrayList<Card> deck){
-      int index = random.nextInt(deck.size());
-      Card drawn = deck.get(index);
-      return drawn;
-   }
 
    //can print out card's information including name and stats
    public String toString(){
