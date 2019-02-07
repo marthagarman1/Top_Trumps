@@ -79,9 +79,9 @@ h1 {
             
             <nav>
     <ul>
-        <li><a href = "homescreen.html">Home</a></li>
-        <li><a href = "GameScreen.html">Play Game</a></li>
-        <li><a href = "howtoplay.html">How to Play</a></li>
+        <li><a href = "/toptrumps">Home</a></li>
+        <li><a href = "/toptrumps/game">Play Game</a></li>
+        <li><a href = "toptrumps/stats">How to Play</a></li>
         <li class = "active">View Statistics</li>
     </ul>
             </nav>          
@@ -231,4 +231,4 @@ h1 {
 		</script>
 		
 		</body>
-</html>
+		</html>
