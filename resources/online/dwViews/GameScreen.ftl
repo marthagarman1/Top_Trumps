@@ -77,10 +77,10 @@
               </button>-->
                     <nav style="background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
     <ul>
-        <li><a href = "homescreen.html">Home</a></li>
-        <li><a href = "GameScreen.html">Play Game</a></li>
-        <li><a href = "howtoplay.html">How to Play</a></li>
-        <li class = "active">View Statistics</li>
+        <li><a href = "/toptrumps">Home</a></li>
+        <li><a href = "/toptrumps/game">Play Game</a></li>
+        <li><a href = "">How to Play</a></li>
+        <li><a href="/toptrumps/stats">View Statistics</a></li>
     </ul>
             </nav> 
 
@@ -105,7 +105,7 @@
 
 
                 <div class="jumbotron" style="background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
-                    <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; margin: 0px;" >Top Trumps Card Game</p></h1>
+                    <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; color: black; background: none; margin: 0px;" >Top Trumps Card Game</p></h1>
               <p class="lead" id="title12" style="font-size: 20px; margin: 0px;">Choose How Many Players To Play Against</p>
 
                 <p id="title12" style="font-size: 30px; ">
