@@ -1,8 +1,5 @@
 package online.dwResources;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +13,8 @@ import javax.ws.rs.core.MediaType;
 
 import online.configuration.TopTrumpsJSONConfiguration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-
-import commandline.Card;
-import commandline.HumanPlayer;
-import commandline.ImportDeckInformation;
-import commandline.AIPlayer;
-import commandline.Player;
-import commandline.TopTrumpsCLIApplication;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -40,26 +29,12 @@ import commandline.TopTrumpsCLIApplication;
  * REST API methods in Dropwizard. You will need to replace these with
  * methods that allow a TopTrumps game to be controled from a Web page.
  */
-
 public class TopTrumpsRESTAPI {
 
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
 	
-	private File deckFile;
-	private int numPlayers;
-	private ImportDeckInformation gameDeck;
-	private Player activePlayer;
-	private int catIndex;
-	private int numRounds;
-	private int numDraws;
-	private HumanPlayer humanPlayer;
-	private Player winner;
-	private Player gameWinner;
-	private int[] playerWinCounts = new int[5];
-	private static ArrayList <Player> players;
-	private ArrayList<Card> winnerPile;
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
 	 * a TopTrumpsJSONConfiguration from which you can get the location of
@@ -67,13 +42,9 @@ public class TopTrumpsRESTAPI {
 	 * @param conf
 	 */
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
-	
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
-	deckFile = conf.getDeckFile();
-	numPlayers = conf.getNumAIPlayers() + 1;
-	
 	}
 	
 	// ----------------------------------------------------
@@ -81,125 +52,36 @@ public class TopTrumpsRESTAPI {
 	// ----------------------------------------------------
 	
 	@GET
-	@Path("/setPlayers")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void setPlayers(@QueryParam("Number") int Number) throws IOException {
-		numPlayers = Number + 1;
-	//	System.err.println("the number of players: " + numPlayers); testing
-		startGame1();
-	}
-	@GET
-	@Path("/activePlayer")
-	public String activePlayer() throws IOException {
-	//	System.err.println("Active player is " + activePlayer.getName()); testing
-
-		if (activePlayer != humanPlayer) {
-			computerSelect();
-		}
-
-		return activePlayer.getName();
-	}
-	/*
-	 * method that creates game based on number of players and declares a
-	 * winnerPile this method also will randomise the order of players for who
-	 * goes first. Round number is set to 1.
-	 */
-	public void startGame1() {
-		gameDeck = new ImportDeckInformation(deckFile);
-		Deck.shuffle(gameDeck.getDeck());
-
-		Deck[] deck = gameDeck.advancedSplit(this.numPlayers);
-		this.humanPlayer = new HumanPlayer("Human Player", deck[0]);
-		players = new ArrayList<Player>();
-		players.add(humanPlayer);
-
-		winnerPile = new ArrayList<Card>();
-		for (int i = 1; i < deck.length; i++) {
-			Player p = new Player("AI Player" + i, deck[i]);
-			players.add(p);
-
-		}
-		randomiseOrder();
-		numRounds = 1;
-	}
-	public void randomiseOrder() {
-		Collections.shuffle(players);
-		activePlayer = players.get(0);
-	}
-
-	public void removePlayer(int i) {
-		players.remove(i);
-	}
-
-	// returns an index depending on the button pressed
-	// index is used to set the chosen category
-	@GET
-	@Path("/computerSelect")
-	public String computerSelect() {
-
-		catIndex = activePlayer.chooseCategory();
-		String catString = activePlayer.getHeldCard().getSelectedCategory(catIndex);
-		return catString;
-
-	}
-	@GET
-	@Path("/selectCategory")
-	public String selectCategory(@QueryParam("Number") int Number) throws IOException {
-		catIndex = Number - 1;
-		String catString = activePlayer.getHeldCard().getSelectedCategory(catIndex);
-		return catString;
-
-	}
-
-	// a count for player decks remaining in game
-	public int checkDecks() {
-		int count = 0;
-		for (int i = 0; i < players.size(); i++) {
-			if (players.get(i) != null && players.get(i).getDeckSize() > 0)
-				count++;
-		}
-		return count;
-	}
+	@Path("/helloJSONList")
 	/**
-	 * Method to populate the saved statistics of the game
-	 * 
-	 * @return xAsJsonString - String representation of array containing pertinent information
-	 * game statistics
-	 * */
-	@GET
-	@Path("/statsTable")
-	public String statsTable() throws IOException {
-		Database db = new Database();
-		int[] x = db.getGameStatisticsOnline();
-		db.closeConnection();
-		db = null;
-
-		String xAsJsonString = oWriter.writeValueAsString(x);
-		return xAsJsonString;
-	}
-
-	/**
-	 * Saves game statistics to database at the end of the game.
+	 * Here is an example of a simple REST get request that returns a String.
+	 * We also illustrate here how we can convert Java objects to JSON strings.
+	 * @return - List of words as JSON
+	 * @throws IOException
 	 */
-	public void saveGameStats() {
-		Database db = new Database();
-		if (numPlayers == 2)
-			db.gameStats(gameWinner.getName(), numRounds, numDraws, playerWinCounts[0], playerWinCounts[1]);
-		else if (numPlayers == 3)
-			db.gameStats(gameWinner.getName(), numRounds, numDraws, playerWinCounts[0], playerWinCounts[1],
-					playerWinCounts[2]);
-		else if (numPlayers == 4)
-			db.gameStats(gameWinner.getName(), numRounds, numDraws, playerWinCounts[0], playerWinCounts[1],
-					playerWinCounts[2], playerWinCounts[3]);
-		else if (numPlayers == 4)
-			db.gameStats(gameWinner.getName(), numRounds, numDraws, playerWinCounts[0], playerWinCounts[1],
-					playerWinCounts[2], playerWinCounts[3]);
-		else if (numPlayers == 5)
-			db.gameStats(gameWinner.getName(), numRounds, numDraws, playerWinCounts[0], playerWinCounts[1],
-					playerWinCounts[2], playerWinCounts[3], playerWinCounts[4]);
-		db.closeConnection();
+	public String helloJSONList() throws IOException {
+		
+		List<String> listOfWords = new ArrayList<String>();
+		listOfWords.add("Hello");
+		listOfWords.add("World!");
+		
+		// We can turn arbatory Java objects directly into JSON strings using
+		// Jackson seralization, assuming that the Java objects are not too complex.
+		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
+		
+		return listAsJSONString;
 	}
+	
+	@GET
+	@Path("/helloWord")
+	/**
+	 * Here is an example of how to read parameters provided in an HTML Get request.
+	 * @param Word - A word
+	 * @return - A String
+	 * @throws IOException
+	 */
+	public String helloWord(@QueryParam("Word") String Word) throws IOException {
+		return "Hello "+Word;
+	}
+	
 }
-
-
-
