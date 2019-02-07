@@ -115,7 +115,7 @@ public class TopTrumpsRESTAPI {
 
 		winnerPile = new ArrayList<Card>();
 		for (int i = 1; i < deck.length; i++) {
-			Player p = new Player("Computer " + i, deck[i]);
+			Player p = new Player("AI Player" + i, deck[i]);
 			players.add(p);
 
 		}
