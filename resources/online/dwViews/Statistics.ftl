@@ -179,7 +179,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		
 		// Method that is called on page load
         			function initalize() {
-        				Database();
+        				statsTable();
         			}
         			// -----------------------------------------
         			// Add your other Javascript methods Here
