@@ -44,6 +44,18 @@ public class Card {
       return output;
    }
    
+   
+     public String winnderToString(int cat){
+      String output = "\n'" + this.name + "':"
+         + "\n\t> " + aNames[1] + ": " + attributes.get(0) 
+         + if(cat == 1) { + "<----"}
+         + "\n\t> " + aNames[2] + ": " + attributes.get(1) 
+         + "\n\t> " + aNames[3] + ": " + attributes.get(2) 
+         + "\n\t> " + aNames[4] + ": " + attributes.get(3) 
+         + "\n\t> " + aNames[5] + ": " + attributes.get(4);
+      return output;
+   }
+   
 
    //in the event of a draw, adds cards to the common pile
    public void addCommon(ArrayList<Card> CommonPile, Card c) {
