@@ -1,8 +1,18 @@
 <html>
     	<title>Top Trumps - Home</title>
-        <style type="text/css"></style>
+       
         <body>
-       <link rel = "stylesheet" type="text/css" href = "main.css">
+             <h1>Top Trumps</h1>
+    
+          <div id=container>
+          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href= "GameScreen.html">Play game</a></button></p>
+          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href = "statistics.html">View Statistics</a> </button></p>
+          <p><button type= "button" class="btn btn-default btn-lg" style="font-size: 30px" role="button"><a href = "howtoplay.html">How to Play</a></button></p>         
+            </div>                                         
+        <footer style="font-size: 25px">
+		Team: Error 404: Team Name Not Found
+	    </footer>   
+          
     	   	<!-- Import JQuery, as it provides functions you will probably find useful (see https://jquery.com/ -->
     	<script src="https://code.jquery.com/jquery-2.1.1.js"></script>
     	<script src="https://code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
@@ -14,70 +24,119 @@
 
 		<!-- Optional Styling of the Website, for the demo I used Bootstrap (see https://getbootstrap.com/docs/4.0/getting-started/introduction/) -->
                                                                         
-    
+    <style>
         <div class= "container">
-        <div class="topnav">
-            
-                    <h1>Top Trumps</h1>
+        <div class="topnav">                  
+* {
+    margin: 1000;
+    padding: 0;
+        }
+html, body{
+    height: 100%;
     
-          <div id=container>
-          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href= "GameScreen.html">Play game</a></button></p>
-          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href = "statistics.html">View Statistics</a> </button></p>
-          <p><button type= "button" class="btn btn-default btn-lg" style="font-size: 30px" role="button"><a href = "howtoplay.html">How to Play</a></button></p>         
-            </div>
-            </div>   
-            </div>                                           
-        <footer style="font-size: 25px">
-		Team: Error 404: Team Name Not Found
-	    </footer>    
-   
+}
+h1{
+    text-align: center;
+    font-size: 100px;
+    font-family: sans-serif;
+    
+}
+
+#p{    
+    align-items: baseline;
+    }
+#container{
+    height: 80%;
+    min-height: 80%;
+    color: beige;
+}
+#main{
+    overflow: auto;
+    padding-bottom: 100px;
+    
+}
+#footer{
+    background-color:darkgreen;
+    position: relative;
+    height: 100px;
+    
+}
+body {
+       
+    background-image: url(http://hdwpro.com/wp-content/uploads/2017/07/HD-Aircraft-Wallpaper.jpg);
+    height: 80%;
+    background-position:center;
+    background-repeat: no-repeat;
+    background-size: cover
+}
+height: 10.3;
+}
+
+h2 {
+    margin-top: 1.3em;
+}
+
+a {
+    color: black;
+}
+
+footer{
+    font-family:sans-serif;
+    font-size: 800px;
+}
+        
+            </style>
 		<!-- Here are examples of how to call REST API Methods -->
+		//Method is called on page load
 		<script type="text/javascript">
 		
-			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloJSONList() {
-			
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList"); // Request type and URL
+			// Method that is called on page load
+		
+		<script type="text/javascript">
+		
+			// Method that is called on page load
+			function initalize() {
 				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
-
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					alert(responseText); // lets produce an alert
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
 			}
-			
-			// This calls the helloJSONList REST method from TopTrumpsRESTAPI
-			function helloWord(word) {
-			
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloWord?Word="+word); // Request type and URL+parameters
-				
-				// Message is not sent yet, but we can check that the browser supports CORS
-				if (!xhr) {
-  					alert("CORS not supported");
-				}
-
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					alert(responseText); // lets produce an alert
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();		
+	
+				// This is a reusable method for creating a CORS request. Do not edit this.
+			  function createCORSRequest(method, url) {
+			  var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/helloJSONList");
+  				var xhr = new XMLHttpRequest();
+  				if ("withCredentials" in xhr) {
+    				
+    				// Check if the XMLHttpRequest object has a "withCredentials" property.
+    				// "withCredentials" only exists on XMLHTTPRequest2 objects.
+    				
+    			xhr.open(method, url, true);
+  				
+  				} else if (typeof XDomainRequest != "undefined") {
+    				
+    				// Otherwise, check if XDomainRequest.
+    				// XDomainRequest only exists in IE, and is IE's way of making CORS requests.
+    				xhr = new XDomainRequest();
+    				xhr.open(method, url);
+ 				
+ 				 } else {
+    				
+    				// Otherwise, CORS is not supported by the browser.
+    				xhr = null;
+  				 }
+  				 return xhr;
 			}
-
+		
 		</script>
-    </body>
+
+<!-- Here are examples of how to call REST API Methods -->
+<script type="text/javascript">
+		
+			function playGame(){
+        		window.location='http://localhost:7777/toptrumps/game';
+    		}
+    		
+    		function viewStatistics(){
+    			window.location='http://localhost:7777/toptrumps/stats';
+    		}
+		</script>
+</body>
 </html>
