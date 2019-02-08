@@ -6,10 +6,6 @@ import java.util.Random;
 public class Card {
    private String[] aNames; 
    private String name;
-   private String cat1;
-   private String cat2;
-   private String cat3;
-   private String cat4;
    
  /** Constructor 
   * 
@@ -19,9 +15,7 @@ public class Card {
       this.attributes=attributes;
       this.aNames = aNames; 
    }
-   
-   
-   private String cat5;
+
    private ArrayList<Integer> attributes;
    private String[] attributeNames;
    private ArrayList<Card> deck;
@@ -62,9 +56,10 @@ public class Card {
          + "\n\t> " + aNames[5] + ": " + attributes.get(4);
       return output;
    }
+   
 
    //in the event of a draw, adds cards to the common pile
-   public void addCommon(ArrayList<Card> CommonPile, Card c){
+   public void addCommon(ArrayList<Card> CommonPile, Card c) {
       CommonPile.add(c);
    }
 

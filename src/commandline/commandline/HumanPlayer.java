@@ -11,15 +11,6 @@ public class HumanPlayer extends Player {
       this.name = name; 
    }
    
-   //public Card selectCard(int x) {
-      //Card drawn = deck.get(x);
-      //return drawn; 
-      
-   //}
-   
-
-   
-   
 
 }
 

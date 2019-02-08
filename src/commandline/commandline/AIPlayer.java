@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class AIPlayer extends Player {
     
-   //ArrayList<Card> deck = new ArrayList<>();
+
    public AIPlayer(ArrayList<Card> deck, String name) {
       super(deck, name); 
    }
