@@ -114,7 +114,7 @@
                     </p>
 
                     <script type="text/javascript">
-                      window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
+                     // window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
                       oneButton.setPlayers(1);
                       twoButton.setPlayers(2);
                       threeButton.setPlayers(3);
@@ -133,7 +133,7 @@
                         <h4>Cards in Pile: <label  style="color: green;"> Cards in Pile .... </label></h4>
                         
                         <script type="text/javascript">
-                          window.location='http://localhost:7777/toptrumps/activePlayer'; //need to confirm path
+                          //window.location='http://localhost:7777/toptrumps/activePlayer'; //need to confirm path
                           activePlayerLabel.activePlayer();
                         </script>
 
@@ -153,26 +153,35 @@
                 <h5 class="card-title">Category Name</h5>
                   <img src="http://www.dcs.gla.ac.uk/~richardm/TopTrumps/350r.jpg" style="max-width: 100%;">
                <ul class="list-group">
-              <a class="list-group-item d-flex justify-content-between align-items-center" href="MScITProject.html" role="button">
+              <a class="list-group-item d-flex justify-content-between align-items-center" id="a1" href="MScITProject.html" role="button">
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
-              <a class="list-group-item d-flex justify-content-between align-items-center" href="MScITProject.html" role="button">
+              <a class="list-group-item d-flex justify-content-between align-items-center" id="a2" href="MScITProject.html" role="button">
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
-              <a class="list-group-item d-flex justify-content-between align-items-center" href="MScITProject.html" role="button">
+              <a class="list-group-item d-flex justify-content-between align-items-center" id="a3" href="MScITProject.html" role="button">
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
-                <a class="list-group-item d-flex justify-content-between align-items-center" href="MScITProject.html" role="button">
+                <a class="list-group-item d-flex justify-content-between align-items-center" id="a4" href="MScITProject.html" role="button">
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
-              <a class="list-group-item d-flex justify-content-between align-items-center" href="MScITProject.html" role="button">
+              <a class="list-group-item d-flex justify-content-between align-items-center" id="a5" href="MScITProject.html" role="button">
                 Attribute
                 <span class="badge badge-primary badge-pill">1</span>
               </a>
+
+              <script type="text/javascript">
+                //window.location='http://localhost:7777/toptrumps/selectCategory'; //need to confirm path
+                a1.selectCategory(1);
+                a2.selectCategory(2);
+                a3.selectCategory(3);
+                a4.selectCategory(4);
+                a5.selectCategory(5);
+              </script>
                   <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
                
