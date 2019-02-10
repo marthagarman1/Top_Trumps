@@ -1,4 +1,4 @@
-    <html>
+<html>
 
             <head>
             <!-- Web page title -->
@@ -31,10 +31,9 @@
 
      </head>
                 <style>
-
             #mainBody {
                 padding: 5px;
-                background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);
+                background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);
             }
             #mainBody1 {
                 background: rgba(255, 255, 255, 0.8);
@@ -64,7 +63,6 @@
                          max-width: 100%; 
                         max-height: 100%;
                     }
-
             </style>
 
 
@@ -75,7 +73,7 @@
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>-->
-                    <nav style="background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
+                    <nav style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
     <ul>
         <li><a href = "/toptrumps">Home</a></li>
         <li><a href = "/toptrumps/game">Play Game</a></li>
@@ -104,16 +102,24 @@
 
 
 
-                <div class="jumbotron" style="background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
+                <div class="jumbotron" style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
                     <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; color: black; background: none; margin: 0px;" >Top Trumps Card Game</p></h1>
               <p class="lead" id="title12" style="font-size: 20px; margin: 0px;">Choose How Many Players To Play Against</p>
 
                 <p id="title12" style="font-size: 30px; ">
-                <button type="button" class="btn btn-secondary" style="color: Blue; font-size: 15px;">1</button>
-                <button type="button" class="btn btn-secondary" style="color: Blue; font-size: 15px;">2</button>
-                <button type="button" class="btn btn-secondary" style="color: Blue; font-size: 15px;">3</button>
-                <button type="button" class="btn btn-secondary" style="color: Blue; font-size: 15px;">4</button>
+                <button type="button" class="btn btn-secondary" id="oneButton" style="color: Blue; font-size: 15px;">1</button>
+                <button type="button" class="btn btn-secondary" id="twoButton" style="color: Blue; font-size: 15px;">2</button>
+                <button type="button" class="btn btn-secondary" id="threeButton" style="color: Blue; font-size: 15px;">3</button>
+                <button type="button" class="btn btn-secondary" id="fourButton" style="color: Blue; font-size: 15px;">4</button>
                     </p>
+
+                    <script type="text/javascript">
+                      window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
+                      oneButton.setPlayers(1);
+                      twoButton.setPlayers(2);
+                      threeButton.setPlayers(3);
+                      fourButton.setPlayers(4);
+                    </script>
 
               
               <h3 id="title12"><p class="badge badge-secondary" id="title12">Click Start Game After Your Choice</p></h3>
@@ -121,19 +127,25 @@
                 <a class="btn btn-primary btn-lg" href="MScITProject.html" role="button" >Start Game</a>
               </p>
 
-                    <div class="jumbotron" style="text-align: center; background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
-                        <h4>Active Player: <label  style="color: green;"> Player ..... </label></h4>
+                    <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
+                        <h4>Active Player: <label id=activePlayerLabel  style="color: green;"> Player ..... </label></h4>
                         <h4>Round Number: <label  style="color: green;"> Round Number .... </label></h4>
                         <h4>Cards in Pile: <label  style="color: green;"> Cards in Pile .... </label></h4>
+                        
+                        <script type="text/javascript">
+                          window.location='http://localhost:7777/toptrumps/activePlayer'; //need to confirm path
+                          activePlayerLabel.activePlayer();
+                        </script>
+
                         <button class="btn btn-primary btn-lg" onclick="" >Draw A Card</button>
                         </div>
-                    <div class="jumbotron" style="text-align: center; padding-left: 5%; margin: -9%; background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
+                    <div class="jumbotron" style="text-align: center; padding-left: 5%; margin: -9%; background-image:    url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
                         <button class="btn btn-primary btn-lg" onclick="" style="padding-left: 20px; margin: 0px;">Play Again</button>
                         <button class="btn btn-primary btn-lg" onclick="" style=" padding-left: 5px;">View Statisitics</button>
                         </div>
                     <!--Cards Section-->
                     <div class="jumbotron" id="backg">
-                    <div class="row text-center" style="padding-left: 6.5%; background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
+                    <div class="row text-center" style="padding-left: 6.5%; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
                         <div class="col-md-2.5">
                 <div class="cardsection" style="background: none;">
               <div class="card-header">Human Player</div>
