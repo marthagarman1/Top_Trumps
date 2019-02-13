@@ -13,9 +13,10 @@ import java.util.*;
  */
 public class TopTrumpsCLIApplication {
 
-    public static String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/onkrajux";
-    public static String user = "onkrajux";
-    public static String password = "toc8a9gWmmZO41dnETiNFS6Ju98QGKzq";
+    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
+    public static String user = "m_18_2094641c";
+    public static String password = "2094641c";
+
 
     public static PlayerRepository playerRepository;
     public static GameResultRepository gameRepository;
