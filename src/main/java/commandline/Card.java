@@ -1,5 +1,5 @@
 package commandline;
-import java.io.*;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -61,19 +61,8 @@ public class Card {
       String output = String.join("",outputList);
       return output;
    }
-   
 
-   //in the event of a draw, adds cards to the common pile
-   public void addCommon(ArrayList<Card> CommonPile, Card c) {
-      CommonPile.add(c);
-   }
 
-   //takes cards from common pile, adds them to winner's pile
-   public void clearCommon(ArrayList<Card> CommonPile, ArrayList<Card> WinnerPile){
-      WinnerPile.addAll(CommonPile);
-      CommonPile.clear();
-   }
-   
    public String[] getANames() {
       return aNames; 
    }
@@ -81,8 +70,7 @@ public class Card {
    public String getAName(int c) {
       return aNames[c]; 
    }
-   
-   
+
    public int getStats(int i) {
       int stats =  attributes.get(i-1);
       return stats; 

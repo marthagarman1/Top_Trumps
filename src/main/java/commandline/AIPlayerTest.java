@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AIPlayerTest {
 
+
+
     @BeforeEach
     void setUp() throws Exception {
 
@@ -27,17 +29,6 @@ class AIPlayerTest {
     void setPlayerNumber() {
     }
 
-    @Test
-    void getNumberCards() throws Exception {
-        ArrayList<Card> botDeck = new ArrayList<>();
-        String[] aNames = new String[]{"speed"};
-        ArrayList<Integer> attribures = new ArrayList<>();
-        attribures.add(3);
-        Card e = new Card("Test", aNames, attribures);
-        botDeck.add(e);
-        AIPlayer bot_player = new AIPlayer(botDeck, "Bot Player");
-        assertEquals(bot_player.getNumberCards(), 1);
-    }
 
     @Test
     void drawTopCard() {
@@ -50,14 +41,24 @@ class AIPlayerTest {
 
     @Test
     void getRoundsWon() {
+
     }
 
     @Test
     void numOfCards() {
+        ArrayList<Card> botDeck = new ArrayList<>();
+        String[] aNames = new String[]{"speed"};
+        ArrayList<Integer> attribures = new ArrayList<>();
+        attribures.add(3);
+        Card e = new Card("Test", aNames, attribures);
+        botDeck.add(e);
+        AIPlayer bot_player = new AIPlayer(botDeck, "Bot Player");
+        assertEquals(bot_player.numOfCards(), 1);
     }
 
     @Test
     void getName() {
+
     }
 
     @Test
