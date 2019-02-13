@@ -1,3 +1,48 @@
+package online.dwResources;
+
+import java.io.File;
+import java.io.IOException;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import java.util.Collections;
+
+import online.configuration.TopTrumpsJSONConfiguration;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.sun.javafx.collections.MappingChange.Map;
+
+import commandline.Card;
+import commandline.HumanPlayer;
+import commandline.ImportDeckInformation;
+import commandline.AIPlayer;
+import commandline.Player;
+import commandline.TopTrumpsCLIApplication;
+
+
+@Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
+@Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content//
+@Consumes(MediaType.APPLICATION_JSON) // This resource can take JSON content as input
+/*
+ * This is a Dropwizard Resource that specifies what to provide when a user
+ * requests a particular URL. In this case, the URLs are associated to the
+ * different REST API methods that you will need to expose the game commands
+ * to the Web page.
+ * 
+ * Below are provided some sample methods that illustrate how to create
+ * REST API methods in Dropwizard. You will need to replace these with
+ * methods that allow a TopTrumps game to be controled from a Web page.
+ */
 public class TopTrumpsRESTAPI {
 
 	private static final int ArrayList = 0;
