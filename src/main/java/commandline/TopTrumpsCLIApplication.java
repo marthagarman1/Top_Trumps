@@ -213,12 +213,13 @@ public class TopTrumpsCLIApplication {
 
                 //return the winner --lose/draw/win
                 if (draw) {
-                    System.out.println("Round " + roundCount + ": "
-                            + "This round was a Draw");
-                    commonPile.addAll(drawPile);
-                    fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()
-                            + "\n--------------------");
-                    drawPile.clear();
+                   commonPile.addAll(drawPile);
+               System.out.println("Round " + roundCount + ": "
+                      + "This round was a Draw, common pile now has " +  commonPile.size() + " cards");
+               fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()
+                      + "\n--------------------");
+               drawPile.clear();
+
                 } else {
                     System.out.println("Round " + roundCount + ": "
                             + "Player " + playerList.get(currentWinner).getName()
@@ -238,7 +239,8 @@ public class TopTrumpsCLIApplication {
                     System.out.print("The winning card was ");
                     drawPile.clear();
                     //arrow
-                    System.out.println(playerList.get(currentWinner).drawTopCard());
+                    System.out.println(playerList.get(currentWinner).drawTopCard().winnerToString(catChoice));
+
 
                 }
 
