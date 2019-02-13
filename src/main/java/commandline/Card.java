@@ -45,14 +45,21 @@ public class Card {
    }
    
    
-     public String winnderToString(int cat){
-      String output = "\n'" + this.name + "':"
-         + "\n\t> " + aNames[1] + ": " + attributes.get(0) 
-         + (cat == 1 ? "<----" : "" )
-         + "\n\t> " + aNames[2] + ": " + attributes.get(1) 
-         + "\n\t> " + aNames[3] + ": " + attributes.get(2) 
-         + "\n\t> " + aNames[4] + ": " + attributes.get(3) 
-         + "\n\t> " + aNames[5] + ": " + attributes.get(4);
+    
+   public String winnerToString(int cat){
+      ArrayList<String> outputList = new ArrayList<>();
+      outputList.add("\n'" + this.name + "':"
+                + "\n\t> " + aNames[1] + ": " + attributes.get(0));
+      if(cat==1) {outputList.add(" <--");}
+      outputList.add("\n\t> " + aNames[2] + ": " + attributes.get(1));
+      if(cat==2) {outputList.add(" <--");}
+      outputList.add("\n\t> " + aNames[3] + ": " + attributes.get(2));
+      if(cat==3) {outputList.add(" <--");}
+      outputList.add("\n\t> " + aNames[4] + ": " + attributes.get(3));
+      if(cat==4) {outputList.add(" <--");}
+      outputList.add("\n\t> " + aNames[5] + ": " + attributes.get(4));
+      if(cat==5) {outputList.add(" <--");}
+      String output = String.join("",outputList);
       return output;
    }
    
