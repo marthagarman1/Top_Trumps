@@ -21,15 +21,15 @@ public class TopTrumpsCLIApplication {
     public static GameResultRepository gameRepository;
     public static DbDriver driver;
 
-    static {
-        try {
-            driver = new DbDriver(user, password, url);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        playerRepository = new PlayerRepository(driver);
-        gameRepository = new GameResultRepository(driver);
-    }
+//    static {
+//        try {
+//            driver = new DbDriver(user, password, url);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        playerRepository = new PlayerRepository(driver);
+//        gameRepository = new GameResultRepository(driver);
+//    }
 
 
     /**
@@ -43,7 +43,7 @@ public class TopTrumpsCLIApplication {
         //Test Log is launched from here :
         boolean writeGameLogsToFile = false; // Should we write game logs to file?
 
-        if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile = true; // Command line selection
+        //if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile = true; // Command line selection
 
 
         boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
@@ -110,7 +110,7 @@ public class TopTrumpsCLIApplication {
             playerList.add(bot3);
             playerList.add(bot4);
 
-            savePlayers(playerList);
+            //savePlayers(playerList);
 
             while (!userWantsToQuit) {
 
@@ -213,9 +213,9 @@ public class TopTrumpsCLIApplication {
 
                 //return the winner --lose/draw/win
                 if (draw) {
-                    System.out.println("Round " + roundCount + ": "
-                            + "This round was a Draw");
                     commonPile.addAll(drawPile);
+                    System.out.println("Round " + roundCount + ": "
+                            + "This round was a Draw, common pile now has " +  commonPile.size() + " cards");
                     fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()
                             + "\n--------------------");
                     drawPile.clear();
@@ -238,7 +238,7 @@ public class TopTrumpsCLIApplication {
                     System.out.print("The winning card was ");
                     drawPile.clear();
                     //arrow
-                    System.out.println(playerList.get(currentWinner).drawTopCard());
+                    System.out.println(playerList.get(currentWinner).drawTopCard().winnerToString(catChoice));
 
                 }
 
@@ -272,7 +272,7 @@ public class TopTrumpsCLIApplication {
                         playerList.remove(i);
                         losers.add(player);
                         i = 0;
-                        markAsWinners(playerList);
+                        //markAsWinners(playerList);
 
                     }
                 }
@@ -280,7 +280,7 @@ public class TopTrumpsCLIApplication {
                 //if only one player remains, they are the winner
                 if (playerList.size() == 1) {
 
-                    saveGameResults(roundCount, playerList.get(0), losers);
+                    //saveGameResults(roundCount, playerList.get(0), losers);
                     //TODO save game result and participants in the database here (Using GameResultRepository)
 
                     System.out.println("The winner is " + playerList.get(0).getName());
@@ -307,43 +307,43 @@ public class TopTrumpsCLIApplication {
 
     }
 
-    static void saveGameResults(int roundCount, Player winner, Collection<Player> losers ) throws Exception {
-        Collection<ParticipantDb> participants = new ArrayList<>();
-        // add winner
-        PlayerDb winnerDb = new PlayerDb(winner.getId(), winner.getName(), getType(winner));
-        participants.add(new ParticipantDb(winnerDb, winner.getRoundsWon()));
+//    static void saveGameResults(int roundCount, Player winner, Collection<Player> losers ) throws Exception {
+//        Collection<ParticipantDb> participants = new ArrayList<>();
+//        // add winner
+//        PlayerDb winnerDb = new PlayerDb(winner.getId(), winner.getName(), getType(winner));
+//        participants.add(new ParticipantDb(winnerDb, winner.getRoundsWon()));
+//
+//        for (Player loser : losers) {
+//            PlayerDb player = new PlayerDb(loser.getId(), loser.getName(), getType(loser));
+//            participants.add(new ParticipantDb(player, loser.getRoundsWon()));
+//        }
+//
+//        GameResultDb result = new GameResultDb(winnerDb, roundCount, participants);
+//        gameRepository.save(result);
+//    }
 
-        for (Player loser : losers) {
-            PlayerDb player = new PlayerDb(loser.getId(), loser.getName(), getType(loser));
-            participants.add(new ParticipantDb(player, loser.getRoundsWon()));
-        }
-
-        GameResultDb result = new GameResultDb(winnerDb, roundCount, participants);
-        gameRepository.save(result);
-    }
-
-    static PlayerType getType(Player player) {
-
-        if (player instanceof HumanPlayer) {
-            return PlayerType.human;
-        } else {
-            return PlayerType.ai;
-        }
-    }
-
-    static void markAsWinners(Collection<Player> players) {
-        for (Player player : players) {
-            player.hasWon();
-        }
-    }
-
-    static void savePlayers(Collection<Player> players) throws Exception {
-        for (Player player : players) {
-            PlayerType type = getType(player);
-            PlayerDb db = new PlayerDb(player.name, type);
-            PlayerDb saved = playerRepository.save(db);
-            player.setId(saved.id);
-        }
-    }
+//    static PlayerType getType(Player player) {
+//
+//        if (player instanceof HumanPlayer) {
+//            return PlayerType.human;
+//        } else {
+//            return PlayerType.ai;
+//        }
+//    }
+//
+//    static void markAsWinners(Collection<Player> players) {
+//        for (Player player : players) {
+//            player.hasWon();
+//        }
+//    }
+//
+//    static void savePlayers(Collection<Player> players) throws Exception {
+//        for (Player player : players) {
+//            PlayerType type = getType(player);
+//            PlayerDb db = new PlayerDb(player.name, type);
+//            PlayerDb saved = playerRepository.save(db);
+//            player.setId(saved.id);
+//        }
+//    }
 
 }
