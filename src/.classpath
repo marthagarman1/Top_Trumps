@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="commandline/" kind="src" path=""/>
+	<classpathentry kind="src" path="commandline"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/javax.servlet-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/Users/marthakaitlingarman/NetBeansProjects/TradeBond/dist/lib/javax.persistence_2.1.0.v201304241213.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/jar_files.zip"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/eclipse/plugins/org.eclipse.swt.carbon.macosx.ppc_3.1.1.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/eclipse/plugins/org.eclipse.swt_3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/jar_files (1)/jetty-http-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/jar_files (1)/jetty-io-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/jar_files (1)/jetty-servlets-9.4.8.v20171121.jar"/>
+	<classpathentry kind="lib" path="/Users/marthakaitlingarman/Downloads/jar_files (1)/jetty-util-9.4.8.v20171121.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
