@@ -1,4 +1,4 @@
-<html>
+	<html>
 	<head>
 		<!-- Web page title -->
     	<title>Top Trumps- Statistics</title>
@@ -141,7 +141,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 	// Method that is called on page load
 	
 	
-	function newGame() {
+	function PlayGame() {
 	window.location='http://localhost:7777/toptrumps/game';
 		
 	}
@@ -152,6 +152,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 			// Method that is called on page load
 			function initalize() {
 			
+			         statsTable();
 			// This is a reusable method for creating a CORS request. Do not edit this.
 			function createCORSRequest(method,url) {
   				var xhr = new XMLHttpRequest();
@@ -179,12 +180,12 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		
 		// Method that is called on page load
         			function initalize() {
-        				statsTable();
+        				Database();
         			}
         			// -----------------------------------------
         			// Add your other Javascript methods Here
         			// -----------------------------------------
-        			function newGame() {
+        			function playGame() {
         				window.location='http://localhost:7777/toptrumps/game';
         			}
         			function createCORSRequest(method, url) {
@@ -206,33 +207,26 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
         			}
         		</script>
 					<script type="text/javascript">
-					$(function(){
+					function statsTable() {
 				
 				// First create a CORS request, this is the message we are going to send (a get request in this case)
-				var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/database"); // Request type and URL+parameters
+	            var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/statsTable");
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
   					alert("CORS not supported");
 				}
-				// CORS requests are Asynchronous, i.e. we do not wait for a response, instead we define an action
-				// to do when the response arrives 
-				xhr.onload = function(e) {
- 					var responseText = xhr.response; // the text of the response
-					var jsonObject = JSON.parse(responseText);
-					$("#games").html(jsonObject["TotalGamesPlayed"]);
-					$("#computer_wins").html(jsonObject["ComputerWins"]);
-					$("#human_wins").html(jsonObject["PlayerWins"]);
-					$("#max_rounds").html(jsonObject["LargestNumberofRoundsPlayed"]);
-					$("#average_draws").html(jsonObject["AverageDrawsPerGame"]);
-				};
-				
-				// We have done everything we need to prepare the CORS request, so send it
-				xhr.send();	
-				
-				
-				
-			});
+				var responseText = xhr.response; // the text of the response
+			    var list = JSON.parse(responseText);
+			    for (i = 0; i < 5; i++) {
+				var tuple = "#num" + (i + 1);
+				$(tuple).text(list[i]);
+			}
+		}
+		xhr.send();
+
+		}
 		</script>
-		
+        </div>
 		</body>
+            </body>
