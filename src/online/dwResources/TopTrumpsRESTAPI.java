@@ -5,8 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 import java.util.Random;
@@ -22,6 +24,9 @@ import online.configuration.TopTrumpsJSONConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
+import com.sun.xml.internal.ws.wsdl.writer.document.Types;
 
 import commandline.AIPlayer;
 import commandline.Card;
@@ -82,52 +87,6 @@ public class TopTrumpsRESTAPI {
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
-	}
-
-	@GET
-	@Path("/playGame")
-	public String playGame() throws IOException {
-		String message = null;
-		Scanner scan = null;
-		try {
-			
-			File file = new File("StarCitizenDeck.txt");			
-			scan = new Scanner(file).useDelimiter("/");			
-			txt = scan.next();		
-			for (int i = 0; i < txt.length();i++) {
-				
-			message = oWriter.writeValueAsString(txt);	
-		    }
-						
-		    }catch (FileNotFoundException ex) {	    	
-	        }
-		scan.close();		
-	    return message;
-		
-	}
-	@GET
-	@Path("/activePlayer")
-	public String activePlayer() {
-		return activePlayer;
-	}
-	@GET
-	@Path("/commonPile")
-	public int commonPile() {
-		return commonPile.size();
-	}
-	@GET
-	@Path("/roundCount")
-	public int roundCount() {
-		return roundCount;
-	}
-	
-	@GET
-	@Path("/startGame")
-	
-	public String Game() throws IOException {
-		String a = null;
-		startGame();
-		return a;
 	}
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void startGame() throws IOException {
@@ -203,21 +162,18 @@ public class TopTrumpsRESTAPI {
 	        
 	            //get all chosen cards from players and make an arraylist of cards
 	            drawPile = new ArrayList<>(); 
-	          
-	            
+     
 	            for(int i = 0; i < playerList.size() ; i++ ) {
 	               drawPile.add((playerList.get(i)).drawTopCard());
 	            }
 	               
 	            fileOutput.add("\nCards in play this round:" + drawPile.toString()
-	               + "\n--------------------"); 
-	            
-	            System.out.println("Round " + roundCount + ": Players have drawn their cards");
+	               + "\n--------------------");
 	            if( user.numOfCards() != 0 ) {
 	               System.out.println("You drew: " + user.drawTopCard());
 	               System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
 	            }
-	          
+   
 	            int userChoice = 0;
 	            if(activePlayer.equalsIgnoreCase("PlayerDb You")){
 	               System.out.print("It is your turn to select a category, " 
@@ -228,8 +184,7 @@ public class TopTrumpsRESTAPI {
 	                  + "\n\t4: " + (deck.get(0).getANames())[4]
 	                  + "\n\t5: " + (deck.get(0).getANames())[5]
 	                  + "\nEnter the number for your attribute: ");
-	               
-	            		 System.out.println("Enter Number 1 or 5");
+	              
 	            		 userChoice = scan.nextInt();	            		 
 	            	 
 	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
@@ -237,8 +192,7 @@ public class TopTrumpsRESTAPI {
 	            } else { //Method for bots to choose category
 	               Random math = new Random();
 	               userChoice = math.nextInt((5 - 1) + 1) + 1;
-	            }
-	         
+	            }         
 	            int catChoice = 0;
 	            
 	            switch(userChoice) {
@@ -362,8 +316,166 @@ public class TopTrumpsRESTAPI {
 		//return deckFile;
 		//return numAIPlayers;
 		//return message;
-	   
-	   }	
+	}	   
+	@GET
+	@Path("/selectCategory")
+	public int catChoice() throws IOException {
+    boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
+	   	
+	   	// Loop until the user wants to exit the game
+	      while (!userWantsToQuit) {
+	         //variables
+	         
+	         ArrayList<Card> deck = new ArrayList<Card>(); 
+	          
+	         ArrayList<String> fileOutput = new ArrayList<>();
+	         PrintWriter writer = new PrintWriter("toptrumps.log", "UTF-8");
+	      
+	         // 1. Read in file and load information for cards 
+	         File file = new File("StarCitizenDeck.txt"); 
+	         ImportDeckInformation fI = new ImportDeckInformation(file); 
+	         fileOutput.add("NEW GAME \nContents of new deck:" + fI.getDeck().toString().replace("[", "").replace("]", "")
+	            + "\n--------------------\n"); 
+	         
+	         // 2. Return a shuffled Deck 
+	         deck = fI.getShuffledDeck();
+	         fileOutput.add("\nShuffled Deck: " + deck.toString().replace("[", "").replace("]", "")
+	            +  "\n--------------------\n"); 
+	              
+	         // 3. Create Players and divide deck between players
+	         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
+	         user = new HumanPlayer(playerDeck, "PlayerDb You"); 
+	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString() 
+	            + "\n--------------------\n");
+	         
+	         playerDeck = new ArrayList<>(deck.subList(8,16)); //16
+	         AIPlayer bot1 = new AIPlayer(playerDeck, "AI PlayerDb 1");
+	         fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString() 
+	            + "\n--------------------\n");
+	            
+	         playerDeck = new ArrayList<>(deck.subList(16,24)); //24
+	         AIPlayer bot2 = new AIPlayer(playerDeck, "AI PlayerDb 2");
+	         fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString() 
+	            + "\n--------------------\n");
+	            
+	         playerDeck = new ArrayList<>(deck.subList(24,32)); //32
+	         AIPlayer bot3 = new AIPlayer(playerDeck, "AI PlayerDb 3");
+	         fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString() 
+	            + "\n--------------------\n");
+	            
+	         playerDeck = new ArrayList<>(deck.subList(32,40));
+	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI PlayerDb 4"); 
+	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString() 
+	            + "\n--------------------\n");
+	      
+	         // 4. Start new game
+	         playerList = new ArrayList<>(); 
+	         playerList.add(user);
+	         playerList.add(bot1); 
+	         playerList.add(bot2); 
+	         playerList.add(bot3); 
+	         playerList.add(bot4); 
+	         
+	         Scanner scan = new Scanner(System.in); 
+	         //String activePlayer = "";
+	         
+	         commonPile = new ArrayList<>(); 
+	         
+	         while(!userWantsToQuit) {
+	         
+	         //Start New Round
+	           //Randomly selects first playerDb during first round. 
+	            if(roundCount == 1) {
+	               Collections.shuffle(playerList);
+	               activePlayer = playerList.get(0).getName();
+	            }
+	        
+	            //get all chosen cards from players and make an arraylist of cards
+	            drawPile = new ArrayList<>(); 
+     
+	            for(int i = 0; i < playerList.size() ; i++ ) {
+	               drawPile.add((playerList.get(i)).drawTopCard());
+	            }
+	               
+	            fileOutput.add("\nCards in play this round:" + drawPile.toString()
+	               + "\n--------------------");
+	            if( user.numOfCards() != 0 ) {
+	               System.out.println("You drew: " + user.drawTopCard());
+	               System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
+	            }
+   
+	            int userChoice = 0;
+	            if(activePlayer.equalsIgnoreCase("PlayerDb You")){
+	               System.out.print("It is your turn to select a category, " 
+	                  + "the categories are: "
+	                  + "\n\t1: " + (deck.get(0).getANames())[1]
+	                  + "\n\t2: " + (deck.get(0).getANames())[2]
+	                  + "\n\t3: " + (deck.get(0).getANames())[3]
+	                  + "\n\t4: " + (deck.get(0).getANames())[4]
+	                  + "\n\t5: " + (deck.get(0).getANames())[5]
+	                  + "\nEnter the number for your attribute: ");
+	              
+	            		 userChoice = scan.nextInt();	            		 
+	            	 
+	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
+	                    
+	            } else { //Method for bots to choose category
+	               Random math = new Random();
+	               userChoice = math.nextInt((5 - 1) + 1) + 1;
+	            }         
+	            int catChoice = 0;
+	            
+	            switch(userChoice) {
+	               case 1 : catChoice = 1; 
+	                  break; 
+	               case 2 : catChoice = 2; 
+	                  break; 
+	               case 3 : catChoice = 3; 
+	                  break; 
+	               case 4 : catChoice = 4; 
+	                  break; 
+	               case 5 : catChoice = 5; 
+	                  break;
+	               default : 
+	                  {
+	                     fileOutput.add("No category chosen");
+	                  }
+	            }
+	            
+	            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice) 
+	               + "\nCorresponding Values: ");
+	               
+	            for(int i = 0; i < playerList.size(); i++) {
+	               fileOutput.add("\n" + (playerList.get(i)).getName() + ": " + drawPile.get(i).getStats(catChoice));
+	            }
+	            fileOutput.add("\n--------------------");}
+	      }return catChoice();
+	}
+    	
+    @GET
+    @Path("/activePlayer")
+    public String activePlayer() {
+	return activePlayer;
+    }
+    @GET
+    @Path("/commonPile")
+    public int commonPile() {
+	return commonPile.size();
+    }
+    @GET
+    @Path("/roundCount")
+    public int roundCount() {
+	return roundCount;
+}
+    
+    @GET
+    @Path("/startGame")  
+    public String Game() throws IOException {
+	String a = null;
+	startGame();
+	return a;
+}
+    
 /*
  * Method to populate the saved statistics of the game
  * 
@@ -382,11 +494,160 @@ public class TopTrumpsRESTAPI {
 
 		String xAsJsonString = oWriter.writeValueAsString(x);
 		return xAsJsonString;
+	}
+    // save results to the database
+	/**
+	 * 
+	 * @param results
+	 * @return
+	 * @throws SQLException
+	 */
+ 
+    public void GameResultRepository(DbDriver driver) {
+		this.driver = driver;
+	}
+  
+	public int getLargestNumberOfRounds() throws SQLException { 
+		Connection con = driver.getConnection();
+		try {
+			
+			ResultSet result = con.prepareStatement("SELECT max(numberOfRounds) FROM game_result").executeQuery();
+			
+		    if (!result.next()) {
+		    	throw new IllegalStateException("Sql returned no rows");
+		    }
+		    
+		    return result.getInt(1);
+			
+		} finally {
+			con.close();
+		}
+	}
 	
+	public int getNumberOfDraws() throws SQLException { 
+		Connection con = driver.getConnection();
+		try {
+			
+			ResultSet result = con.prepareStatement("SELECT count(*) FROM game_result WHERE winner IS NULL").executeQuery();
+			
+		    if (!result.next()) {
+		    	throw new IllegalStateException("Sql returned no rows");
+		    }
+		    
+		    return result.getInt(1);
+			
+		} finally {
+			con.close();
+		}
+	}
+	
+	public int getWinsByPlayerType(PlayerType type) throws SQLException {
+		Connection con = driver.getConnection();
+		try {
+			
+			PreparedStatement statement = con.prepareStatement("SELECT count(*) FROM game_result as G JOIN PLAYER AS P ON G.winner = P.id WHERE p.type = ?");
+					 
+			statement.setString(1, type.name());
+			
+			ResultSet result = statement.executeQuery(); 
+			
+		    if (!result.next()) {
+		    	throw new IllegalStateException("Sql returned no rows");
+		    }
+		    
+		    return result.getInt(1);
+			
+		} finally {
+			con.close();
+		}
+	}
+	
+	public int totalGames() throws SQLException {
+		Connection con = driver.getConnection();
+		try {
+			
+			ResultSet result = con.prepareStatement("SELECT count(*) FROM game_result").executeQuery();
+			
+		    if (!result.next()) {
+		    	throw new IllegalStateException("Sql returned no rows");
+		    }
+		    
+		    return result.getInt(1);
+			
+		} finally {
+			con.close();
+		}
+	}
+	
+	/**
+	 * 
+	 * @param results
+	 * @return
+	 * @throws SQLException
+	 * 
+	 *                      Save method allows create an object (?) and save it to
+	 *                      the data base.
+	 */
+
+	public int save(GameResultDb game) throws SQLException {
+		validate(game);
+
+		int id;
+		Connection con = driver.getConnection();
+		try {
+			con.setAutoCommit(false);
+
+			java.sql.PreparedStatement createGameStatement = con.prepareStatement(
+					"INSERT INTO  game_result (winner,numberOfRounds) VALUES (?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
+
+			// Null means a draw
+			if (game.winner != null) {
+			    createGameStatement.setInt(1, game.winner.id);
+			} else {
+				createGameStatement.setNull(1, Types.INTEGER);
+			}
+			createGameStatement.setInt(2, game.numberOfRounds); 
+
+			createGameStatement.executeUpdate();
+
+			ResultSet result = createGameStatement.getGeneratedKeys();
+
+		    if (!result.next()) {
+		    	throw new IllegalStateException("Sql returned no rows");
+		    } 
+			id = result.getInt(1);
+			
+			for (ParticipantDb participant : game.participants) {
+
+				java.sql.PreparedStatement createParticipantStatement = con.prepareStatement(
+						"INSERT INTO  participation (roundsWon,playerId,gameId) VALUES (?, ?, ?)" );
+				createParticipantStatement.setInt(1, participant.roundsWon); 
+			    createParticipantStatement.setInt(2, participant.playerDb.id);  
+				createParticipantStatement.setInt(3, id); 
+				createParticipantStatement.executeUpdate();
+			}
+			
+			con.commit();
+
+			return id;
+			
+		} catch (Exception e) {
+			con.rollback();
+			throw e;
+		} finally {
+			con.close();
+		} 
+ 
+	} 
+
+	private void validate(GameResultDb results) {
+		if (results.numberOfRounds < 1) {
+			throw new IllegalArgumentException("Game must have at least one round");
+		} 
+		if (results.participants == null || results.participants.size() < 2) {
+			throw new IllegalArgumentException("Game must have at least two players");
+		}
 	}
 }
-	
 
-
-
-	
