@@ -1,6 +1,6 @@
 package commandline;
 
-//import db.*;
+import db.*;
 
 import java.io.*;
 import java.sql.SQLException;
@@ -13,24 +13,29 @@ import java.util.*;
  */
 public class TopTrumpsCLIApplication {
 
-    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
-    public static String user = "m_18_2094641c";
-    public static String password = "2094641c";
+//    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
+//    public static String user = "m_18_2094641c";
+//    public static String password = "2094641c";
+
+    public static String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/onkrajux";
+    public static String user = "onkrajux";
+    public static String password = "toc8a9gWmmZO41dnETiNFS6Ju98QGKzq";
 
 
-   // public static PlayerRepository playerRepository;
-    //public static GameResultRepository gameRepository;
-    //public static DbDriver driver;
 
-//    static {
-//        try {
-//            driver = new DbDriver(user, password, url);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        playerRepository = new PlayerRepository(driver);
-//        gameRepository = new GameResultRepository(driver);
-//    }
+    public static PlayerRepository playerRepository;
+    public static GameResultRepository gameRepository;
+    public static DbDriver driver;
+
+    static {
+        try {
+            driver = new DbDriver(user, password, url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        playerRepository = new PlayerRepository(driver);
+        gameRepository = new GameResultRepository(driver);
+    }
 
 
     /**
@@ -224,6 +229,11 @@ public class TopTrumpsCLIApplication {
                     commonPile.clear();
 
 
+
+
+
+
+
                     //print winning card with selected category with an arrow
                     System.out.print("The winning card was ");
                     drawPile.clear();
@@ -258,7 +268,7 @@ public class TopTrumpsCLIApplication {
                         playerList.remove(i);
                         losers.add(player);
                         i = 0;
-                        //markAsWinners(playerList);
+                        markAsWinners(playerList);
                     }
                 }
 
@@ -267,7 +277,7 @@ public class TopTrumpsCLIApplication {
                 //if only one player remains or there are cards in the commonPile, a winner is selected:
                 if (playerList.size() == 1 && commonPile.size() >= 1) {
 
-                    //saveGameResults(roundCount, playerList.get(0), losers);
+                    saveGameResults(roundCount, playerList.get(0), losers);
                     //TODO save game result and participants in the database here (Using GameResultRepository)
 
                     System.out.println("The winner is " + playerList.get(0).getName());
@@ -298,51 +308,51 @@ public class TopTrumpsCLIApplication {
 
 
 
-        //System.out.println("Largest number of rounds: "+gameRepository.getLargestNumberOfRounds());
-        //System.out.println("Number of draws: "+gameRepository.getNumberOfDraws());
-        //System.out.println("AI wins: "+gameRepository.getWinsByPlayerType(PlayerType.ai));
-        //System.out.println("Human wins: "+gameRepository.getWinsByPlayerType(PlayerType.human));
-        //System.out.println("Total games: "+gameRepository.totalGames());
+        System.out.println("Largest number of rounds: "+gameRepository.getLargestNumberOfRounds());
+        System.out.println("Number of draws: "+gameRepository.getNumberOfDraws());
+        System.out.println("AI wins: "+gameRepository.getWinsByPlayerType(PlayerType.ai));
+        System.out.println("Human wins: "+gameRepository.getWinsByPlayerType(PlayerType.human));
+        System.out.println("Total games: "+gameRepository.totalGames());
 
     }
 
-//    static void saveGameResults(int roundCount, Player winner, Collection<Player> losers ) throws Exception {
-//        Collection<ParticipantDb> participants = new ArrayList<>();
-//        // add winner
-//        PlayerDb winnerDb = new PlayerDb(winner.getId(), winner.getName(), getType(winner));
-//        participants.add(new ParticipantDb(winnerDb, winner.getRoundsWon()));
-//
-//        for (Player loser : losers) {
-//            PlayerDb player = new PlayerDb(loser.getId(), loser.getName(), getType(loser));
-//            participants.add(new ParticipantDb(player, loser.getRoundsWon()));
-//        }
-//
-//        GameResultDb result = new GameResultDb(winnerDb, roundCount, participants);
-//        gameRepository.save(result);
-//    }
+    static void saveGameResults(int roundCount, Player winner, Collection<Player> losers ) throws Exception {
+        Collection<ParticipantDb> participants = new ArrayList<>();
+        // add winner
+        PlayerDb winnerDb = new PlayerDb(winner.getId(), winner.getName(), getType(winner));
+        participants.add(new ParticipantDb(winnerDb, winner.getRoundsWon()));
 
-//    static PlayerType getType(Player player) {
-//
-//        if (player instanceof HumanPlayer) {
-//            return PlayerType.human;
-//        } else {
-//            return PlayerType.ai;
-//        }
-//    }
-//
-//    static void markAsWinners(Collection<Player> players) {
-//        for (Player player : players) {
-//            player.hasWon();
-//        }
-//    }
-//
-//    static void savePlayers(Collection<Player> players) throws Exception {
-//        for (Player player : players) {
-//            PlayerType type = getType(player);
-//            PlayerDb db = new PlayerDb(player.name, type);
-//            PlayerDb saved = playerRepository.save(db);
-//            player.setId(saved.id);
-//        }
-//    }
+        for (Player loser : losers) {
+            PlayerDb player = new PlayerDb(loser.getId(), loser.getName(), getType(loser));
+            participants.add(new ParticipantDb(player, loser.getRoundsWon()));
+        }
+
+        GameResultDb result = new GameResultDb(winnerDb, roundCount, participants);
+        gameRepository.save(result);
+    }
+
+    static PlayerType getType(Player player) {
+
+       if (player instanceof HumanPlayer) {
+            return PlayerType.human;
+       } else {
+            return PlayerType.ai;
+        }
+    }
+
+   static void markAsWinners(Collection<Player> players) {
+       for (Player player : players) {
+           player.hasWon();
+       }
+   }
+
+   static void savePlayers(Collection<Player> players) throws Exception {
+       for (Player player : players) {
+           PlayerType type = getType(player);
+           PlayerDb db = new PlayerDb(player.name, type);
+           PlayerDb saved = playerRepository.save(db);
+           player.setId(saved.id);
+        }
+    }
 
 }

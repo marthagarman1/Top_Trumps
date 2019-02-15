@@ -5,6 +5,9 @@ import java.util.ArrayList;
 public abstract class Player {
    ArrayList<Card> deck;
    String name;
+   int roundsWon = 0;
+   int id;
+
 
 
    public Player(ArrayList<Card> deck, String name) {
@@ -37,6 +40,22 @@ public abstract class Player {
    public void addCards(ArrayList<Card> commonPile) {
       deck.addAll(commonPile);
    }
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+
+   public void hasWon() {
+      roundsWon++;
+   }
+
+   public int getRoundsWon() {
+      return roundsWon;
+   }
+
 }
 
 

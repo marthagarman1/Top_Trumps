@@ -15,7 +15,7 @@ import online.dwViews.StatisticsView;
 /**
  * This is a Dropwizard Resource that specifies what to provide when a user
  * requests a particular URL. In this case, the URLs are associated to the
- * different HTML/Javascript Web pages for the TopTrumps Application. 
+ * different HTML/Javascript Web pages for the TopTrumps Application.
  * @author richardm
  *
  */
@@ -31,7 +31,7 @@ public class GameWebPagesResource {
     public SelectionScreenView getSelectionScreen() {
         return new SelectionScreenView();
     }
-	
+
 	@GET
 	@Path("/game")
 	/**
@@ -42,7 +42,7 @@ public class GameWebPagesResource {
     public GameScreenView getGameScreen() {
         return new GameScreenView();
     }
-	
+
 	@GET
 	@Path("/stats")
 	/**
@@ -53,5 +53,5 @@ public class GameWebPagesResource {
     public StatisticsView getStatisticsView() {
         return new StatisticsView();
     }
-	
+
 }

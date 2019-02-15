@@ -49,7 +49,7 @@ import db.PlayerType;
  * requests a particular URL. In this case, the URLs are associated to the
  * different REST API methods that you will need to expose the game commands
  * to the Web page.
- * 
+ *
  * Below are provided some sample methods that illustrate how to create
  * REST API methods in Dropwizard. You will need to replace these with
  * methods that allow a TopTrumps game to be controled from a Web page.
@@ -73,7 +73,7 @@ public class TopTrumpsRESTAPI {
 	private ArrayList<Card> commonPile;
 	private ArrayList<Card> drawPile;
 	private int roundCount = 1;
-		
+
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
 	 * a TopTrumpsJSONConfiguration from which you can get the location of
@@ -83,7 +83,7 @@ public class TopTrumpsRESTAPI {
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) {
 		numAIPlayers = conf.getNumAIPlayers() + 1;
 		deckFile = conf.getDeckFile();
-		
+
 		// ----------------------------------------------------
 		// Add relevant initalization here
 		// ----------------------------------------------------
@@ -91,92 +91,92 @@ public class TopTrumpsRESTAPI {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void startGame() throws IOException {
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
-	   	
+
 	   	// Loop until the user wants to exit the game
 	      while (!userWantsToQuit) {
 	         //variables
-	         
-	         ArrayList<Card> deck = new ArrayList<Card>(); 
-	          
+
+	         ArrayList<Card> deck = new ArrayList<Card>();
+
 	         ArrayList<String> fileOutput = new ArrayList<>();
 	         PrintWriter writer = new PrintWriter("toptrumps.log", "UTF-8");
-	      
-	         // 1. Read in file and load information for cards 
-	         File file = new File("StarCitizenDeck.txt"); 
-	         ImportDeckInformation fI = new ImportDeckInformation(file); 
+
+	         // 1. Read in file and load information for cards
+	         File file = new File("StarCitizenDeck.txt");
+	         ImportDeckInformation fI = new ImportDeckInformation(file);
 	         fileOutput.add("NEW GAME \nContents of new deck:" + fI.getDeck().toString().replace("[", "").replace("]", "")
-	            + "\n--------------------\n"); 
-	         
-	         // 2. Return a shuffled Deck 
+	            + "\n--------------------\n");
+
+	         // 2. Return a shuffled Deck
 	         deck = fI.getShuffledDeck();
 	         fileOutput.add("\nShuffled Deck: " + deck.toString().replace("[", "").replace("]", "")
-	            +  "\n--------------------\n"); 
-	              
+	            +  "\n--------------------\n");
+
 	         // 3. Create Players and divide deck between players
 	         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
-	         user = new HumanPlayer(playerDeck, "PlayerDb You"); 
-	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString() 
+	         user = new HumanPlayer(playerDeck, "PlayerDb You");
+	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	         
+
 	         playerDeck = new ArrayList<>(deck.subList(8,16)); //16
 	         AIPlayer bot1 = new AIPlayer(playerDeck, "AI PlayerDb 1");
-	         fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString() 
+	         fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	            
+
 	         playerDeck = new ArrayList<>(deck.subList(16,24)); //24
 	         AIPlayer bot2 = new AIPlayer(playerDeck, "AI PlayerDb 2");
-	         fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString() 
+	         fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	            
+
 	         playerDeck = new ArrayList<>(deck.subList(24,32)); //32
 	         AIPlayer bot3 = new AIPlayer(playerDeck, "AI PlayerDb 3");
-	         fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString() 
+	         fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	            
+
 	         playerDeck = new ArrayList<>(deck.subList(32,40));
-	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI PlayerDb 4"); 
-	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString() 
+	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI PlayerDb 4");
+	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	      
+
 	         // 4. Start new game
-	         playerList = new ArrayList<>(); 
+	         playerList = new ArrayList<>();
 	         playerList.add(user);
-	         playerList.add(bot1); 
-	         playerList.add(bot2); 
-	         playerList.add(bot3); 
-	         playerList.add(bot4); 
-	         
-	         Scanner scan = new Scanner(System.in); 
+	         playerList.add(bot1);
+	         playerList.add(bot2);
+	         playerList.add(bot3);
+	         playerList.add(bot4);
+
+	         Scanner scan = new Scanner(System.in);
 	         //String activePlayer = "";
-	         
-	         commonPile = new ArrayList<>(); 
-	         
+
+	         commonPile = new ArrayList<>();
+
 	         while(!userWantsToQuit) {
-	         
+
 	         //Start New Round
-	           //Randomly selects first playerDb during first round. 
+	           //Randomly selects first playerDb during first round.
 	            if(roundCount == 1) {
 	               Collections.shuffle(playerList);
 	               activePlayer = playerList.get(0).getName();
 	            }
-	        
+
 	            //get all chosen cards from players and make an arraylist of cards
-	            drawPile = new ArrayList<>(); 
-     
+	            drawPile = new ArrayList<>();
+
 	            for(int i = 0; i < playerList.size() ; i++ ) {
 	               drawPile.add((playerList.get(i)).drawTopCard());
 	            }
-	               
+
 	            fileOutput.add("\nCards in play this round:" + drawPile.toString()
 	               + "\n--------------------");
 	            if( user.numOfCards() != 0 ) {
 	               System.out.println("You drew: " + user.drawTopCard());
-	               System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
+	               System.out.println("There are '" + user.numOfCards() + " cards in your deck");
 	            }
-   
+
 	            int userChoice = 0;
 	            if(activePlayer.equalsIgnoreCase("PlayerDb You")){
-	               System.out.print("It is your turn to select a category, " 
+	               System.out.print("It is your turn to select a category, "
 	                  + "the categories are: "
 	                  + "\n\t1: " + (deck.get(0).getANames())[1]
 	                  + "\n\t2: " + (deck.get(0).getANames())[2]
@@ -184,81 +184,81 @@ public class TopTrumpsRESTAPI {
 	                  + "\n\t4: " + (deck.get(0).getANames())[4]
 	                  + "\n\t5: " + (deck.get(0).getANames())[5]
 	                  + "\nEnter the number for your attribute: ");
-	              
-	            		 userChoice = scan.nextInt();	            		 
-	            	 
-	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
-	                    
+
+	            		 userChoice = scan.nextInt();
+
+	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception
+
 	            } else { //Method for bots to choose category
 	               Random math = new Random();
 	               userChoice = math.nextInt((5 - 1) + 1) + 1;
-	            }         
+	            }
 	            int catChoice = 0;
-	            
+
 	            switch(userChoice) {
-	               case 1 : catChoice = 1; 
-	                  break; 
-	               case 2 : catChoice = 2; 
-	                  break; 
-	               case 3 : catChoice = 3; 
-	                  break; 
-	               case 4 : catChoice = 4; 
-	                  break; 
-	               case 5 : catChoice = 5; 
+	               case 1 : catChoice = 1;
 	                  break;
-	               default : 
+	               case 2 : catChoice = 2;
+	                  break;
+	               case 3 : catChoice = 3;
+	                  break;
+	               case 4 : catChoice = 4;
+	                  break;
+	               case 5 : catChoice = 5;
+	                  break;
+	               default :
 	                  {
 	                     fileOutput.add("No category chosen");
 	                  }
 	            }
-	            
-	            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice) 
+
+	            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice)
 	               + "\nCorresponding Values: ");
-	               
+
 	            for(int i = 0; i < playerList.size(); i++) {
 	               fileOutput.add("\n" + (playerList.get(i)).getName() + ": " + drawPile.get(i).getStats(catChoice));
 	            }
 	            fileOutput.add("\n--------------------");
-	            
-	            //Compare all cards in chosen category 
+
+	            //Compare all cards in chosen category
 	            //int currentWinner = 0;
 	            boolean draw = false;
-	            for(int i = 0; i < playerList.size()-1; i++) { 
-	            
+	            for(int i = 0; i < playerList.size()-1; i++) {
+
 	               if(drawPile.get(currentWinner).getStats(catChoice) < drawPile.get(i+1).getStats(catChoice)) {
 	                  currentWinner = i+1;
-	                  draw = false; 
+	                  draw = false;
 	               } else if (drawPile.get(currentWinner).getStats(catChoice) == drawPile.get(i+1).getStats(catChoice)) {
 	                  draw = true; //drawn
-	                  
+
 	               }
-	            }          
+	            }
 	            //return the winner --lose/draw/win
 	            if(draw) {
-	               commonPile.addAll(drawPile); 
-	               fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()  
+	               commonPile.addAll(drawPile);
+	               fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()
 	                  + "\n--------------------");
-	               drawPile.clear(); 
+	               drawPile.clear();
 	            }
-	            
+
 	            else {
-	               activePlayer = playerList.get(currentWinner).getName(); 
-	            
+	               activePlayer = playerList.get(currentWinner).getName();
+
 	               //winner gets all of common pile cards and then remove all from drawPile
-	               (playerList.get(currentWinner)).addCards(drawPile);  
+	               (playerList.get(currentWinner)).addCards(drawPile);
 	               if(commonPile != null ) {
-	                  fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()  
+	                  fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()
 	                     + "\n--------------------");
 	               }
-	               commonPile.clear();         
-	               drawPile.clear();               
+	               commonPile.clear();
+	               drawPile.clear();
 	            }
-	            
-	            //remove cards at element 0 
+
+	            //remove cards at element 0
 	            // for(int i = 0; i < playerList.size(); i++) {
 	               // playerList.get(i).removeCard(0);
 	            // }
-	            
+
 	            if (user.numOfCards() != 0 ) {
 	               user.removeCard(0);
 	            }
@@ -266,147 +266,147 @@ public class TopTrumpsRESTAPI {
 	            if ( bot2.numOfCards() != 0 ) { bot2.removeCard(0); }
 	            if ( bot3.numOfCards() != 0 ) { bot3.removeCard(0); }
 	            if ( bot4.numOfCards() != 0 ) { bot4.removeCard(0); }
-	            
-	            //print each deck 
+
+	            //print each deck
 	            for(int i = 0; i < playerList.size(); i++ ) {
-	               fileOutput.add("\nAfter Round " + roundCount + "\n" 
-	                  + (playerList.get(i)).getName() + "'s Deck:" + (playerList.get(i)).getDeck().toString() 
+	               fileOutput.add("\nAfter Round " + roundCount + "\n"
+	                  + (playerList.get(i)).getName() + "'s Deck:" + (playerList.get(i)).getDeck().toString()
 	                  + "\n--------------------\n");
 	            }
-	            String choice;	            
+	            String choice;
 	            do {
 	            	roundCount++;
 	            	choice = scan.next();
-	            	 
+
 	            	 if(choice.equalsIgnoreCase("Y")) {
 	                 	userWantsToQuit=true;
-	                 	 //roundCount++; 
+	                 	 //roundCount++;
 	                 }else {
-	                 	continue;              	
-	                 }	            	
+	                 	continue;
+	                 }
 	            }
 	            while (choice.matches("\\d+"));
-	                       
-	            roundCount++; 	
-	            	
+
+	            roundCount++;
+
 	             //{
-	               //userWantsToQuit=true; 
+	               //userWantsToQuit=true;
 	               // use this when the user wants to exit the game
 	            //}
-	            //roundCount++;            
+	            //roundCount++;
 	            //remove players from game who no longer have cards
 	            for(int i = 0; i < playerList.size(); i++) {
 	               if((playerList.get(i)).numOfCards() == 0 ) {
 	                  playerList.remove(i);
-	                  i = 0;           
+	                  i = 0;
 	               }
-	            }     
+	            }
 	           //if only one playerDb remains, they are the winner
 	            if(playerList.size() == 1) {
-	               userWantsToQuit = true; 
-	               fileOutput.add("\nThe winner is " + playerList.get(0).getName()); 
-	            }            
+	               userWantsToQuit = true;
+	               fileOutput.add("\nThe winner is " + playerList.get(0).getName());
+	            }
 	         }
-	      
-	         //print all of string array at once 
-	         writer.println(fileOutput.toString().replace("[", "").replace("]", "").replace(",","")); 
+
+	         //print all of string array at once
+	         writer.println(fileOutput.toString().replace("[", "").replace("]", "").replace(",",""));
 	         writer.close();
 	      }
 	      String message = oWriter.writeValueAsString(playerList.get(0).getName());
 		//return deckFile;
 		//return numAIPlayers;
 		//return message;
-	}	   
+	}
 	@GET
 	@Path("/selectCategory")
 	public int catChoice() throws IOException {
     boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
-	   	
+
 	   	// Loop until the user wants to exit the game
 	      while (!userWantsToQuit) {
 	         //variables
-	         
-	         ArrayList<Card> deck = new ArrayList<Card>(); 
-	          
+
+	         ArrayList<Card> deck = new ArrayList<Card>();
+
 	         ArrayList<String> fileOutput = new ArrayList<>();
 	         PrintWriter writer = new PrintWriter("toptrumps.log", "UTF-8");
-	      
-	         // 1. Read in file and load information for cards 
-	         File file = new File("StarCitizenDeck.txt"); 
-	         ImportDeckInformation fI = new ImportDeckInformation(file); 
+
+	         // 1. Read in file and load information for cards
+	         File file = new File("StarCitizenDeck.txt");
+	         ImportDeckInformation fI = new ImportDeckInformation(file);
 	         fileOutput.add("NEW GAME \nContents of new deck:" + fI.getDeck().toString().replace("[", "").replace("]", "")
-	            + "\n--------------------\n"); 
-	         
-	         // 2. Return a shuffled Deck 
+	            + "\n--------------------\n");
+
+	         // 2. Return a shuffled Deck
 	         deck = fI.getShuffledDeck();
 	         fileOutput.add("\nShuffled Deck: " + deck.toString().replace("[", "").replace("]", "")
-	            +  "\n--------------------\n"); 
-	              
+	            +  "\n--------------------\n");
+
 	         // 3. Create Players and divide deck between players
 	         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
-	         user = new HumanPlayer(playerDeck, "PlayerDb You"); 
-	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString() 
+	         user = new HumanPlayer(playerDeck, "PlayerDb You");
+	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	         
+
 	         playerDeck = new ArrayList<>(deck.subList(8,16)); //16
 	         AIPlayer bot1 = new AIPlayer(playerDeck, "AI PlayerDb 1");
-	         fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString() 
+	         fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	            
+
 	         playerDeck = new ArrayList<>(deck.subList(16,24)); //24
 	         AIPlayer bot2 = new AIPlayer(playerDeck, "AI PlayerDb 2");
-	         fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString() 
+	         fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	            
+
 	         playerDeck = new ArrayList<>(deck.subList(24,32)); //32
 	         AIPlayer bot3 = new AIPlayer(playerDeck, "AI PlayerDb 3");
-	         fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString() 
+	         fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	            
+
 	         playerDeck = new ArrayList<>(deck.subList(32,40));
-	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI PlayerDb 4"); 
-	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString() 
+	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI PlayerDb 4");
+	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString()
 	            + "\n--------------------\n");
-	      
+
 	         // 4. Start new game
-	         playerList = new ArrayList<>(); 
+	         playerList = new ArrayList<>();
 	         playerList.add(user);
-	         playerList.add(bot1); 
-	         playerList.add(bot2); 
-	         playerList.add(bot3); 
-	         playerList.add(bot4); 
-	         
-	         Scanner scan = new Scanner(System.in); 
+	         playerList.add(bot1);
+	         playerList.add(bot2);
+	         playerList.add(bot3);
+	         playerList.add(bot4);
+
+	         Scanner scan = new Scanner(System.in);
 	         //String activePlayer = "";
-	         
-	         commonPile = new ArrayList<>(); 
-	         
+
+	         commonPile = new ArrayList<>();
+
 	         while(!userWantsToQuit) {
-	         
+
 	         //Start New Round
-	           //Randomly selects first playerDb during first round. 
+	           //Randomly selects first playerDb during first round.
 	            if(roundCount == 1) {
 	               Collections.shuffle(playerList);
 	               activePlayer = playerList.get(0).getName();
 	            }
-	        
+
 	            //get all chosen cards from players and make an arraylist of cards
-	            drawPile = new ArrayList<>(); 
-     
+	            drawPile = new ArrayList<>();
+
 	            for(int i = 0; i < playerList.size() ; i++ ) {
 	               drawPile.add((playerList.get(i)).drawTopCard());
 	            }
-	               
+
 	            fileOutput.add("\nCards in play this round:" + drawPile.toString()
 	               + "\n--------------------");
 	            if( user.numOfCards() != 0 ) {
 	               System.out.println("You drew: " + user.drawTopCard());
-	               System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
+	               System.out.println("There are '" + user.numOfCards() + " cards in your deck");
 	            }
-   
+
 	            int userChoice = 0;
 	            if(activePlayer.equalsIgnoreCase("PlayerDb You")){
-	               System.out.print("It is your turn to select a category, " 
+	               System.out.print("It is your turn to select a category, "
 	                  + "the categories are: "
 	                  + "\n\t1: " + (deck.get(0).getANames())[1]
 	                  + "\n\t2: " + (deck.get(0).getANames())[2]
@@ -414,44 +414,44 @@ public class TopTrumpsRESTAPI {
 	                  + "\n\t4: " + (deck.get(0).getANames())[4]
 	                  + "\n\t5: " + (deck.get(0).getANames())[5]
 	                  + "\nEnter the number for your attribute: ");
-	              
-	            		 userChoice = scan.nextInt();	            		 
-	            	 
-	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
-	                    
+
+	            		 userChoice = scan.nextInt();
+
+	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception
+
 	            } else { //Method for bots to choose category
 	               Random math = new Random();
 	               userChoice = math.nextInt((5 - 1) + 1) + 1;
-	            }         
+	            }
 	            int catChoice = 0;
-	            
+
 	            switch(userChoice) {
-	               case 1 : catChoice = 1; 
-	                  break; 
-	               case 2 : catChoice = 2; 
-	                  break; 
-	               case 3 : catChoice = 3; 
-	                  break; 
-	               case 4 : catChoice = 4; 
-	                  break; 
-	               case 5 : catChoice = 5; 
+	               case 1 : catChoice = 1;
 	                  break;
-	               default : 
+	               case 2 : catChoice = 2;
+	                  break;
+	               case 3 : catChoice = 3;
+	                  break;
+	               case 4 : catChoice = 4;
+	                  break;
+	               case 5 : catChoice = 5;
+	                  break;
+	               default :
 	                  {
 	                     fileOutput.add("No category chosen");
 	                  }
 	            }
-	            
-	            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice) 
+
+	            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice)
 	               + "\nCorresponding Values: ");
-	               
+
 	            for(int i = 0; i < playerList.size(); i++) {
 	               fileOutput.add("\n" + (playerList.get(i)).getName() + ": " + drawPile.get(i).getStats(catChoice));
 	            }
 	            fileOutput.add("\n--------------------");}
 	      }return catChoice();
 	}
-    	
+
     @GET
     @Path("/activePlayer")
     public String activePlayer() {
@@ -467,25 +467,25 @@ public class TopTrumpsRESTAPI {
     public int roundCount() {
 	return roundCount;
 }
-    
+
     @GET
-    @Path("/startGame")  
+    @Path("/startGame")
     public String Game() throws IOException {
 	String a = null;
 	startGame();
 	return a;
 }
-    
+
 /*
  * Method to populate the saved statistics of the game
- * 
+ *
  * @return xAsJsonString - String representation of array containing pertinent information
  * game statistics
  * */
-	
+
 	@GET
 	@Path("/statsTable")
-	
+
 	public String statsTable() throws IOException, SQLException, ClassNotFoundException {
 		DbDriver db = new DbDriver(activePlayer, deckFile, txt);
 		Connection x = db.getConnection();
@@ -497,94 +497,94 @@ public class TopTrumpsRESTAPI {
 	}
     // save results to the database
 	/**
-	 * 
+	 *
 	 * @param results
 	 * @return
 	 * @throws SQLException
 	 */
- 
+
     public void GameResultRepository(DbDriver driver) {
 		this.driver = driver;
 	}
-  
-	public int getLargestNumberOfRounds() throws SQLException { 
+
+	public int getLargestNumberOfRounds() throws SQLException {
 		Connection con = driver.getConnection();
 		try {
-			
+
 			ResultSet result = con.prepareStatement("SELECT max(numberOfRounds) FROM game_result").executeQuery();
-			
+
 		    if (!result.next()) {
 		    	throw new IllegalStateException("Sql returned no rows");
 		    }
-		    
+
 		    return result.getInt(1);
-			
+
 		} finally {
 			con.close();
 		}
 	}
-	
-	public int getNumberOfDraws() throws SQLException { 
+
+	public int getNumberOfDraws() throws SQLException {
 		Connection con = driver.getConnection();
 		try {
-			
+
 			ResultSet result = con.prepareStatement("SELECT count(*) FROM game_result WHERE winner IS NULL").executeQuery();
-			
+
 		    if (!result.next()) {
 		    	throw new IllegalStateException("Sql returned no rows");
 		    }
-		    
+
 		    return result.getInt(1);
-			
+
 		} finally {
 			con.close();
 		}
 	}
-	
+
 	public int getWinsByPlayerType(PlayerType type) throws SQLException {
 		Connection con = driver.getConnection();
 		try {
-			
+
 			PreparedStatement statement = con.prepareStatement("SELECT count(*) FROM game_result as G JOIN PLAYER AS P ON G.winner = P.id WHERE p.type = ?");
-					 
+
 			statement.setString(1, type.name());
-			
-			ResultSet result = statement.executeQuery(); 
-			
+
+			ResultSet result = statement.executeQuery();
+
 		    if (!result.next()) {
 		    	throw new IllegalStateException("Sql returned no rows");
 		    }
-		    
+
 		    return result.getInt(1);
-			
+
 		} finally {
 			con.close();
 		}
 	}
-	
+
 	public int totalGames() throws SQLException {
 		Connection con = driver.getConnection();
 		try {
-			
+
 			ResultSet result = con.prepareStatement("SELECT count(*) FROM game_result").executeQuery();
-			
+
 		    if (!result.next()) {
 		    	throw new IllegalStateException("Sql returned no rows");
 		    }
-		    
+
 		    return result.getInt(1);
-			
+
 		} finally {
 			con.close();
 		}
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * @param results
 	 * @return
 	 * @throws SQLException
-	 * 
+	 *
 	 *                      Save method allows create an object (?) and save it to
 	 *                      the data base.
 	 */
@@ -607,7 +607,7 @@ public class TopTrumpsRESTAPI {
 			} else {
 				createGameStatement.setNull(1, Types.INTEGER);
 			}
-			createGameStatement.setInt(2, game.numberOfRounds); 
+			createGameStatement.setInt(2, game.numberOfRounds);
 
 			createGameStatement.executeUpdate();
 
@@ -615,36 +615,36 @@ public class TopTrumpsRESTAPI {
 
 		    if (!result.next()) {
 		    	throw new IllegalStateException("Sql returned no rows");
-		    } 
+		    }
 			id = result.getInt(1);
-			
+
 			for (ParticipantDb participant : game.participants) {
 
 				java.sql.PreparedStatement createParticipantStatement = con.prepareStatement(
 						"INSERT INTO  participation (roundsWon,playerId,gameId) VALUES (?, ?, ?)" );
-				createParticipantStatement.setInt(1, participant.roundsWon); 
-			    createParticipantStatement.setInt(2, participant.playerDb.id);  
-				createParticipantStatement.setInt(3, id); 
+				createParticipantStatement.setInt(1, participant.roundsWon);
+			    createParticipantStatement.setInt(2, participant.playerDb.id);
+				createParticipantStatement.setInt(3, id);
 				createParticipantStatement.executeUpdate();
 			}
-			
+
 			con.commit();
 
 			return id;
-			
+
 		} catch (Exception e) {
 			con.rollback();
 			throw e;
 		} finally {
 			con.close();
-		} 
- 
-	} 
+		}
+
+	}
 
 	private void validate(GameResultDb results) {
 		if (results.numberOfRounds < 1) {
 			throw new IllegalArgumentException("Game must have at least one round");
-		} 
+		}
 		if (results.participants == null || results.participants.size() < 2) {
 			throw new IllegalArgumentException("Game must have at least two players");
 		}
