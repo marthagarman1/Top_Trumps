@@ -91,25 +91,18 @@ public class TopTrumpsRESTAPI {
 		Scanner scan = null;
 		try {
 			
-			File file = new File("StarCitizenDeck.txt");
-			
-			scan = new Scanner(file).useDelimiter("/");
-			
-			txt = scan.next();
-			
+			File file = new File("StarCitizenDeck.txt");			
+			scan = new Scanner(file).useDelimiter("/");			
+			txt = scan.next();		
 			for (int i = 0; i < txt.length();i++) {
 				
-			message = oWriter.writeValueAsString(txt);
-			
-			}
+			message = oWriter.writeValueAsString(txt);	
+		    }
 						
-		}catch (FileNotFoundException ex) {
-	    	
-	        System.out.println("Cannot read file.");
-		}
-		scan.close();
-		
-	return message;
+		    }catch (FileNotFoundException ex) {	    	
+	        }
+		scan.close();		
+	    return message;
 		
 	}
 	@GET
@@ -119,12 +112,12 @@ public class TopTrumpsRESTAPI {
 	}
 	@GET
 	@Path("/commonPile")
-	public int commPile() {
+	public int commonPile() {
 		return commonPile.size();
 	}
 	@GET
 	@Path("/roundCount")
-	public int roundCo() {
+	public int roundCount() {
 		return roundCount;
 	}
 	
@@ -159,8 +152,7 @@ public class TopTrumpsRESTAPI {
 	         deck = fI.getShuffledDeck();
 	         fileOutput.add("\nShuffled Deck: " + deck.toString().replace("[", "").replace("]", "")
 	            +  "\n--------------------\n"); 
-	        
-	         
+	              
 	         // 3. Create Players and divide deck between players
 	         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
 	         user = new HumanPlayer(playerDeck, "PlayerDb You"); 
@@ -208,8 +200,7 @@ public class TopTrumpsRESTAPI {
 	               Collections.shuffle(playerList);
 	               activePlayer = playerList.get(0).getName();
 	            }
-	         
-	            System.out.println("Round " + roundCount);
+	        
 	            //get all chosen cards from players and make an arraylist of cards
 	            drawPile = new ArrayList<>(); 
 	          
@@ -239,8 +230,7 @@ public class TopTrumpsRESTAPI {
 	                  + "\nEnter the number for your attribute: ");
 	               
 	            		 System.out.println("Enter Number 1 or 5");
-	            		 userChoice = scan.nextInt();
-	            		 
+	            		 userChoice = scan.nextInt();	            		 
 	            	 
 	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
 	                    
@@ -265,7 +255,6 @@ public class TopTrumpsRESTAPI {
 	               default : 
 	                  {
 	                     fileOutput.add("No category chosen");
-	                     System.out.println("No category chosen");  
 	                  }
 	            }
 	            
@@ -289,12 +278,9 @@ public class TopTrumpsRESTAPI {
 	                  draw = true; //drawn
 	                  
 	               }
-	            }
-	             
+	            }          
 	            //return the winner --lose/draw/win
 	            if(draw) {
-	               System.out.println("Round " + roundCount + ": " 
-	                  + "This round was a Draw"); 
 	               commonPile.addAll(drawPile); 
 	               fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()  
 	                  + "\n--------------------");
@@ -302,9 +288,6 @@ public class TopTrumpsRESTAPI {
 	            }
 	            
 	            else {
-	               System.out.println("Round " + roundCount + ": " 
-	                  + "PlayerDb " + playerList.get(currentWinner).getName() 
-	                  + " won this round.");
 	               activePlayer = playerList.get(currentWinner).getName(); 
 	            
 	               //winner gets all of common pile cards and then remove all from drawPile
@@ -313,14 +296,8 @@ public class TopTrumpsRESTAPI {
 	                  fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()  
 	                     + "\n--------------------");
 	               }
-	               commonPile.clear();
-	               
-	                  
-	               //print winning card with selected category with an arrow
-	               System.out.print("The winning card was "); 
-	               drawPile.clear();
-	               System.out.println(playerList.get(currentWinner).drawTopCard());
-	               
+	               commonPile.clear();         
+	               drawPile.clear();               
 	            }
 	            
 	            //remove cards at element 0 
@@ -342,14 +319,8 @@ public class TopTrumpsRESTAPI {
 	                  + (playerList.get(i)).getName() + "'s Deck:" + (playerList.get(i)).getDeck().toString() 
 	                  + "\n--------------------\n");
 	            }
-	            
-	            
-	         
-	            System.out.println("\nWould you like to quit? (Y/N)?"); 
-	            String choice;
-	            
+	            String choice;	            
 	            do {
-	            	System.out.println("Enter Y or N");
 	            	roundCount++;
 	            	choice = scan.next();
 	            	 
@@ -357,8 +328,7 @@ public class TopTrumpsRESTAPI {
 	                 	userWantsToQuit=true;
 	                 	 //roundCount++; 
 	                 }else {
-	                 	continue;
-	                 	
+	                 	continue;              	
 	                 }	            	
 	            }
 	            while (choice.matches("\\d+"));
@@ -369,25 +339,19 @@ public class TopTrumpsRESTAPI {
 	               //userWantsToQuit=true; 
 	               // use this when the user wants to exit the game
 	            //}
-	           
-	            //roundCount++; 
-	           
+	            //roundCount++;            
 	            //remove players from game who no longer have cards
 	            for(int i = 0; i < playerList.size(); i++) {
 	               if((playerList.get(i)).numOfCards() == 0 ) {
 	                  playerList.remove(i);
-	                  i = 0;
-	                 
+	                  i = 0;           
 	               }
-	            }
-	         
+	            }     
 	           //if only one playerDb remains, they are the winner
 	            if(playerList.size() == 1) {
-	               System.out.println("The winner is " + playerList.get(0).getName()); 
 	               userWantsToQuit = true; 
 	               fileOutput.add("\nThe winner is " + playerList.get(0).getName()); 
-	            }
-	            
+	            }            
 	         }
 	      
 	         //print all of string array at once 
@@ -421,4 +385,8 @@ public class TopTrumpsRESTAPI {
 	
 	}
 }
+	
+
+
+
 	
