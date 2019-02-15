@@ -5,8 +5,8 @@
              <h1>Top Trumps</h1>
     
           <div id=container>
-          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href= "GameScreen.html">Play game</a></button></p>
-          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href = "statistics.html">View Statistics</a> </button></p>
+          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href= "/toptrumps/game">Play game</a></button></p>
+          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href = "/toptrumps/stats">View Statistics</a> </button></p>
           <p><button type= "button" class="btn btn-default btn-lg" style="font-size: 30px" role="button"><a href = "howtoplay.html">How to Play</a></button></p>         
             </div>                                         
         <footer style="font-size: 25px">
@@ -140,4 +140,3 @@ footer{
 		</script>
 </body>
 </html>
-
