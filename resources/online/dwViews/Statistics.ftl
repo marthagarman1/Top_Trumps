@@ -1,4 +1,4 @@
-	<html>
+<html>
 	<head>
 		<!-- Web page title -->
     	<title>Top Trumps- Statistics</title>
@@ -79,8 +79,8 @@ h1 {
             
             <nav>
     <ul>
-        <li><a href = "homescreen.html">Home</a></li>
-        <li><a href = "GameScreen.html">Play Game</a></li>
+        <li><a href = "/toptrumps">Home</a></li>
+        <li><a href = "/toptrumps/game">Play Game</a></li>
         <li><a href = "howtoplay.html">How to Play</a></li>
         <li class = "active">View Statistics</li>
     </ul>
@@ -180,7 +180,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		
 		// Method that is called on page load
         			function initalize() {
-        				Database();
+        				statsTable();
         			}
         			// -----------------------------------------
         			// Add your other Javascript methods Here
@@ -227,6 +227,5 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 
 		}
 		</script>
-        </div>
+		
 		</body>
-            </body>
