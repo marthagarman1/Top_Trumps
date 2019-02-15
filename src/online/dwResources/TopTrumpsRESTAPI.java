@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.InputMismatchException;
-import java.util.List;
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -16,12 +16,10 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import online.configuration.TopTrumpsJSONConfiguration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -30,6 +28,13 @@ import commandline.Card;
 import commandline.HumanPlayer;
 import commandline.ImportDeckInformation;
 import commandline.Player;
+import db.DbDriver;
+import db.GameResultDb;
+import db.GameResultRepository;
+import db.ParticipantDb;
+import db.PlayerDb;
+import db.PlayerRepository;
+import db.PlayerType;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -63,9 +68,7 @@ public class TopTrumpsRESTAPI {
 	private ArrayList<Card> commonPile;
 	private ArrayList<Card> drawPile;
 	private int roundCount = 1;
-	
-	
-	
+		
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
 	 * a TopTrumpsJSONConfiguration from which you can get the location of
@@ -80,13 +83,10 @@ public class TopTrumpsRESTAPI {
 		// Add relevant initalization here
 		// ----------------------------------------------------
 	}
-	
-	//public static void main(String[] args) {
-	//	startGame();
-	//}
+
 	@GET
-	@Path("/startGame")
-	public String startGame() throws IOException {
+	@Path("/playGame")
+	public String playGame() throws IOException {
 		String message = null;
 		Scanner scan = null;
 		try {
@@ -102,8 +102,7 @@ public class TopTrumpsRESTAPI {
 			message = oWriter.writeValueAsString(txt);
 			
 			}
-			
-			
+						
 		}catch (FileNotFoundException ex) {
 	    	
 	        System.out.println("Cannot read file.");
@@ -114,37 +113,37 @@ public class TopTrumpsRESTAPI {
 		
 	}
 	@GET
-	@Path("/activePl")
-	public String activePLA() {
+	@Path("/activePlayer")
+	public String activePlayer() {
 		return activePlayer;
 	}
 	@GET
-	@Path("/comPile")
+	@Path("/commonPile")
 	public int commPile() {
 		return commonPile.size();
 	}
 	@GET
-	@Path("/roundCon")
+	@Path("/roundCount")
 	public int roundCo() {
 		return roundCount;
 	}
 	
 	@GET
-	@Path("/startGamee")
+	@Path("/startGame")
 	
-	public String startIT() throws IOException {
+	public String Game() throws IOException {
 		String a = null;
-		startGame1();
+		startGame();
 		return a;
 	}
-	//@Consumes(MediaType.APPLICATION_JSON)
-	public void startGame1() throws IOException {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void startGame() throws IOException {
 		boolean userWantsToQuit = false; // flag to check whether the user wants to quit the application
 	   	
 	   	// Loop until the user wants to exit the game
 	      while (!userWantsToQuit) {
 	         //variables
-	         System.out.println("Game Start"); 
+	         
 	         ArrayList<Card> deck = new ArrayList<Card>(); 
 	          
 	         ArrayList<String> fileOutput = new ArrayList<>();
@@ -164,27 +163,27 @@ public class TopTrumpsRESTAPI {
 	         
 	         // 3. Create Players and divide deck between players
 	         ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
-	         user = new HumanPlayer(playerDeck, "Player You"); 
+	         user = new HumanPlayer(playerDeck, "PlayerDb You"); 
 	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	         
 	         playerDeck = new ArrayList<>(deck.subList(8,16)); //16
-	         AIPlayer bot1 = new AIPlayer(playerDeck, "AI Player 1");
+	         AIPlayer bot1 = new AIPlayer(playerDeck, "AI PlayerDb 1");
 	         fileOutput.add("\n" + bot1.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	            
 	         playerDeck = new ArrayList<>(deck.subList(16,24)); //24
-	         AIPlayer bot2 = new AIPlayer(playerDeck, "AI Player 2");
+	         AIPlayer bot2 = new AIPlayer(playerDeck, "AI PlayerDb 2");
 	         fileOutput.add("\n" + bot2.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	            
 	         playerDeck = new ArrayList<>(deck.subList(24,32)); //32
-	         AIPlayer bot3 = new AIPlayer(playerDeck, "AI Player 3");
+	         AIPlayer bot3 = new AIPlayer(playerDeck, "AI PlayerDb 3");
 	         fileOutput.add("\n" + bot3.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	            
 	         playerDeck = new ArrayList<>(deck.subList(32,40));
-	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI Player 4"); 
+	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI PlayerDb 4"); 
 	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	      
@@ -204,7 +203,7 @@ public class TopTrumpsRESTAPI {
 	         while(!userWantsToQuit) {
 	         
 	         //Start New Round
-	           //Randomly selects first player during first round. 
+	           //Randomly selects first playerDb during first round. 
 	            if(roundCount == 1) {
 	               Collections.shuffle(playerList);
 	               activePlayer = playerList.get(0).getName();
@@ -229,7 +228,7 @@ public class TopTrumpsRESTAPI {
 	            }
 	          
 	            int userChoice = 0;
-	            if(activePlayer.equalsIgnoreCase("Player You")){
+	            if(activePlayer.equalsIgnoreCase("PlayerDb You")){
 	               System.out.print("It is your turn to select a category, " 
 	                  + "the categories are: "
 	                  + "\n\t1: " + (deck.get(0).getANames())[1]
@@ -244,9 +243,7 @@ public class TopTrumpsRESTAPI {
 	            		 
 	            	 
 	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
-	              
-	              
-	            
+	                    
 	            } else { //Method for bots to choose category
 	               Random math = new Random();
 	               userChoice = math.nextInt((5 - 1) + 1) + 1;
@@ -306,7 +303,7 @@ public class TopTrumpsRESTAPI {
 	            
 	            else {
 	               System.out.println("Round " + roundCount + ": " 
-	                  + "Player " + playerList.get(currentWinner).getName() 
+	                  + "PlayerDb " + playerList.get(currentWinner).getName() 
 	                  + " won this round.");
 	               activePlayer = playerList.get(currentWinner).getName(); 
 	            
@@ -362,13 +359,10 @@ public class TopTrumpsRESTAPI {
 	                 }else {
 	                 	continue;
 	                 	
-	                 }
-	            	 
-	            	
+	                 }	            	
 	            }
 	            while (choice.matches("\\d+"));
-	            	
-	            
+	                       
 	            roundCount++; 	
 	            	
 	             //{
@@ -387,7 +381,7 @@ public class TopTrumpsRESTAPI {
 	               }
 	            }
 	         
-	           //if only one player remains, they are the winner
+	           //if only one playerDb remains, they are the winner
 	            if(playerList.size() == 1) {
 	               System.out.println("The winner is " + playerList.get(0).getName()); 
 	               userWantsToQuit = true; 
@@ -404,52 +398,27 @@ public class TopTrumpsRESTAPI {
 		//return deckFile;
 		//return numAIPlayers;
 		//return message;
-		
 	   
-	   }
-	
-	
-		   
-	
-	
-	
-	
-	
-	// ----------------------------------------------------
-	// Add relevant API methods here
-	// ----------------------------------------------------
+	   }	
+/*
+ * Method to populate the saved statistics of the game
+ * 
+ * @return xAsJsonString - String representation of array containing pertinent information
+ * game statistics
+ * */
 	
 	@GET
-	@Path("/helloJSONList")
-	/**
-	 * Here is an example of a simple REST get request that returns a String.
-	 * We also illustrate here how we can convert Java objects to JSON strings.
-	 * @return - List of words as JSON
-	 * @throws IOException
-	 */
-	public String helloJSONList() throws IOException {
-		
-		List<String> listOfWords = new ArrayList<String>();
-		listOfWords.add("Hello");
-		listOfWords.add("World!");
-		
-		// We can turn arbatory Java objects directly into JSON strings using
-		// Jackson seralization, assuming that the Java objects are not too complex.
-		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
-		
-		return listAsJSONString;
-	}
+	@Path("/statsTable")
 	
-	@GET
-	@Path("/helloWord")
-	/**
-	 * Here is an example of how to read parameters provided in an HTML Get request.
-	 * @param Word - A word
-	 * @return - A String
-	 * @throws IOException
-	 */
-	public String helloWord(@QueryParam("Word") String Word) throws IOException {
-		return "Hello "+Word;
-	}
+	public String statsTable() throws IOException, SQLException, ClassNotFoundException {
+		DbDriver db = new DbDriver(activePlayer, deckFile, txt);
+		Connection x = db.getConnection();
+		db.closeConnection();
+		db = null;
+
+		String xAsJsonString = oWriter.writeValueAsString(x);
+		return xAsJsonString;
 	
+	}
 }
+	
