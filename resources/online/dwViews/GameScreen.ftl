@@ -92,7 +92,7 @@
                     </p>
 
                     <script type="text/javascript">
-                      window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
+                     // window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
                       oneButton.setPlayers(1);
                       twoButton.setPlayers(2);
                       threeButton.setPlayers(3);
@@ -102,13 +102,13 @@
               
               <h3 id="title12"><p class="badge badge-secondary" id="title12">Click Start Game After Your Choice</p></h3>
               <p class="lead" id="title12" style="margin: auto;">
-                <a class="btn btn-primary btn-lg" href="/toptrumps/startGamee">Start Game</a>
+                <button class="btn btn-primary btn-lg" onclick="startGame();">Start Game</button>
               </p>
 
                     <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
-                        <h4>Active Player: <label id=activePlayerLabel  style="color: green;"> Player ..... </label></h4>
-                        <h4>Round Number: <label  style="color: green;"> Round Number .... </label></h4>
-                        <h4>Cards in Pile: <label  style="color: green;"> Cards in Pile .... </label></h4>
+                        <h4>Active Player: <b><label id='activePlayer' style="color: green;"></label></b></h4>
+                        <h4>Round Number: <label  id='roundCount' style="color: green;"></label></h4>
+                        <h4>Cards in Pile: <label  id='commonPile' style="color: green;"></label></h4>
                         
                         <script type="text/javascript">
                           //window.location='http://localhost:7777/toptrumps/activePlayer'; //need to confirm path
@@ -319,7 +319,122 @@
 
                 <h3><div class="card-footer text-muted" style="text-align: center;">Error 404 Team Name Not Found</div></h3>
             </body>
-
+            
+<script type="text/javascript">
+    
+    function createCORSRequest(method, url) {
+      var xhr = new XMLHttpRequest();
+      if ("withCredentials" in xhr) {
+        
+        xhr.open(method, url, true);
+      } else if (typeof XDomainRequest != "undefined") {
+        
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+      } else {
+       
+        xhr = null;
+      }
+      return xhr;
+    }
+    
+  </script>
+                
+            
+    <script>
+  
+            function startGame() {
+            activePlayer();
+            roundCount();
+            commonPile();
+      var xhr = createCORSRequest('GET',
+        "http://localhost:7777/toptrumps/startGamee"); // Request type and URL+parameters
+      if (!xhr) {
+        alert("CORS not supported");
+      }
+    xhr.onload = function(e){
+        
+        
+        
+    }
+    xhr.send();
+     
+    	  
+    	 
+    	  
+      }
+      
+      function activePlayer() {
+	
+		var xhr = createCORSRequest('GET',
+				"http://localhost:7777/toptrumps/activePlayer");
+		if (!xhr) {
+			alert("No active Player error");
+		}
+		xhr.onload = function(e) {
+			
+		var responseText = xhr.response; // the text of the response
+		responseText = responseText.replace(/^"(.*)"$/, '$1');
+		document.getElementById('activePlayer').innerHTML = responseText;
+	
+			
+		}
+		xhr.send();
+	}
+	
+	function roundCount() {
+	
+		var xhr = createCORSRequest('GET',
+				"http://localhost:7777/toptrumps/roundCount");
+		if (!xhr) {
+			alert("No round error");
+		}
+		xhr.onload = function(e) {
+			
+		var responseText = xhr.response; // the text of the response
+		responseText = responseText.replace(/^"(.*)"$/, '$1');
+		document.getElementById('roundCount').innerHTML = responseText;
+	
+			
+		}
+		xhr.send();
+	}
+        function commonPile() {
+	
+		var xhr = createCORSRequest('GET',
+				"http://localhost:7777/toptrumps/commonPile");
+		if (!xhr) {
+			alert("No Pile error");
+		}
+		xhr.onload = function(e) {
+			
+		var responseText = xhr.response; // the text of the response
+		responseText = responseText.replace(/^"(.*)"$/, '$1');
+		document.getElementById('commonPile').innerHTML = responseText;
+	
+			
+		}
+		xhr.send();
+	}
+      
+     
+    	  
+    	 
+    	  
+      
+      
+</script>
+                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+		crossorigin="anonymous"></script>
 
 
 
