@@ -20,9 +20,9 @@ public class TopTrumps {
     //   Scanner scan = new Scanner(System.in);
       // boolean exit = false; 
    //    
-      // System.out.println("--------------------");
-      // System.out.println("--- Top Trumps   ---");
-      // System.out.println("--------------------");
+      // System.out.println("╔╦╗╔═╗╔═╗  ╔╦╗╦═╗╦ ╦╔╦╗╔═╗╔═╗);
+      // System.out.println("║ ║ ║╠═╝   ║ ╠╦╝║ ║║║║╠═╝╚═╗");
+      // System.out.println(" ╩ ╚═╝╩     ╩ ╩╚═╚═╝╩ ╩╩  ╚═╝");
    // 	
       // do {
          // System.out.println("Do you want to see past results or play a game?" 
