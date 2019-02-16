@@ -16,7 +16,15 @@ public class GameResultRepository {
 	public GameResultRepository(DbDriver driver) {
 		this.driver = driver;
 	}
-  
+
+	/**
+	 * selects and
+	 * @return max number of rounds
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
 	public int getLargestNumberOfRounds() throws SQLException { 
 		Connection con = driver.getConnection();
 		try {
@@ -33,7 +41,16 @@ public class GameResultRepository {
 			con.close();
 		}
 	}
-	
+
+	/**
+	 * selects and
+	 * @return number of rounds where the winner is null
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
+
 	public int getNumberOfDraws() throws SQLException { 
 		Connection con = driver.getConnection();
 		try {
@@ -50,7 +67,15 @@ public class GameResultRepository {
 			con.close();
 		}
 	}
-	
+
+	/**
+	 * selects and
+	 * @return the number of games won based on player type
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
 	public int getWinsByPlayerType(PlayerType type) throws SQLException {
 		Connection con = driver.getConnection();
 		try {
@@ -71,7 +96,16 @@ public class GameResultRepository {
 			con.close();
 		}
 	}
-	
+
+	/**
+	 * selects and
+	 * @return number of total games
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
+
 	public int totalGames() throws SQLException {
 		Connection con = driver.getConnection();
 		try {
@@ -90,8 +124,8 @@ public class GameResultRepository {
 	}
 	
 	/**
-	 * 
-	 * @param results
+	 *
+	 * @param
 	 * @return
 	 * @throws SQLException
 	 * 

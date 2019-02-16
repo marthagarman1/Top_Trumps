@@ -1,5 +1,8 @@
 package db;
 
+/**
+ * An object representing a data model of a single row from `user` sql table
+ */
 public class PlayerDb {
 
 	public PlayerDb(String name, PlayerType type) {

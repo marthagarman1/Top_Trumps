@@ -1,5 +1,10 @@
 package db;
 
+/**
+ * An object representing a data model of a single row from `participant` sql table.
+ * Also represents many-to-one relations with `user` and `game` tables through {@link PlayerDb} and {@link GameResultDb}
+ * objects correspondingly.
+ */
 public class ParticipantDb {
 
 	public ParticipantDb() {}
