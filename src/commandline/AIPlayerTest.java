@@ -1,11 +1,12 @@
 package commandline;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class AIPlayerTest {
 
@@ -33,13 +34,8 @@ class AIPlayerTest {
     
     @Test
     void drawTopCard() {
-    	String[] aNames = new String[]{"speed"};
-        ArrayList<Integer> attribures = new ArrayList<>();
-        attribures.add(3);
-        Card e = new Card("Test", aNames, attribures);
-        deck.add(e);
-    	Card drawn = deck.get(0);
-    	assertEquals(drawn, aip.drawTopCard(), "Should draw top card from deck");
+
+    	assertEquals(deck.get(0), aip.drawTopCard(), "Should draw top card from deck");
 
     }
 
@@ -59,7 +55,6 @@ class AIPlayerTest {
 
     @Test
     void getNameTest() {
-    	assertEquals("test", aip.getName(), "Should return name defined");
     	assertEquals("test", aip.getName(), "Should return name previously defined");
     }
 
