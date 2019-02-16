@@ -1,39 +1,44 @@
 package commandline;
 import java.io.File;
 import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AIPlayerTest {
+
+    private String name;
+    private ArrayList<Card> deck = new ArrayList<Card>;
+    private AIPlayer aip;
 
 
 
     @BeforeEach
     void setUp() throws Exception {
+        aip = new AIPlayer(this.deck, this.name);
 
     }
 
     @Test
-    void getDeck() {
+    void getDeckTest() {
+        assertEquals(deck, aip.getDeck(), "Should return same deck");
+    }
+
+    @Test
+    void printDeckTest() {
 
     }
 
     @Test
-    void printDeck() {
-    }
-
-    @Test
-    void setPlayerNumber() {
+    void setPlayerNumberTest() {
     }
 
 
     @Test
-    void drawTopCard() {
+    void drawTopCardTest() {
+        Card drawn = deck.get(0);
+        assertEquals(drawn, aip.drawTopCard());
 
     }
 
