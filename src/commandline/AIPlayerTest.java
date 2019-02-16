@@ -13,10 +13,21 @@ class AIPlayerTest {
 
 	private String name = "test";
 	private ArrayList<Card> deck = new ArrayList<>();
+<<<<<<< HEAD
+=======
+	private ArrayList<Card> common = new ArrayList<>();
+>>>>>>> branch 'master' of https://github.com/marthagarman1/sdjflwakejrwoeiunweorn
 	private AIPlayer aip;
 
     @BeforeEach
     void setUp() throws Exception {
+<<<<<<< HEAD
+=======
+    	File file = new File("StarCitizenDeck.txt");
+    	ImportDeckInformation deckinfo = new ImportDeckInformation(file);
+    	deck = deckinfo.getDeck();
+    	common.addAll(deck.subList(0, 20));
+>>>>>>> branch 'master' of https://github.com/marthagarman1/sdjflwakejrwoeiunweorn
     	aip = new AIPlayer(this.deck, this.name);
 
     }
@@ -27,22 +38,17 @@ class AIPlayerTest {
 
     }
 
-    @Test
-    void printDeck() {
-    }
-
-    @Test
-    void setPlayerNumber() {
-    }
-
-
+    
     @Test
     void drawTopCard() {
+<<<<<<< HEAD
     	String[] aNames = new String[]{"speed"};
         ArrayList<Integer> attribures = new ArrayList<>();
         attribures.add(3);
         Card e = new Card("Test", aNames, attribures);
         deck.add(e);
+=======
+>>>>>>> branch 'master' of https://github.com/marthagarman1/sdjflwakejrwoeiunweorn
     	Card drawn = deck.get(0);
     	assertEquals(drawn, aip.drawTopCard(), "Should draw top card from deck");
 
@@ -59,44 +65,51 @@ class AIPlayerTest {
 
     @Test
     void numOfCards() {
-        ArrayList<Card> botDeck = new ArrayList<>();
-        String[] aNames = new String[]{"speed"};
-        ArrayList<Integer> attribures = new ArrayList<>();
-        attribures.add(3);
-        Card e = new Card("Test", aNames, attribures);
-        botDeck.add(e);
-        AIPlayer bot_player = new AIPlayer(botDeck, "Bot Player");
-        assertEquals(bot_player.numOfCards(), 1);
+        assertEquals(40, aip.numOfCards(), "Should return the num of cards in deck which is 40");
     }
 
     @Test
     void getNameTest() {
+<<<<<<< HEAD
     	assertEquals("test", aip.getName(), "Should return name defined");
+=======
+    	assertEquals("test", aip.getName(), "Should return name previously defined");
+>>>>>>> branch 'master' of https://github.com/marthagarman1/sdjflwakejrwoeiunweorn
     }
 
     @Test
+<<<<<<< HEAD
     void removeCard() {
     	String[] aNames = new String[]{"speed"};
         ArrayList<Integer> attribures = new ArrayList<>();
         attribures.add(3);
         Card e = new Card("Test", aNames, attribures);
         deck.add(e);
+=======
+    void removeCardTest() {
+        aip.removeCard(0); 
+        assertEquals(39, aip.numOfCards(), "Should return one less card (40-1=39)");
+>>>>>>> branch 'master' of https://github.com/marthagarman1/sdjflwakejrwoeiunweorn
         
     }
 
     @Test
-    void addCards() {
+    void addCardsTest() {
+        aip.addCards(common);
+        assertEquals(60, aip.numOfCards(), "Should add decks from common pile to player's deck (40+20=60)");
     }
 
     @Test
-    void getId() {
+    void getSetIdTest() {
+    	aip.setId(5);
+    	assertEquals(5, aip.getId(), "Should set player ID to 5 and return it as such");
     }
 
-    @Test
-    void setId() {
-    }
 
     @Test
-    void selectCard() {
+    void selectCardTest() {
+        assertTrue(aip.selectCard().contains("Firepower"), "If card is correctly selected and returning toString should contain attribute Firepower");
+        
     }
+    
 }
