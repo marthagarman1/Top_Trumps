@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
+/*
+Class responsible for saving and retrieving objects from the database
+ */
 public class PlayerRepository {
 
 	private final DbDriver driver;
@@ -16,11 +18,12 @@ public class PlayerRepository {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param entry player to save
 	 * @return saved player entry from the database
 	 * @throws SQLException
 	 */
+
 	public PlayerDb save(PlayerDb entry) throws SQLException {
 		validate(entry);
 
@@ -41,7 +44,7 @@ public class PlayerRepository {
 		    	throw new IllegalStateException("Sql returned no rows");
 		    }
 
-			int id = result.getInt(1);
+			int id = result.getInt(1); //returning the ID for the saved player if needed.
 
 			return get(id);
 
@@ -50,9 +53,16 @@ public class PlayerRepository {
 		}
 	}
 
+	/**
+	 *
+	 * @param id to used to return the player from the database
+	 * @return player (name, type)
+	 * @throws SQLException
+	 */
+
 	public PlayerDb get(int id) throws SQLException {
 		if (id < 0) {
-			throw new IllegalArgumentException("Id must be positive");
+			throw new IllegalArgumentException("It must be positive");
 		}
 
 		Connection con = driver.getConnection();
@@ -81,6 +91,11 @@ public class PlayerRepository {
 			con.close();
 		}
 	}
+
+	/*
+	Method validates entry values so player's name or type is not null
+	 */
+
 
 	private void validate(PlayerDb player) {
 		if (player.name == null) {

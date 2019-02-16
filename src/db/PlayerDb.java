@@ -1,5 +1,7 @@
 package db;
 
+
+
 public class PlayerDb {
 
 	public PlayerDb(String name, PlayerType type) {

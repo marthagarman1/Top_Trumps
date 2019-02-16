@@ -16,7 +16,15 @@ public class GameResultRepository {
 	public GameResultRepository(DbDriver driver) {
 		this.driver = driver;
 	}
-  
+
+	/**
+	 * selects and
+	 * @return max number of rounds
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
 	public int getLargestNumberOfRounds() throws SQLException { 
 		Connection con = driver.getConnection();
 		try {
@@ -33,7 +41,16 @@ public class GameResultRepository {
 			con.close();
 		}
 	}
-	
+
+	/**
+	 * selects and
+	 * @return number of rounds where the winner is null
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
+
 	public int getNumberOfDraws() throws SQLException { 
 		Connection con = driver.getConnection();
 		try {
@@ -50,7 +67,15 @@ public class GameResultRepository {
 			con.close();
 		}
 	}
-	
+
+	/**
+	 * selects and
+	 * @return the number of games won based on player type
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
 	public int getWinsByPlayerType(PlayerType type) throws SQLException {
 		Connection con = driver.getConnection();
 		try {
@@ -71,7 +96,16 @@ public class GameResultRepository {
 			con.close();
 		}
 	}
-	
+
+	/**
+	 * selects and
+	 * @return number of total games
+	 * @throws SQLException, IllegalStateException
+	 *
+	 */
+
+
+
 	public int totalGames() throws SQLException {
 		Connection con = driver.getConnection();
 		try {
@@ -90,13 +124,12 @@ public class GameResultRepository {
 	}
 	
 	/**
-	 * 
-	 * @param results
+	 *
+	 * @param
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      Save method allows create an object (?) and save it to
-	 *                      the data base.
+	 *
 	 */
 
 	public int save(GameResultDb game) throws SQLException {
@@ -105,11 +138,11 @@ public class GameResultRepository {
 		int id;
 		Connection con = driver.getConnection();
 		try {
-			con.setAutoCommit(false);
+			con.setAutoCommit(false); // nekuriame atskiru transakciju kiekvienam query
 
 			PreparedStatement createGameStatement = con.prepareStatement(
 					"INSERT INTO  game_result (winner,numberOfRounds) VALUES (?, ?)",
-					Statement.RETURN_GENERATED_KEYS);
+					Statement.RETURN_GENERATED_KEYS); //cia pasizymime, kad grazintu ID is viso
 
 			// Null means a draw
 			if (game.winner != null) {
@@ -119,14 +152,14 @@ public class GameResultRepository {
 			}
 			createGameStatement.setInt(2, game.numberOfRounds); 
 
-			createGameStatement.executeUpdate();
+			createGameStatement.executeUpdate(); //insertinam nauja zaidima
 
-			ResultSet result = createGameStatement.getGeneratedKeys();
+			ResultSet result = createGameStatement.getGeneratedKeys();//grazina tik ka sukurta ID naujai insertinto object
 
-		    if (!result.next()) {
+		    if (!result.next()) {//tikriname, ar grazino ID, nes jei ne, tai npavyko suinsertinti objekto.
 		    	throw new IllegalStateException("Sql returned no rows");
 		    } 
-			id = result.getInt(1);
+			id = result.getInt(1); //is grazinto table pasiimame ID reiksme
 			
 			for (ParticipantDb participant : game.participants) {
 
@@ -149,7 +182,16 @@ public class GameResultRepository {
 			con.close();
 		} 
  
-	} 
+	}
+
+
+
+	/*
+	Method validates entry values so number of rounds is not less than one, there are at least 2 participants
+	in the game and
+	 */
+
+
 
 	private void validate(GameResultDb results) {
 		if (results.numberOfRounds < 1) {

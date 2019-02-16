@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
+
+
 public class DbDriver {
 
     private final String uri;
@@ -20,7 +22,7 @@ public class DbDriver {
         try {
             Class.forName("org.postgresql.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Could not fine JDBC Driver");
+            System.out.println("Could not find JDBC Driver");
             e.printStackTrace();
             throw e;
         }
@@ -29,7 +31,7 @@ public class DbDriver {
         	// Try connecting
             DriverManager.getConnection(uri, username,password).close();
         } catch (SQLException e) {
-            System.out.println("Could not fine JDBC Driver");
+            System.out.println("Could not find JDBC Driver");
             e.printStackTrace();
             throw e;
         }
@@ -38,5 +40,6 @@ public class DbDriver {
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(uri, username,password);
-    }
+    } 
+
 } 
