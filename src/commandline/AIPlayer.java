@@ -23,6 +23,7 @@ public class AIPlayer extends Player {
 	   Random math = new Random();
        int choice = math.nextInt((5 - 1) + 1) + 1;
 	   return choice; 
+	   
    }
    
 
