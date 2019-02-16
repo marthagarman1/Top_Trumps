@@ -55,6 +55,13 @@ public abstract class Player {
    public int getRoundsWon() {
       return roundsWon;
    }
+   
+   
+   public String toString() {
+	   String output = "   " + this.getName() + ": " + getRoundsWon() + "\n";
+	   return output; 
+   }
+   
 
 }
 
