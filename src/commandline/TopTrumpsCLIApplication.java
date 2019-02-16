@@ -154,7 +154,7 @@ public class TopTrumpsCLIApplication {
                     System.out.println("There are '" + user.numOfCards()
                             + " cards in your deck");
                 }
-                /**User's selected category represeneted by int. */
+                /**User's selected category represented by int. */
                 int userCatChoice = 0;
                 //If the active player is Human, they can select a category.
                 if (activePlayer.equalsIgnoreCase("Player You")) {

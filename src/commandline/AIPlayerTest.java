@@ -1,90 +1,96 @@
 package commandline;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.io.File;
 import java.util.ArrayList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AIPlayerTest {
 
-    private String name;
-    private ArrayList<Card> deck = new ArrayList<Card>;
-    private AIPlayer aip;
-
-
+	private String name = "test";
+	private ArrayList<Card> deck = new ArrayList<>();
+	private ArrayList<Card> common = new ArrayList<>();
+	private AIPlayer aip;
 
     @BeforeEach
     void setUp() throws Exception {
-        aip = new AIPlayer(this.deck, this.name);
+    	File file = new File("StarCitizenDeck.txt");
+    	ImportDeckInformation deckinfo = new ImportDeckInformation(file);
+    	deck = deckinfo.getDeck();
+    	common.addAll(deck.subList(0, 20));
+    	aip = new AIPlayer(this.deck, this.name);
 
     }
 
     @Test
     void getDeckTest() {
-        assertEquals(deck, aip.getDeck(), "Should return same deck");
-    }
-
-    @Test
-    void printDeckTest() {
+    	assertEquals(deck, aip.getDeck(),"Should return same deck");
 
     }
 
+    
     @Test
-    void setPlayerNumberTest() {
-    }
-
-
-    @Test
-    void drawTopCardTest() {
-        Card drawn = deck.get(0);
-        assertEquals(drawn, aip.drawTopCard());
-
-    }
-
-    @Test
-    void hasWon() {
-    }
-
-    @Test
-    void getRoundsWon() {
-
-    }
-
-    @Test
-    void numOfCards() {
-        ArrayList<Card> botDeck = new ArrayList<>();
-        String[] aNames = new String[]{"speed"};
+    void drawTopCard() {
+    	String[] aNames = new String[]{"speed"};
         ArrayList<Integer> attribures = new ArrayList<>();
         attribures.add(3);
         Card e = new Card("Test", aNames, attribures);
-        botDeck.add(e);
-        AIPlayer bot_player = new AIPlayer(botDeck, "Bot Player");
-        assertEquals(bot_player.numOfCards(), 1);
-    }
-
-    @Test
-    void getName() {
+        deck.add(e);
+    	Card drawn = deck.get(0);
+    	assertEquals(drawn, aip.drawTopCard(), "Should draw top card from deck");
 
     }
 
     @Test
-    void removeCard() {
+    void roundsWonTest() {
+    	aip.hasWon();
+    	aip.hasWon();
+    	assertEquals(2, aip.getRoundsWon(), "Should have added 2 rounds won to roundsWon counter");
+    }
+
+
+
+    @Test
+    void numOfCards() {
+        assertEquals(40, aip.numOfCards(), "Should return the num of cards in deck which is 40");
     }
 
     @Test
-    void addCards() {
+    void getNameTest() {
+    	assertEquals("test", aip.getName(), "Should return name defined");
+    	assertEquals("test", aip.getName(), "Should return name previously defined");
     }
 
     @Test
-    void getId() {
+    void removeCardTest() {
+        aip.removeCard(0); 
+        assertEquals(39, aip.numOfCards(), "Should return one less card (40-1=39)");
     }
 
     @Test
-    void setId() {
+    void addCardsTest() {
+        aip.addCards(common);
+        assertEquals(60, aip.numOfCards(), "Should add decks from common pile to player's deck (40+20=60)");
     }
 
     @Test
-    void selectCard() {
+    void getSetIdTest() {
+    	aip.setId(5);
+    	assertEquals(5, aip.getId(), "Should set player ID to 5 and return it as such");
     }
+
+
+    @Test
+    void selectCardTest() {
+        assertTrue(aip.selectCard().contains("Firepower"), "If card is correctly selected and returning toString should contain attribute Firepower");
+        
+    }
+    
+    @Test
+    void pickCategoryTest() {
+    	assertTrue(aip.pickCategory()<=5 && aip.pickCategory()>=0, "Should return int between 0 and 5");
+    }
+    
 }
