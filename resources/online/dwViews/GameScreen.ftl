@@ -92,7 +92,7 @@
                     </p>
 
                     <script type="text/javascript">
-                     // window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
+                      window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
                       oneButton.setPlayers(1);
                       twoButton.setPlayers(2);
                       threeButton.setPlayers(3);
