@@ -18,10 +18,20 @@ public class AIPlayer extends Player {
       String drawn = deck.get(index).toString(); 
       return drawn; 
    }
-   
+
+   //
    public int pickCategory() {
-	   Random math = new Random();
-       int choice = math.nextInt((5 - 1) + 1) + 1;
+	   //Random math = new Random();
+       //int choice = math.nextInt((5 - 1) + 1) + 1;
+      int choice = 0;
+
+      for(int i = 1; i < 5; i++) {
+         if(choice < this.drawTopCard().getStats(i))
+         {
+            choice = i;
+
+         }
+      }
 	   return choice; 
 	   
    }

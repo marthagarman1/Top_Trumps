@@ -193,7 +193,7 @@ public class TopTrumpsCLIApplication {
 
 
 
-                System.out.println(activePlayer + " " +  "selected category " + userCatChoice);
+                System.out.println("\t" + activePlayer + " " +  "selected category " + userCatChoice);
                 fileOutput.add("\nCatergory selected: "
                         + (drawPile.get(0)).getAName(userCatChoice)
                         + "\nCorresponding Values: ");
@@ -230,15 +230,17 @@ public class TopTrumpsCLIApplication {
                             + "\n--------------------");
                     drawPile.clear();
                 } else {
-                    System.out.println("Round " + roundCount + ": "
-                            + "Player " + playerList.get(currentWinner).getName()
-                            + " won this round.");
-                    (playerList.get(currentWinner)).hasWon();
+                    System.out.println("~~~~ Round " + roundCount + ": "
+                            + " Player " + playerList.get(currentWinner).getName()
+                            + " won this round. ~~~~");
+
+
                     activePlayer = playerList.get(currentWinner).getName();
 
                     //winner gets all of common pile cards and then remove all from drawPile
                     (playerList.get(currentWinner)).addCards(drawPile);
-
+                    (playerList.get(currentWinner)).addCards(commonPile);
+                    (playerList.get(currentWinner)).hasWon();
 
                     if (commonPile != null) {
                         fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()
@@ -247,7 +249,7 @@ public class TopTrumpsCLIApplication {
                     commonPile.clear();
 
                     //print winning card with selected category with an arrow
-                    System.out.print("The winning card was ");
+                    System.out.print("\tThe winning card was ");
                     drawPile.clear();
                     //arrow
                     System.out.println(playerList.get(currentWinner)
@@ -284,7 +286,8 @@ public class TopTrumpsCLIApplication {
                     }
                 }
 
-                System.out.println("There are " + playerList.size() + " players left.");
+                System.out.println("There are " + playerList.size() + " players left and "
+                        + user.numOfCards() + " cards in your hand.\n");
 
 //                //Testing!!!!!REMOVE SIMULATE WINNER
 //                playerList.get(4).hasWon();
