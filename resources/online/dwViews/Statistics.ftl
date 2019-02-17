@@ -81,7 +81,6 @@ h1 {
     <ul>
         <li><a href = "/toptrumps">Home</a></li>
         <li><a href = "/toptrumps/game">Play Game</a></li>
-        <li><a href = "howtoplay.html">How to Play</a></li>
         <li class = "active">View Statistics</li>
     </ul>
             </nav>          
