@@ -1,4 +1,4 @@
-<html>
+	<html>
 	<head>
 		<!-- Web page title -->
     	<title>Top Trumps- Statistics</title>
@@ -37,7 +37,7 @@
 	height: 100%
 }
 body {
-	background-image:		url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);
+	background-image: url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);
     background-size: cover;
 	font-family:sans-serif;
 	font-size: 25px;    
@@ -180,13 +180,21 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
 		
 		// Method that is called on page load
         			function initalize() {
-        				statsTable();
+        				getStats();
         			}
         			// -----------------------------------------
         			// Add your other Javascript methods Here
         			// -----------------------------------------
         			function playGame() {
         				window.location='http://localhost:7777/toptrumps/game';
+        			}
+        			function printStats(){
+        		
+        			document.getElementById("num1").innerHTML = "Number of games played: " + db.totalGames();
+        			document.getElementById("num2").innerHTML = "PlayerWins" + db.getNumberofDraws(PlayerType.human);
+        			document.getElementById("num3").innerHTML = "ComputerWins" + db.getWinsByPlaterType(PlayerType.ai);
+        			document.getElementById("num4").innerHTML = "LargestNumberOfRounds"+ db.getLargestNumberOfRounds();
+        			document.getElementById("num5").innerHTML = "AverageDrawsPerGame" + db.getNumberOfDraws();
         			}
         			function createCORSRequest(method, url) {
         				var xhr = new XMLHttpRequest();
@@ -205,27 +213,23 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
         				}
         				return xhr;
         			}
-        		</script>
+        		    
+          		    </script>
 					<script type="text/javascript">
-					function statsTable() {
-				
-				// First create a CORS request, this is the message we are going to send (a get request in this case)
-	            var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/statsTable");
+					function getStats() {
+	                var xhr = createCORSRequest('GET', "http://localhost:7777/toptrumps/getStatistics");
 				
 				// Message is not sent yet, but we can check that the browser supports CORS
 				if (!xhr) {
   					alert("CORS not supported");
 				}
-				var responseText = xhr.response; // the text of the response
-			    var list = JSON.parse(responseText);
-			    for (i = 0; i < 5; i++) {
-				var tuple = "#num" + (i + 1);
-				$(tuple).text(list[i]);
-			}
-		}
+				xhr.onload = function(e){
+				console.log(xhr.response);
+				printStats();
+			};
 		xhr.send();
-
 		}
 		</script>
 		
 		</body>
+		</html>
