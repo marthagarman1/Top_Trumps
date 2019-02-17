@@ -9,9 +9,11 @@ public class TopTrumps {
 	/** This is the main class for the TopTrumps Application */
    public static void main(String[] args) throws Exception {
    	
-      System.out.println("╔╦╗╔═╗╔═╗  ╔╦╗╦═╗╦ ╦╔╦╗╔═╗╔═╗");
-      System.out.println(" ║ ║ ║╠═╝   ║ ╠╦╝║ ║║║║╠═╝╚═╗");
-      System.out.println(" ╩ ╚═╝╩     ╩ ╩╚═╚═╝╩ ╩╩  ╚═╝");
+      	System.out.println(" _____            _____ ");
+	System.out.println("|_   _|__ _ __  |_   _|_ _  _ _ __  _ __ ___ ");
+	System.out.println("  | |/ _ \\ '_ \\   | || '_| || | '  \\| '_ (_- ");
+	System.out.println("  |_|\\___/ .__/   |_||_|  \\_,_|_|_|_| .__/__/");
+	System.out.println("          |_|                         |_| ");
    	
    	// command line switches
       boolean onlineMode = false;
