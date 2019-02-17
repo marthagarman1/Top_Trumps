@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+/**
+ * Class responsible for saving and retrieving objects from the database
+ */
 
 public class PlayerRepository {
 
@@ -16,11 +19,12 @@ public class PlayerRepository {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param entry player to save
 	 * @return saved player entry from the database
 	 * @throws SQLException
 	 */
+
 	public PlayerDb save(PlayerDb entry) throws SQLException {
 		validate(entry);
 
@@ -49,6 +53,13 @@ public class PlayerRepository {
 			con.close();
 		}
 	}
+
+	/**
+	 *
+	 * @param id to used to return the player from the database
+	 * @return player (name, type)
+	 * @throws SQLException
+	 */
 
 	public PlayerDb get(int id) throws SQLException {
 		if (id < 0) {
@@ -81,6 +92,11 @@ public class PlayerRepository {
 			con.close();
 		}
 	}
+
+	/**
+	 * Method validates entry values so player's name or type is not null
+	 */
+
 
 	private void validate(PlayerDb player) {
 		if (player.name == null) {

@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 
+/**
+ * Class responsible for saving and retrieving objects from the database
+ */
 
 
 public class GameResultRepository {
@@ -68,9 +71,11 @@ public class GameResultRepository {
 	}
 
 	/**
+	 *
 	 * selects and
 	 * @return the number of games won based on player type
 	 * @throws SQLException, IllegalStateException
+	 * @param type
 	 *
 	 */
 
@@ -124,10 +129,10 @@ public class GameResultRepository {
 	
 	/**
 	 *
-	 * @param
-	 * @return
+	 * @param game to save
+	 * @return saved game entry from the database
 	 * @throws SQLException
-	 * 
+	 * method also saves data in the participants table since the two tables connected via one-to-many relationship
 	 *
 	 */
 
@@ -182,6 +187,14 @@ public class GameResultRepository {
 		} 
  
 	} 
+
+
+	/*
+	Method validates entry values so number of rounds of the game is not less than one, there are at least 2 participants
+	in the game and participants are not null
+	 */
+
+
 
 	private void validate(GameResultDb results) {
 		if (results.numberOfRounds < 1) {
