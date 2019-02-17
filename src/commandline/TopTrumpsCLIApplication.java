@@ -2,8 +2,9 @@ package commandline;
 
 import db.*;
 
-import java.io.*;
-import java.sql.SQLException;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -72,6 +73,7 @@ public class TopTrumpsCLIApplication {
             String activePlayer = "";
             /** Cards added to ArrayList after Draw. */
             ArrayList<Card> commonPile = new ArrayList<>();
+            String playerName = "You";
 
 
             /** Start the Game */
@@ -96,7 +98,7 @@ public class TopTrumpsCLIApplication {
             ArrayList<Card> playerDeck = new ArrayList<>(deck.subList(0, 8));
             // TODO ask for name via input
 
-            HumanPlayer user = new HumanPlayer(playerDeck, "Player You");
+            HumanPlayer user = new HumanPlayer(playerDeck, playerName); // PLAYER YOU
             fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString()
                     + "\n--------------------\n");
 
@@ -139,7 +141,7 @@ public class TopTrumpsCLIApplication {
                     activePlayer = playerList.get(0).getName();
                 }
 
-                System.out.println("Round " + roundCount);
+                System.out.println("---------------- ROUND " + roundCount + " ----------------");
                 //get all drawn cards from players and make an arraylist of cards
                 ArrayList<Card> drawPile = new ArrayList<>();
                 for (int i = 0; i < playerList.size(); i++) {
@@ -155,32 +157,43 @@ public class TopTrumpsCLIApplication {
                     System.out.println("There are '" + user.numOfCards()
                             + " cards in your deck");
                 }
-                /**User's selected category represeneted by int. */
+                /**User's selected category represented by int. */
                 int userCatChoice = 0;
-                //If the active player is Human, they can select a category.
-                if (activePlayer.equalsIgnoreCase("Player You")) {
-                    System.out.print("It is your turn to select a category, "
-                            + "the categories are: "
-                            + "\n\t1: " + (deck.get(0).getANames())[1]
-                            + "\n\t2: " + (deck.get(0).getANames())[2]
-                            + "\n\t3: " + (deck.get(0).getANames())[3]
-                            + "\n\t4: " + (deck.get(0).getANames())[4]
-                            + "\n\t5: " + (deck.get(0).getANames())[5]
-                            + "\nEnter the number for your attribute: ");
-                    try {
-                        userCatChoice = scan.nextInt();
-                    } catch (InputMismatchException e) {
-                        System.out.print("\nPlease enter number 1 - 5");
+                boolean repeat = false;
+                do {
+                    //If the active player is Human, they can select a category.
+                    if (activePlayer.equalsIgnoreCase(playerName)) {
+                        System.out.print("It is your turn to select a category, "
+                                + "the categories are: "
+                                + "\n\t1: " + (deck.get(0).getANames())[1]
+                                + "\n\t2: " + (deck.get(0).getANames())[2]
+                                + "\n\t3: " + (deck.get(0).getANames())[3]
+                                + "\n\t4: " + (deck.get(0).getANames())[4]
+                                + "\n\t5: " + (deck.get(0).getANames())[5]
+                                + "\nEnter the number for your attribute: ");
+                        try {
+                            userCatChoice = scan.nextInt();
+                            repeat = false;
+                            if(userCatChoice < 1 || userCatChoice > 5) {
+                                System.out.print("\nPlease enter a valid number between 1 - 5\n");
+                                repeat = true;}
+                        } catch (InputMismatchException e) {
+                            System.out.print("\nInvalid Input, please enter a valid number.\n");
+                            repeat = true;
+                        }
+                        //If the active player is a bot, they will randomly select a category.
+                    } else {
+                        //Method for bots to choose category
+                        AIPlayer temp = bot1;
+                        userCatChoice = temp.pickCategory();
+
                     }
-                //If the active player is a bot, they will randomly select a category.
-                } else {
-                    //Method for bots to choose category
-             
-                    Random math = new Random();
-                    userCatChoice = math.nextInt((5 - 1) + 1) + 1;
-                }
+                } while(repeat);
 
 
+
+
+                System.out.println("\t" + activePlayer + " " +  "selected category " + userCatChoice);
                 fileOutput.add("\nCatergory selected: "
                         + (drawPile.get(0)).getAName(userCatChoice)
                         + "\nCorresponding Values: ");
@@ -217,13 +230,18 @@ public class TopTrumpsCLIApplication {
                             + "\n--------------------");
                     drawPile.clear();
                 } else {
-                    System.out.println("Round " + roundCount + ": "
-                            + "Player " + playerList.get(currentWinner).getName()
-                            + " won this round.");
+                    System.out.println("~~~~ Round " + roundCount + ": "
+                            + " Player " + playerList.get(currentWinner).getName()
+                            + " won this round. ~~~~");
+
+
                     activePlayer = playerList.get(currentWinner).getName();
 
                     //winner gets all of common pile cards and then remove all from drawPile
                     (playerList.get(currentWinner)).addCards(drawPile);
+                    (playerList.get(currentWinner)).addCards(commonPile);
+                    (playerList.get(currentWinner)).hasWon();
+
                     if (commonPile != null) {
                         fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()
                                 + "\n--------------------");
@@ -231,7 +249,7 @@ public class TopTrumpsCLIApplication {
                     commonPile.clear();
 
                     //print winning card with selected category with an arrow
-                    System.out.print("The winning card was ");
+                    System.out.print("\tThe winning card was ");
                     drawPile.clear();
                     //arrow
                     System.out.println(playerList.get(currentWinner)
@@ -268,10 +286,11 @@ public class TopTrumpsCLIApplication {
                     }
                 }
 
-                System.out.println("There are " + playerList.size() + " players left.");
+                System.out.println("There are " + playerList.size() + " players left and "
+                        + user.numOfCards() + " cards in your hand.\n");
 
 //                //Testing!!!!!REMOVE SIMULATE WINNER
-//                playerList.get(4).hasWon(); 
+//                playerList.get(4).hasWon();
 //                losers.add(playerList.get(4));
 //                losers.add(playerList.get(3));
 //                losers.add(playerList.get(2));
@@ -302,8 +321,8 @@ public class TopTrumpsCLIApplication {
                     		+ losers.get(3).toString());
                     boolean endLoop = false; 
                     while(!endLoop) {
-                    System.out.println("Do you want to seet past results or play a game?" 
-                    		+ "\n\t1: Print Game Statisitcs"
+                    System.out.println("Do you want to see past results or play a game?"
+                    		+ "\n\t1: Print Game Statistics"
                     		+ "\n\t2: Play New Game "
                     		+ "\n\t3: Quit Game "
                     		+ "\nEnter the number for your selection: ");  
@@ -325,6 +344,7 @@ public class TopTrumpsCLIApplication {
                     		} 
                     		else if (choice == 3) 
                     		{
+                    		    System.out.println("Thanks for Playing!");
                     			endLoop = true;
                     			newGame = true;
                     			userWantsToQuit = true; 
