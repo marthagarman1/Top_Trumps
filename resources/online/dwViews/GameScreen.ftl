@@ -116,7 +116,7 @@
               <h3 id="title12"><p class="badge badge-secondary" id="title12">Click Start Game After Your Choice</p></h3>
               <p class="lead" id="title12" style="margin: auto;">
                 <button class="btn btn-primary btn-lg" onclick="startGame();">Start Game</button>
-                <button class="btn btn-primary btn-lg" onclick="openStatPage();" style=" padding-left: 5px;">View Statisitics</button>
+                <button class="btn btn-primary btn-lg" onclick="openStatPage();" style=" padding-left: 5px;">View Statistics</button>
               </p></div>
 
                     <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg); margin-top: -15%;" id="gameStatus">
