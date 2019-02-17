@@ -41,6 +41,7 @@ h1{
     font-family: sans-serif;
     
 }
+
 #p{    
     align-items: baseline;
     }
@@ -70,12 +71,15 @@ body {
 }
 height: 10.3;
 }
+
 h2 {
     margin-top: 1.3em;
 }
+
 a {
     color: black;
 }
+
 footer{
     font-family:sans-serif;
     font-size: 800px;
