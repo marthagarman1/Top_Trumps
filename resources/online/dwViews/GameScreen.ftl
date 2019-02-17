@@ -86,16 +86,14 @@
     <ul>
         <li><a href = "/toptrumps">Home</a></li>
         <li><a href = "/toptrumps/game">Play Game</a></li>
-        <li><a href = "">How to Play</a></li>
         <li><a href="/toptrumps/stats">View Statistics</a></li>
     </ul>
             </nav> 
-
-
-
+   
+             
                 <div class="jumbotron" style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg); margin-top: 0%;" >
                 <div id="startButton">
-                    <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; color: black; background: none; margin: 0px;" >Top Trumps Card Game</p></h1>
+                <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; color: black; background: none; margin: 0px;" >Top Trumps Card Game</p></h1>
               <p class="lead" id="title12" style="font-size: 20px; margin: 0px;">Choose How Many Players To Play Against</p>
               
 				
@@ -178,14 +176,10 @@
                 a5.selectCategory(5);
               </script>
                   <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
-            </ul>
-               
-                  
+            </ul>               
               </div>
-                        
-            </div>
-
-                        </div>
+              </div>
+              </div>
 
                         <div class="col-md-2.5">
                     <div class="cardsection" style="background: none;">
@@ -217,11 +211,10 @@
                     <div class="card-footer text-muted" style="border: 1px solid gray;">Cards Left</div> 
             </ul>
                 
-
               </div>
                    
             </div>
-                        </div>
+             </div>
 
                         <div class="col-md-2.5">
                         <div class="cardsection" style="background: none;">
@@ -422,11 +415,7 @@
         
         
     }
-    xhr.send();
-     
-    	  
-    	 
-    	  
+    xhr.send(); 	  
       }
       
       function activePlayer() {
@@ -496,21 +485,11 @@
       xhr.send();
       
     } 
-    
-    
-      
-     
+ 
     function openStatPage() {
     window.location='http://localhost:7777/toptrumps/stats';
     	  }	  
-    	 
-    	  
-      
-      
+    	       
 </script>
-         
-
-
-
-                </body>
-                </html>
+</body>
+   </html>
