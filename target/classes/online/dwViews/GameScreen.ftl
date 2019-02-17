@@ -63,6 +63,19 @@
                          max-width: 100%; 
                         max-height: 100%;
                     }
+                    #gameStatus {
+                    display: none;
+                    }
+                    #cardsWindow {
+                    display: none;
+                    }
+                    #drawCard {
+                    margin: auto;
+                    display: none;
+                    }
+                    #playAgainButton {
+                    display: none;
+                    }
             </style>
 
 
@@ -80,10 +93,12 @@
 
 
 
-                <div class="jumbotron" style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
+                <div class="jumbotron" style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg); margin-top: 0%;" >
+                <div id="startButton">
                     <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; color: black; background: none; margin: 0px;" >Top Trumps Card Game</p></h1>
               <p class="lead" id="title12" style="font-size: 20px; margin: 0px;">Choose How Many Players To Play Against</p>
-
+              
+				
                 <p id="title12" style="font-size: 30px; ">
                 <button type="button" class="btn btn-secondary" id="oneButton" style="color: Blue; font-size: 15px;">1</button>
                 <button type="button" class="btn btn-secondary" id="twoButton" style="color: Blue; font-size: 15px;">2</button>
@@ -92,7 +107,7 @@
                     </p>
 
                     <script type="text/javascript">
-                      window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
+                     // window.location='http://localhost:7777/toptrumps/setPlayers'; //need to confirm path
                       oneButton.setPlayers(1);
                       twoButton.setPlayers(2);
                       threeButton.setPlayers(3);
@@ -102,27 +117,29 @@
               
               <h3 id="title12"><p class="badge badge-secondary" id="title12">Click Start Game After Your Choice</p></h3>
               <p class="lead" id="title12" style="margin: auto;">
-                <a class="btn btn-primary btn-lg" href="/toptrumps/startGamee">Start Game</a>
-              </p>
+                <button class="btn btn-primary btn-lg" onclick="startGame();">Start Game</button>
+                <button class="btn btn-primary btn-lg" onclick="openStatPage();" style=" padding-left: 5px;">View Statisitics</button>
+              </p></div>
 
-                    <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
-                        <h4>Active Player: <label id=activePlayerLabel  style="color: green;"> Player ..... </label></h4>
-                        <h4>Round Number: <label  style="color: green;"> Round Number .... </label></h4>
-                        <h4>Cards in Pile: <label  style="color: green;"> Cards in Pile .... </label></h4>
+                    <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg); margin-top: -15%;" id="gameStatus">
+                        <h4>Active Player: <b><label id='activePlayer' style="color: green;"></label></b></h4>
+                        <h4>Round Number: <label  id='roundCount' style="color: green;"></label></h4>
+                        <h4>Cards in Pile: <label  id='commonPile' style="color: green;"></label></h4>
                         
                         <script type="text/javascript">
                           //window.location='http://localhost:7777/toptrumps/activePlayer'; //need to confirm path
                           activePlayerLabel.activePlayer();
                         </script>
 
-                        <button class="btn btn-primary btn-lg" onclick="" >Draw A Card</button>
+                        <button class="btn btn-primary btn-lg" onclick="drawCardUpdate(); selectCategory(4);" id="drawCard">Draw A Card</button>
                         </div>
-                    <div class="jumbotron" style="text-align: center; padding-left: 5%; margin: -9%; background-image:    url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
+                    <div id="playAgainButton" class="jumbotron" style="text-align: center; padding-left: 5%; margin: 0%; background-image:    url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
                         <button class="btn btn-primary btn-lg" onclick="" style="padding-left: 20px; margin: 0px;">Play Again</button>
-                        <button class="btn btn-primary btn-lg" onclick="" style=" padding-left: 5px;">View Statisitics</button>
+                        
                         </div>
+                        
                     <!--Cards Section-->
-                    <div class="jumbotron" id="backg">
+                    <div class="jumbotron" id="cardsWindow" style="margin-top: -5%; padding-left: 12%;">
                     <div class="row text-center" style="padding-left: 6.5%; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
                         <div class="col-md-2.5">
                 <div class="cardsection" style="background: none;">
@@ -319,7 +336,179 @@
 
                 <h3><div class="card-footer text-muted" style="text-align: center;">Error 404 Team Name Not Found</div></h3>
             </body>
-
+            
+<script type="text/javascript">
+    
+    function createCORSRequest(method, url) {
+      var xhr = new XMLHttpRequest();
+      if ("withCredentials" in xhr) {
+        
+        xhr.open(method, url, true);
+      } else if (typeof XDomainRequest != "undefined") {
+        
+        xhr = new XDomainRequest();
+        xhr.open(method, url);
+      } else {
+       
+        xhr = null;
+      }
+      return xhr;
+    }
+    function showGameStatus() {
+    	document.getElementById("gameStatus").style.display = "block";
+  		}
+  		
+  	function showCards() {
+    	document.getElementById("cardsWindow").style.display = "block";
+  		}
+  	function showDrawCard() {
+    	document.getElementById("drawCard").style.display = "block";
+  		}
+    
+    function hideSelection() {
+	    var x = document.getElementById("startButton");
+	    if (x.style.display === "none") {} else {
+	      x.style.display = "none";
+	    }
+	 }
+	 function drawCardUpdate() {
+	 		selectCategory1(3);
+	 		
+	 		
+	 		activePlayer();
+            roundCount();
+            commonPile();
+            
+	 }
+	 function selectCategory1(x) {
+      var number = x
+      var xhr = createCORSRequest('GET',
+        "http://localhost:7777/toptrumps/startGameee?SelectedCat="+ number); // Request type and URL+parameters
+      if (!xhr) {
+        alert("CORS not supported");
+      }
+      xhr.onload = function(e) {
+      
+    	  
+      }
+      xhr.send();
+      
+    } 
+    
+  </script>
+                
+            
+    <script>
+  
+            function startGame() {
+            
+            activePlayer();
+            roundCount();
+            commonPile();
+            showGameStatus();
+            showDrawCard();
+            showCards();
+            
+            hideSelection();
+            
+      var xhr = createCORSRequest('GET',
+        "http://localhost:7777/toptrumps/startGamee"); // Request type and URL+parameters
+      if (!xhr) {
+        alert("CORS not supported");
+      }
+    xhr.onload = function(e){
+        	
+            
+        
+        
+    }
+    xhr.send();
+     
+    	  
+    	 
+    	  
+      }
+      
+      function activePlayer() {
+	
+		var xhr = createCORSRequest('GET',
+				"http://localhost:7777/toptrumps/activePlayer");
+		if (!xhr) {
+			alert("No active Player error");
+		}
+		xhr.onload = function(e) {
+			
+		var responseText = xhr.response; // the text of the response
+		responseText = responseText.replace(/^"(.*)"$/, '$1');
+		document.getElementById('activePlayer').innerHTML = responseText;
+	
+			
+		}
+		xhr.send();
+	}
+	
+	function roundCount() {
+	
+		var xhr = createCORSRequest('GET',
+				"http://localhost:7777/toptrumps/roundCount");
+		if (!xhr) {
+			alert("No round error");
+		}
+		xhr.onload = function(e) {
+			
+		var responseText = xhr.response; // the text of the response
+		responseText = responseText.replace(/^"(.*)"$/, '$1');
+		document.getElementById('roundCount').innerHTML = responseText;
+	
+			
+		}
+		xhr.send();
+	}
+        function commonPile() {
+	
+		var xhr = createCORSRequest('GET',
+				"http://localhost:7777/toptrumps/commonPile");
+		if (!xhr) {
+			alert("No Pile error");
+		}
+		xhr.onload = function(e) {
+			
+		var responseText = xhr.response; // the text of the response
+		responseText = responseText.replace(/^"(.*)"$/, '$1');
+		document.getElementById('commonPile').innerHTML = responseText;
+	
+			
+		}
+		xhr.send();
+	}
+	
+	   function selectCategory(x) {
+      var number = x
+      var xhr = createCORSRequest('GET',
+        "http://localhost:7777/toptrumps/selectCate?SelectedCat="+ number); // Request type and URL+parameters
+      if (!xhr) {
+        alert("CORS not supported");
+      }
+      xhr.onload = function(e) {
+      
+    	  
+      }
+      xhr.send();
+      
+    } 
+    
+    
+      
+     
+    function openStatPage() {
+    window.location='http://localhost:7777/toptrumps/stats';
+    	  }	  
+    	 
+    	  
+      
+      
+</script>
+         
 
 
 
