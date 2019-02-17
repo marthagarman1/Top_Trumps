@@ -36,6 +36,7 @@ import commandline.ImportDeckInformation;
 import commandline.Player;
 import db.DbDriver;
 import db.GameResultRepository;
+import db.PlayerRepository;
 import db.PlayerType;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
@@ -52,6 +53,24 @@ import db.PlayerType;
  * methods that allow a TopTrumps game to be controled from a Web page.
  */
 public class TopTrumpsRESTAPI {
+	
+    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
+    public static String user1 = "m_18_2094641c";
+    public static String password = "2094641c";
+
+    public static PlayerRepository playerRepository;
+    public static GameResultRepository gameRepository;
+    public static DbDriver driver;
+
+    static {
+        try {
+            driver = new DbDriver(user1, password, url);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        playerRepository = new PlayerRepository(driver);
+        gameRepository = new GameResultRepository(driver);
+    }
 
 	
 	
@@ -89,20 +108,7 @@ public class TopTrumpsRESTAPI {
 		 d.browse(new URI("http://localhost:7777/toptrumps"));				
 	}
 	
-	@GET
-	@Path("/startGame")
-	public String startGame() throws IOException {
-		String message = null;
-		Scanner scan = null;
-		File file = new File("StarCitizenDeck.txt");							
-		for (int i = 0; i < txt.length();i++) {				
-		message = oWriter.writeValueAsString(txt);
-		
-		}
-		scan.close();
-		
-	return message;	
-	}
+
 	@GET
 	@Path("/activePlayer")
 	public String activePLA() throws JsonProcessingException {	
@@ -150,6 +156,7 @@ public class TopTrumpsRESTAPI {
 		game2();		
 		return a;		
 	}
+	
 	public void game2() throws IOException {
 		
 		//Test Log is launched from here :
@@ -412,10 +419,19 @@ public class TopTrumpsRESTAPI {
 		 */
 		@GET 
 		@Path("/getStatistics")
-		public String getStatistics() throws Exception {
-			getStats();
-			String dbString = oWriter.writeValueAsString(TopTrumpsRESTAPI.db);
-		    return dbString;
+		public GameResultRepository getStatistics() throws Exception {
+		
+			GameResultRepository db = new GameResultRepository(driver);
+
+			db.getLargestNumberOfRounds();
+			//db.getNumberOfDraws();
+			//db.getWinsByPlayerType(PlayerType.ai);
+			//db.getWinsByPlayerType(PlayerType.human);
+			//db.totalGames();
+			
+			String dbString = oWriter.writeValueAsString(db);
+			String s = "hhh";
+		    return db;
 		
 		}
 // removed after testing	
