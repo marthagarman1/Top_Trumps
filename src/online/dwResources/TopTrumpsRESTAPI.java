@@ -424,14 +424,14 @@ public class TopTrumpsRESTAPI {
 			GameResultRepository db = new GameResultRepository(driver);
 
 			db.getLargestNumberOfRounds();
-			//db.getNumberOfDraws();
-			//db.getWinsByPlayerType(PlayerType.ai);
-			//db.getWinsByPlayerType(PlayerType.human);
-			//db.totalGames();
+			db.getNumberOfDraws();
+			db.getWinsByPlayerType(PlayerType.ai);
+			db.getWinsByPlayerType(PlayerType.human);
+			db.totalGames();
 			
 			String dbString = oWriter.writeValueAsString(db);
 			String s = "hhh";
-		    return db;
+		        return db;
 		
 		}
 // removed after testing	
