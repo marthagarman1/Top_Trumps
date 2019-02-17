@@ -41,7 +41,8 @@ public abstract class Player {
       deck.addAll(commonPile);
    }
    public int getId() {
-      return id;
+	int idU = id + 1;   
+      return idU;
    }
 
    public void setId(int id) {
