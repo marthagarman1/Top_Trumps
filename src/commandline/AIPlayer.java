@@ -2,6 +2,7 @@ package commandline;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class AIPlayer extends Player {
     
 
@@ -18,6 +19,12 @@ public class AIPlayer extends Player {
       return drawn; 
    }
    
+   public int pickCategory() {
+	   Random math = new Random();
+       int choice = math.nextInt((5 - 1) + 1) + 1;
+	   return choice; 
+	   
+   }
    
 
 }

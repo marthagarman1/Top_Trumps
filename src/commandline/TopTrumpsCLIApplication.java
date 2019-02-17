@@ -13,13 +13,13 @@ import java.util.*;
  */
 public class TopTrumpsCLIApplication {
 
-//    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
-//    public static String user = "m_18_2094641c";
-//    public static String password = "2094641c";
+    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
+    public static String user = "m_18_2094641c";
+    public static String password = "2094641c";
 
-    public static String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/onkrajux";
-    public static String user = "onkrajux";
-    public static String password = "toc8a9gWmmZO41dnETiNFS6Ju98QGKzq";
+    //public static String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/onkrajux";
+    //public static String user = "onkrajux";
+    //public static String password = "toc8a9gWmmZO41dnETiNFS6Ju98QGKzq";
 
 
 
@@ -54,6 +54,7 @@ public class TopTrumpsCLIApplication {
         // flag to check whether the user wants to quit the application
         boolean userWantsToQuit = false;
 
+        
         /* Game Loop until the user wants to exit the game */
         while (!userWantsToQuit) {
             // Declare Variables used in Game Loop
@@ -129,8 +130,8 @@ public class TopTrumpsCLIApplication {
             playerList.add(bot4);
 
             //savePlayers(playerList);
-
-            while (!userWantsToQuit) {
+            boolean newGame = false; 
+            while (!newGame) {
                 //Start New Round
                 //Randomly selects first player during first round.
                 if (roundCount == 1) {
@@ -174,6 +175,7 @@ public class TopTrumpsCLIApplication {
                 //If the active player is a bot, they will randomly select a category.
                 } else {
                     //Method for bots to choose category
+             
                     Random math = new Random();
                     userCatChoice = math.nextInt((5 - 1) + 1) + 1;
                 }
@@ -228,12 +230,6 @@ public class TopTrumpsCLIApplication {
                     }
                     commonPile.clear();
 
-
-
-
-
-
-
                     //print winning card with selected category with an arrow
                     System.out.print("The winning card was ");
                     drawPile.clear();
@@ -274,28 +270,68 @@ public class TopTrumpsCLIApplication {
 
                 System.out.println("There are " + playerList.size() + " players left.");
 
+//                //Testing!!!!!REMOVE SIMULATE WINNER
+//                playerList.get(4).hasWon(); 
+//                losers.add(playerList.get(4));
+//                losers.add(playerList.get(3));
+//                losers.add(playerList.get(2));
+//                losers.add(playerList.get(1));
+//                playerList.remove(4);
+//                playerList.remove(3);
+//                playerList.remove(2);
+//                playerList.remove(1);
+                
+                
+                
                 //if only one player remains or there are cards in the commonPile, a winner is selected:
-                if (playerList.size() == 1 && commonPile.size() >= 1) {
-
-                    saveGameResults(roundCount, playerList.get(0), losers);
+                if (playerList.size() == 1 ) {
+                	
+                    //saveGameResults(roundCount, playerList.get(0), losers);
+                    
                     //TODO save game result and participants in the database here (Using GameResultRepository)
-
-                    System.out.println("The winner is " + playerList.get(0).getName());
-                    userWantsToQuit = true;
-                    fileOutput.add("\nThe winner is " + playerList.get(0).getName());
-                }
-
-
-                if(!playerList.contains(user)) {System.out.println("You have lost");}
-                // use this when the user wants to exit the game, only ask if losing or lost
-                if(!activePlayer.equals(user) && user.numOfCards() <= 0) {
-                    System.out.println("\nWould you like to quit? (Y/N)?");
-                    String choice = scan.next();
-                    if (choice.equalsIgnoreCase("Y")) {
-                        userWantsToQuit = true;
+                    System.out.println("\n~~~~Game End~~~~\n");
+                    System.out.println("The overall winner is " + playerList.get(0).getName());
+                    fileOutput.add("\nThe overall winner is " + playerList.get(0).getName());
+                    PlayerRoundComparator pC = new PlayerRoundComparator();
+                    Collections.sort(losers, pC);
+                    System.out.println("Scores:\n" 
+                    		+ playerList.get(0).toString() //prints winner
+                    		+ losers.get(0).toString() //prints last place...
+                    		+ losers.get(1).toString()
+                    		+ losers.get(2).toString()
+                    		+ losers.get(3).toString());
+                    boolean endLoop = false; 
+                    while(!endLoop) {
+                    System.out.println("Do you want to seet past results or play a game?" 
+                    		+ "\n\t1: Print Game Statisitcs"
+                    		+ "\n\t2: Play New Game "
+                    		+ "\n\t3: Quit Game "
+                    		+ "\nEnter the number for your selection: ");  
+                    		int choice = scan.nextInt();  
+                    		
+                    		if(choice == 2) //User wants to play new game
+                    		{
+                    			endLoop = true; 
+                    			newGame = true;
+                    		}
+                    		else if (choice == 1) //User wants to print Game Stats
+                    		{
+                    			 System.out.println("Largest number of rounds: "+gameRepository.getLargestNumberOfRounds());
+                    		     System.out.println("Number of draws: "+gameRepository.getNumberOfDraws());
+                    		     System.out.println("AI wins: "+gameRepository.getWinsByPlayerType(PlayerType.ai));
+                    		     System.out.println("Human wins: "+gameRepository.getWinsByPlayerType(PlayerType.human));
+                    		     System.out.println("Total games: "+gameRepository.totalGames());
+                    			 
+                    		} 
+                    		else if (choice == 3) 
+                    		{
+                    			endLoop = true;
+                    			newGame = true;
+                    			userWantsToQuit = true; 
+                    			} 
                     }
                 }
-
+        
             }
 
             if (writeGameLogsToFile) {
@@ -305,15 +341,6 @@ public class TopTrumpsCLIApplication {
                 writer.close();
             }
         }
-
-
-
-        System.out.println("Largest number of rounds: "+gameRepository.getLargestNumberOfRounds());
-        System.out.println("Number of draws: "+gameRepository.getNumberOfDraws());
-        System.out.println("AI wins: "+gameRepository.getWinsByPlayerType(PlayerType.ai));
-        System.out.println("Human wins: "+gameRepository.getWinsByPlayerType(PlayerType.human));
-        System.out.println("Total games: "+gameRepository.totalGames());
-
     }
 
     static void saveGameResults(int roundCount, Player winner, Collection<Player> losers ) throws Exception {
@@ -326,7 +353,6 @@ public class TopTrumpsCLIApplication {
             PlayerDb player = new PlayerDb(loser.getId(), loser.getName(), getType(loser));
             participants.add(new ParticipantDb(player, loser.getRoundsWon()));
         }
-
         GameResultDb result = new GameResultDb(winnerDb, roundCount, participants);
         gameRepository.save(result);
     }
