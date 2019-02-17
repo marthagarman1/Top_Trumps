@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 /**
- * Class responsible for saving information required to connect with datbasese and connetcing to it
+ * Class responsible for saving information required to connect with the database and connecting to it
  */
 
 public class DbDriver {
