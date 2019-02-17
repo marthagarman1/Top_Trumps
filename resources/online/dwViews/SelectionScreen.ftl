@@ -6,9 +6,9 @@
     
           <div id=container>
           <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href= "/toptrumps/game">Play game</a></button></p>
-          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href = "/toptrumps/stats">View Statistics</a> </button></p>
-          <p><button type= "button" class="btn btn-default btn-lg" style="font-size: 30px" role="button"><a href = "howtoplay.html">How to Play</a></button></p>         
-            </div>                                         
+          <p><button type= "button" class="btn btn-default btn-lg"style="font-size: 30px" role="button"><a href = "/toptrumps/stats">View Statistics</a> </button></p>      
+            </div>   
+                                          
         <footer style="font-size: 25px">
 		Team: Error 404: Team Name Not Found
 	    </footer>   
@@ -38,8 +38,7 @@ html, body{
 h1{
     text-align: center;
     font-size: 100px;
-    font-family: sans-serif;
-    
+    font-family: sans-serif;   
 }
 
 #p{    
