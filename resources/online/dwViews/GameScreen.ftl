@@ -63,6 +63,19 @@
                          max-width: 100%; 
                         max-height: 100%;
                     }
+                    #gameStatus {
+                    display: none;
+                    }
+                    #cardsWindow {
+                    display: none;
+                    }
+                    #drawCard {
+                    margin: auto;
+                    display: none;
+                    }
+                    #playAgainButton {
+                    display: none;
+                    }
             </style>
 
 
@@ -80,10 +93,12 @@
 
 
 
-                <div class="jumbotron" style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
+                <div class="jumbotron" style="background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg); margin-top: 0%;" >
+                <div id="startButton">
                     <h1 id="title12"><p class="badge badge-info" style="font-size: 29px; color: black; background: none; margin: 0px;" >Top Trumps Card Game</p></h1>
               <p class="lead" id="title12" style="font-size: 20px; margin: 0px;">Choose How Many Players To Play Against</p>
-
+              
+				
                 <p id="title12" style="font-size: 30px; ">
                 <button type="button" class="btn btn-secondary" id="oneButton" style="color: Blue; font-size: 15px;">1</button>
                 <button type="button" class="btn btn-secondary" id="twoButton" style="color: Blue; font-size: 15px;">2</button>
@@ -103,9 +118,10 @@
               <h3 id="title12"><p class="badge badge-secondary" id="title12">Click Start Game After Your Choice</p></h3>
               <p class="lead" id="title12" style="margin: auto;">
                 <button class="btn btn-primary btn-lg" onclick="startGame();">Start Game</button>
-              </p>
+                <button class="btn btn-primary btn-lg" onclick="openStatPage();" style=" padding-left: 5px;">View Statisitics</button>
+              </p></div>
 
-                    <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);">
+                    <div class="jumbotron" style="text-align: center; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg); margin-top: -15%;" id="gameStatus">
                         <h4>Active Player: <b><label id='activePlayer' style="color: green;"></label></b></h4>
                         <h4>Round Number: <label  id='roundCount' style="color: green;"></label></h4>
                         <h4>Cards in Pile: <label  id='commonPile' style="color: green;"></label></h4>
@@ -115,14 +131,15 @@
                           activePlayerLabel.activePlayer();
                         </script>
 
-                        <button class="btn btn-primary btn-lg" onclick="" >Draw A Card</button>
+                        <button class="btn btn-primary btn-lg" onclick="drawCardUpdate(); selectCategory(4);" id="drawCard">Draw A Card</button>
                         </div>
-                    <div class="jumbotron" style="text-align: center; padding-left: 5%; margin: -9%; background-image:    url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
+                    <div id="playAgainButton" class="jumbotron" style="text-align: center; padding-left: 5%; margin: 0%; background-image:    url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
                         <button class="btn btn-primary btn-lg" onclick="" style="padding-left: 20px; margin: 0px;">Play Again</button>
-                        <button class="btn btn-primary btn-lg" onclick="" style=" padding-left: 5px;">View Statisitics</button>
+                        
                         </div>
+                        
                     <!--Cards Section-->
-                    <div class="jumbotron" id="backg">
+                    <div class="jumbotron" id="cardsWindow" style="margin-top: -5%; padding-left: 12%;">
                     <div class="row text-center" style="padding-left: 6.5%; background-image:   url(https://upload.wikimedia.org/wikipedia/commons/8/8b/Aviation_Military_aircraft_flock_aircraft_012524_.jpg);" >
                         <div class="col-md-2.5">
                 <div class="cardsection" style="background: none;">
@@ -337,6 +354,46 @@
       }
       return xhr;
     }
+    function showGameStatus() {
+    	document.getElementById("gameStatus").style.display = "block";
+  		}
+  		
+  	function showCards() {
+    	document.getElementById("cardsWindow").style.display = "block";
+  		}
+  	function showDrawCard() {
+    	document.getElementById("drawCard").style.display = "block";
+  		}
+    
+    function hideSelection() {
+	    var x = document.getElementById("startButton");
+	    if (x.style.display === "none") {} else {
+	      x.style.display = "none";
+	    }
+	 }
+	 function drawCardUpdate() {
+	 		selectCategory1(3);
+	 		
+	 		
+	 		activePlayer();
+            roundCount();
+            commonPile();
+            
+	 }
+	 function selectCategory1(x) {
+      var number = x
+      var xhr = createCORSRequest('GET',
+        "http://localhost:7777/toptrumps/startGameee?SelectedCat="+ number); // Request type and URL+parameters
+      if (!xhr) {
+        alert("CORS not supported");
+      }
+      xhr.onload = function(e) {
+      
+    	  
+      }
+      xhr.send();
+      
+    } 
     
   </script>
                 
@@ -344,16 +401,24 @@
     <script>
   
             function startGame() {
+            
             activePlayer();
             roundCount();
             commonPile();
+            showGameStatus();
+            showDrawCard();
+            showCards();
+            
+            hideSelection();
+            
       var xhr = createCORSRequest('GET',
         "http://localhost:7777/toptrumps/startGamee"); // Request type and URL+parameters
       if (!xhr) {
         alert("CORS not supported");
       }
     xhr.onload = function(e){
-        
+        	
+            
         
         
     }
@@ -416,25 +481,34 @@
 		}
 		xhr.send();
 	}
+	
+	   function selectCategory(x) {
+      var number = x
+      var xhr = createCORSRequest('GET',
+        "http://localhost:7777/toptrumps/selectCate?SelectedCat="+ number); // Request type and URL+parameters
+      if (!xhr) {
+        alert("CORS not supported");
+      }
+      xhr.onload = function(e) {
+      
+    	  
+      }
+      xhr.send();
+      
+    } 
+    
+    
       
      
-    	  
+    function openStatPage() {
+    window.location='http://localhost:7777/toptrumps/stats';
+    	  }	  
     	 
     	  
       
       
 </script>
-                <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+         
 
 
 
