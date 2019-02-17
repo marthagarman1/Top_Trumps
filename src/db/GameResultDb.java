@@ -3,9 +3,10 @@ package db;
 import java.util.Collection;
 
 /**
- * An object representing a data model of a single row from `game` sql table. Also represents ane-to-many relation
+ * An object representing a data model of a single row from `game` sql table. Also represents one-to-many relation
  * with `participant` table through a list of {@link ParticipantDb} objects.
  */
+
 public class GameResultDb {
 
 	public GameResultDb() {}

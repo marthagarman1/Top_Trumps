@@ -50,7 +50,6 @@ public class GameResultRepository {
 	 */
 
 
-
 	public int getNumberOfDraws() throws SQLException { 
 		Connection con = driver.getConnection();
 		try {
@@ -129,8 +128,7 @@ public class GameResultRepository {
 	 * @return
 	 * @throws SQLException
 	 * 
-	 *                      Save method allows create an object (?) and save it to
-	 *                      the data base.
+	 *
 	 */
 
 	public int save(GameResultDb game) throws SQLException {
