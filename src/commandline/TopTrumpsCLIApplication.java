@@ -13,7 +13,7 @@ import java.util.*;
  * @version 3/2/2019
  */
 public class TopTrumpsCLIApplication {
-    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
+    public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/m_18_2094641c";
     private static String user = "m_18_2094641c";
     private static String password = "2094641c";
 
@@ -130,7 +130,8 @@ public class TopTrumpsCLIApplication {
             playerList.add(bot4);
 
 
-            //savePlayers(playerList);
+            savePlayers(playerList);
+            
             boolean newGame = false;
             while (!newGame) {
                 //Start New Round
@@ -306,7 +307,7 @@ public class TopTrumpsCLIApplication {
                 // cards in the commonPile, a winner is selected:
                 if (playerList.size() == 1) {
 
-                    //saveGameResults(roundCount, playerList.get(0), losers);
+                    saveGameResults(roundCount, playerList.get(0), losers);
 
                     //TODO save game result and participants in the database here (Using GameResultRepository)
                     System.out.println("\n~~~~Game End~~~~\n");
