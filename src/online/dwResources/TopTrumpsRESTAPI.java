@@ -1,22 +1,42 @@
 package online.dwResources;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import commandline.*;
-import online.configuration.TopTrumpsJSONConfiguration;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.awt.*;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.List;
-import java.util.*;
+import java.util.Random;
+import java.util.Scanner;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+
+import online.configuration.TopTrumpsJSONConfiguration;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
+
+import commandline.AIPlayer;
+import commandline.Card;
+import commandline.HumanPlayer;
+import commandline.ImportDeckInformation;
+import commandline.Player;
+import db.DbDriver;
+import db.GameResultRepository;
+import db.PlayerType;
 
 @Path("/toptrumps") // Resources specified here should be hosted at http://localhost:7777/toptrumps
 @Produces(MediaType.APPLICATION_JSON) // This resource returns JSON content
@@ -33,15 +53,13 @@ import java.util.*;
  */
 public class TopTrumpsRESTAPI {
 
+	
+	
 	/** A Jackson Object writer. It allows us to turn Java objects
 	 * into JSON strings easily. */
 	ObjectWriter oWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-	private int numAIPlayers;
-	private ImportDeckInformation deckOfPlyer;
-	private ArrayList<Player> players;
-	private ArrayList<Card> cards;
-	private String deckFile;
-	private HumanPlayer humanPlayer;
+
+	
 	private String activePlayer = "";
 	private HumanPlayer user;
 	private int currentWinner;
@@ -53,9 +71,7 @@ public class TopTrumpsRESTAPI {
 	private ArrayList<Card> playerDeck;
 	private ArrayList<Card> deck;
 	private int selectcat;
-	
-	
-	
+	static DbDriver db;
 	
 	/**
 	 * Contructor method for the REST API. This is called first. It provides
@@ -66,77 +82,31 @@ public class TopTrumpsRESTAPI {
 	 * @throws IOException 
 	 */
 	public TopTrumpsRESTAPI(TopTrumpsJSONConfiguration conf) throws IOException, URISyntaxException {
-		numAIPlayers = conf.getNumAIPlayers() + 1;
-		deckFile = conf.getDeckFile();
-		Desktop d = Desktop.getDesktop();
-		d.browse(new URI("http://localhost:7777/toptrumps"));
-		
-		// ----------------------------------------------------
-		// Add relevant initalization here
-		// ----------------------------------------------------
+		 
+		int numAIPlayers = conf.getNumAIPlayers() + 1;
+		 String deckFile = conf.getDeckFile();
+		 Desktop d = Desktop.getDesktop();
+		 d.browse(new URI("http://localhost:7777/toptrumps"));				
 	}
 	
-	//public static void main(String[] args) {
-	//	startGame();
-	//}
 	@GET
 	@Path("/startGame")
 	public String startGame() throws IOException {
 		String message = null;
 		Scanner scan = null;
-		try {
-			
-			File file = new File("StarCitizenDeck.txt");
-			
-			scan = new Scanner(file).useDelimiter("/");
-			
-			txt = scan.next();
-			
-			for (int i = 0; i < txt.length();i++) {
-				
-			message = oWriter.writeValueAsString(txt);
-			
-			}
-			
-			
-		}catch (FileNotFoundException ex) {
-	    	
-	        System.out.println("Cannot read file.");
+		File file = new File("StarCitizenDeck.txt");							
+		for (int i = 0; i < txt.length();i++) {				
+		message = oWriter.writeValueAsString(txt);
+		
 		}
 		scan.close();
 		
-	return message;
-		
-	}
-	@GET
-	@Path("/tableStats")
-	public String ss() throws JsonProcessingException {
-		
-		int win = playerList.get(0).getRoundsWon();
-		int rc = roundCount;
-		int cp = commonPile.size();
-		
-		List<Integer> listOfWords = new ArrayList<Integer>();
-		listOfWords.add(win);
-		//listOfWords.add(rc);
-		listOfWords.add(rc);
-		listOfWords.add(cp);
-		
-		// We can turn arbatory Java objects directly into JSON strings using
-		// Jackson seralization, assuming that the Java objects are not too complex.
-		String listAsJSONString = oWriter.writeValueAsString(listOfWords);
-		
-		return listAsJSONString;
-		
-		
-	 
+	return message;	
 	}
 	@GET
 	@Path("/activePlayer")
-	public String activePLA() throws JsonProcessingException {
-		
-		//String message = oWriter.writeValueAsString(activePlayer);
-		
+	public String activePLA() throws JsonProcessingException {	
+		//String message = oWriter.writeValueAsString(activePlayer);	
 		return activePlayer;
 	}
 	@GET
@@ -167,23 +137,18 @@ public class TopTrumpsRESTAPI {
 		//selectedCat = getselectedcategory();
 		selectcat = selectedCat;
 		//selectcat = cards.get(0).getAttri();
-		System.out.println(selectcat);
+	
 		//System.out.println(selectedCat);
-		return selectedCat;
-		
-	}
-	
-	
+		return selectedCat;	
+	}	
 	@GET
 	@Path("/startGamee")
 	public String startIT(@QueryParam("SelectedCat") int selectedCat) throws IOException {
 		String a = null;
 		//this.selectcat = selectcat;
 		//startGame1();
-		game2();
-		System.out.println("Test it it it it " + selectcat);
-		return a;
-		
+		game2();		
+		return a;		
 	}
 	//@Consumes(MediaType.APPLICATION_JSON)
 	public void startGame1() throws IOException {
@@ -192,15 +157,15 @@ public class TopTrumpsRESTAPI {
 	   	// Loop until the user wants to exit the game
 	      while (!userWantsToQuit) {
 	         //variables
-	         System.out.println("Game Start"); 
-	         deck = new ArrayList<Card>();
+	         
+	         deck = new ArrayList<Card>(); 
 	          
 	         ArrayList<String> fileOutput = new ArrayList<>();
 	         PrintWriter writer = new PrintWriter("toptrumps.log", "UTF-8");
 	      
 	         // 1. Read in file and load information for cards 
 	         File file = new File("StarCitizenDeck.txt"); 
-	         ImportDeckInformation fI = new ImportDeckInformation(file);
+	         ImportDeckInformation fI = new ImportDeckInformation(file); 
 	         fileOutput.add("NEW GAME \nContents of new deck:" + fI.getDeck().toString().replace("[", "").replace("]", "")
 	            + "\n--------------------\n"); 
 	         
@@ -208,11 +173,10 @@ public class TopTrumpsRESTAPI {
 	         deck = fI.getShuffledDeck();
 	         fileOutput.add("\nShuffled Deck: " + deck.toString().replace("[", "").replace("]", "")
 	            +  "\n--------------------\n"); 
-	        
-	         
+	        	         
 	         // 3. Create Players and divide deck between players
 	         playerDeck = new ArrayList<>(deck.subList(0,8));  ///TESTING CHANGE BACK TO 0,8
-	         user = new HumanPlayer(playerDeck, "Player You");
+	         user = new HumanPlayer(playerDeck, "Player You"); 
 	         fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	         
@@ -232,7 +196,7 @@ public class TopTrumpsRESTAPI {
 	            + "\n--------------------\n");
 	            
 	         playerDeck = new ArrayList<>(deck.subList(32,40));
-	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI Player 4");
+	         AIPlayer bot4 = new AIPlayer(playerDeck, "AI Player 4"); 
 	         fileOutput.add("\n" + bot4.getName() + "'s Deck:" + playerDeck.toString() 
 	            + "\n--------------------\n");
 	      
@@ -243,11 +207,9 @@ public class TopTrumpsRESTAPI {
 	         playerList.add(bot2); 
 	         playerList.add(bot3); 
 	         playerList.add(bot4); 
-	         
-	         Scanner scan = new Scanner(System.in); 
+	        
 	         //String activePlayer = "";
-	         
-	         
+	         	         
 	         commonPile = new ArrayList<>(); 
 	         
 	         while(!userWantsToQuit) {
@@ -258,23 +220,18 @@ public class TopTrumpsRESTAPI {
 	               Collections.shuffle(playerList);
 	               activePlayer = playerList.get(0).getName();
 	            }
-	         
-	            System.out.println("Round " + roundCount);
+
 	            //get all chosen cards from players and make an arraylist of cards
 	            drawPile = new ArrayList<>(); 
-	          
-	            
+	          	            
 	            for(int i = 0; i < playerList.size() ; i++ ) {
 	               drawPile.add((playerList.get(i)).drawTopCard());
 	            }
 	               
 	            fileOutput.add("\nCards in play this round:" + drawPile.toString()
 	               + "\n--------------------"); 
-	            
-	            System.out.println("Round " + roundCount + ": Players have drawn their cards");
-	            if( user.numOfCards() != 0 ) {
-	               System.out.println("You drew: " + user.drawTopCard());
-	               System.out.println("There are '" + user.numOfCards() + " cards in your deck"); 
+	            	        
+	            if( user.numOfCards() != 0 ) {	            
 	            }
 	          
 	            int userChoice = 0;
@@ -287,21 +244,11 @@ public class TopTrumpsRESTAPI {
 	                  + "\n\t4: " + (deck.get(0).getANames())[4]
 	                  + "\n\t5: " + (deck.get(0).getANames())[5]
 	                  + "\nEnter the number for your attribute: ");
-	               //TopTrumpsRESTAPI catsel = new TopTrumpsRESTAPI(null);
-	            		 System.out.println("Enter Number 1 or 5");
-	            		 //userChoice = scan.nextInt();
-	            		 //userChoice = getselectedcategory();
-	            		 
-	            	 
-	                  //userChoice = scan.nextInt(); //add throw for Inputmismatch exception 
-	              
-	              
-	            
-	            } else { //Method for bots to choose category
+	              	              	             	            
+	            } else { 
 	               Random math = new Random();
 	               userChoice = math.nextInt((5 - 1) + 1) + 1;
-	            }
-	         
+	            }	         
 	            int catChoice = 0;
 	            
 	            switch(userChoice) {
@@ -317,11 +264,9 @@ public class TopTrumpsRESTAPI {
 	                  break;
 	               default : 
 	                  {
-	                     fileOutput.add("No category chosen");
-	                     System.out.println("No category chosen");  
+	                     fileOutput.add("No category chosen");                    
 	                  }
-	            }
-	            
+	            }            
 	            fileOutput.add("\nCatergory selected: " + (drawPile.get(0)).getAName(catChoice) 
 	               + "\nCorresponding Values: ");
 	               
@@ -342,22 +287,14 @@ public class TopTrumpsRESTAPI {
 	                  draw = true; //drawn
 	                  
 	               }
-	            }
-	             
+	            }	             
 	            //return the winner --lose/draw/win
 	            if(draw) {
-	               System.out.println("Round " + roundCount + ": " 
-	                  + "This round was a Draw"); 
-	               commonPile.addAll(drawPile); 
-	               fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()  
-	                  + "\n--------------------");
+	               
 	               drawPile.clear(); 
 	            }
 	            
-	            else {
-	               System.out.println("Round " + roundCount + ": " 
-	                  + "Player " + playerList.get(currentWinner).getName() 
-	                  + " won this round.");
+	            else {	            
 	               activePlayer = playerList.get(currentWinner).getName(); 
 	            
 	               //winner gets all of common pile cards and then remove all from drawPile
@@ -367,20 +304,12 @@ public class TopTrumpsRESTAPI {
 	                     + "\n--------------------");
 	               }
 	               commonPile.clear();
-	               
-	                  
+	               	                  
 	               //print winning card with selected category with an arrow
-	               System.out.print("The winning card was "); 
+	             
 	               drawPile.clear();
-	               System.out.println(playerList.get(currentWinner).drawTopCard());
-	               
-	            }
-	            
-	            //remove cards at element 0 
-	            // for(int i = 0; i < playerList.size(); i++) {
-	               // playerList.get(i).removeCard(0);
-	            // }
-	            
+	              }
+	
 	            if (user.numOfCards() != 0 ) {
 	               user.removeCard(0);
 	            }
@@ -394,68 +323,31 @@ public class TopTrumpsRESTAPI {
 	               fileOutput.add("\nAfter Round " + roundCount + "\n" 
 	                  + (playerList.get(i)).getName() + "'s Deck:" + (playerList.get(i)).getDeck().toString() 
 	                  + "\n--------------------\n");
-	            }
-	            
-	            
-	         
-	            System.out.println("\nWould you like to quit? (Y/N)?"); 
-	            String choice;
-	            
-	            /*do {
-	            	System.out.println("Enter Y or N");
-	            	//roundCount++;
-	            	choice = scan.next();
-	            	 
-	            	 if(choice.equalsIgnoreCase("Y")) {
-	                 	userWantsToQuit=true;
-	                 	 //roundCount++; 
-	                 }else {
-	                 	continue;
-	                 	
-	                 }
-	            	 
-	            	
-	            }
-	            while (choice.matches("\\d+"));
-	            	**/
+	            }	            	          	        	            
+	            String choice;	         
 	            
 	            roundCount++; 	
-	            	
-	             //{
-	               //userWantsToQuit=true; 
-	               // use this when the user wants to exit the game
-	            //}
-	           
-	            //roundCount++; 
-	           
+
 	            //remove players from game who no longer have cards
 	            for(int i = 0; i < playerList.size(); i++) {
 	               if((playerList.get(i)).numOfCards() == 0 ) {
 	                  playerList.remove(i);
-	                  i = 0;
-	                 
+	                  i = 0;                 
 	               }
 	            }
-	         
-	           //if only one player remains, they are the winner
+	          //if only one player remains, they are the winner
 	            if(playerList.size() == 1) {
-	               System.out.println("The winner is " + playerList.get(0).getName()); 
+	               
 	               userWantsToQuit = true; 
 	               fileOutput.add("\nThe winner is " + playerList.get(0).getName()); 
 	            }
 	            
 	         }
-	      
-	         //print all of string array at once 
+	
 	         writer.println(fileOutput.toString().replace("[", "").replace("]", "").replace(",","")); 
 	         writer.close();
 	      }
-	      String message = oWriter.writeValueAsString(playerList.get(0).getName());
-		//return deckFile;
-		//return numAIPlayers;
-		//return message;
-		
-	   
+	      String message = oWriter.writeValueAsString(playerList.get(0).getName());				   
 	   }
 	
 	public void game2() throws IOException {
@@ -486,9 +378,7 @@ public class TopTrumpsRESTAPI {
             /** Cards added to ArrayList after Draw. */
             commonPile = new ArrayList<>();
 
-
-            /** Start the Game */
-            System.out.println("Game Start");
+            //Start the Game
             // 1. Read in file and load information for cards
             File file = new File("StarCitizenDeck.txt");
             ImportDeckInformation fI = new ImportDeckInformation(file);
@@ -503,7 +393,6 @@ public class TopTrumpsRESTAPI {
                     + deck.toString().replace("[", "")
                     .replace("]", "")
                     + "\n--------------------\n");
-
 
             // 3. Create Players and divide deck between players
             playerDeck = new ArrayList<>(deck.subList(0, 8));
@@ -550,9 +439,7 @@ public class TopTrumpsRESTAPI {
                 if (roundCount == 1) {
                     Collections.shuffle(playerList);
                     activePlayer = playerList.get(0).getName();
-                }
-
-                System.out.println("Round " + roundCount);
+                }              
                 //get all drawn cards from players and make an arraylist of cards
                 ArrayList<Card> drawPile = new ArrayList<>();
                 for (int i = 0; i < playerList.size(); i++) {
@@ -560,43 +447,30 @@ public class TopTrumpsRESTAPI {
                 }
                 fileOutput.add("\nCards in play this round:" + drawPile.toString()
                         + "\n--------------------");
-
-                System.out.println("Round " + roundCount
-                        + ": Players have drawn their cards");
+           
                 if (user.numOfCards() != 0) {
-                    System.out.println("You drew: " + user.drawTopCard());
-                    System.out.println("There are '" + user.numOfCards()
-                            + " cards in your deck");
+                   
                 }
                 /**User's selected category represeneted by int. */
                 int userCatChoice = 0;
                 //int userCatChoice = cards.get(0).getAttri();
                 //If the active player is Human, they can select a category.
                 if (activePlayer.equalsIgnoreCase("Player You")) {
-                    System.out.print("It is your turn to select a category, "
-                            + "the categories are: "
-                            + "\n\t1: " + (deck.get(0).getANames())[1]
-                            + "\n\t2: " + (deck.get(0).getANames())[2]
-                            + "\n\t3: " + (deck.get(0).getANames())[3]
-                            + "\n\t4: " + (deck.get(0).getANames())[4]
-                            + "\n\t5: " + (deck.get(0).getANames())[5]
-                            + "\nEnter the number for your attribute: ");
+                    
                    try {
                         userCatChoice = scan.nextInt();
                         
                         //userCatChoice = getselectedcategory();
-                        
-                        System.out.println("test this one ---" + userCatChoice);
+                                       
                   } catch (InputMismatchException e) {
-                        System.out.print("\nPlease enter number 1 - 5");
-                   }
+                   
+                  }                  
                 //If the active player is a bot, they will randomly select a category.
                 } else {
                     //Method for bots to choose category
                     Random math = new Random();
                     userCatChoice = math.nextInt((5 - 1) + 1) + 1;
                 }
-
 
                 fileOutput.add("\nCatergory selected: "
                         + (drawPile.get(0)).getAName(userCatChoice)
@@ -620,7 +494,6 @@ public class TopTrumpsRESTAPI {
                     } else if (drawPile.get(currentWinner).getStats(userCatChoice)
                             == drawPile.get(i + 1).getStats(userCatChoice)) {
                         draw = true; //drawn
-
                     }
                 }
 
@@ -634,9 +507,7 @@ public class TopTrumpsRESTAPI {
                             + "\n--------------------");
                     drawPile.clear();
                 } else {
-                    System.out.println("Round " + roundCount + ": "
-                            + "Player " + playerList.get(currentWinner).getName()
-                            + " won this round.");
+                   
                     activePlayer = playerList.get(currentWinner).getName();
 
                     //winner gets all of common pile cards and then remove all from drawPile
@@ -647,24 +518,8 @@ public class TopTrumpsRESTAPI {
                     }
                     commonPile.clear();
 
-
-
-
-
-
-
-                    //print winning card with selected category with an arrow
-                    System.out.print("The winning card was ");
                     drawPile.clear();
-                    //arrow
-                    System.out.println(playerList.get(currentWinner)
-                            .drawTopCard().winnerToString(userCatChoice));
-
-                }
-                System.out.println("test this one ---" + userCatChoice);
-                System.out.println("test this one ---" + userCatChoice);
-                System.out.println("test this one ---" + userCatChoice);
-
+       
                 for (Player player : playerList) {
                     if (player.numOfCards() != 0) {
                         player.removeCard(0);
@@ -678,7 +533,6 @@ public class TopTrumpsRESTAPI {
                             + (playerList.get(i)).getDeck().toString()
                             + "\n--------------------\n");
                 }
-
 
                 //End of round increase count
                 roundCount++;
@@ -728,27 +582,43 @@ public class TopTrumpsRESTAPI {
                   //      .replace("]", "").replace(",", ""));
                 //writer.close();
             }
+            }
         }
-
-    }
-
-		
-		
-	
-	
-	
-		   
+       
+    }	   
 	public int getselectedcategory() {
 		return selectcat;
 	}
+		  
+	/*
+	 * The method up dates the database variables ready for retrieval
+	 * @throws Exception
+	 * */
 	
-	
-	
-	
-	// ----------------------------------------------------
-	// Add relevant API methods here
-	// ----------------------------------------------------
-	
+	public void getStats() throws Exception {
+			
+			DbDriver driver = null;
+			GameResultRepository db = new GameResultRepository(driver);
+
+			db.getLargestNumberOfRounds();
+			db.getNumberOfDraws();
+			db.getWinsByPlayerType(PlayerType.ai);
+			db.getWinsByPlayerType(PlayerType.human);
+			db.totalGames();
+				
+		}
+		/* this method passes a database object containing all the statistics 
+		 * data into a string and returns it
+		 */
+		@GET 
+		@Path("/getStatistics")
+		public String getStatistics() throws Exception {
+			getStats();
+			String dbString = oWriter.writeValueAsString(TopTrumpsRESTAPI.db);
+		    return dbString;
+		
+		}
+// removed after testing	
 	@GET
 	@Path("/helloJSONList")
 	/**
