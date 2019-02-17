@@ -190,7 +190,7 @@ src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
         			}
         			function printStats(){
         		
-        			document.getElementById("num1").innerHTML = "Number of games played: " + db.totalGames();
+        			document.getElementById("num1").innerHTML = "Number of games played" + db.totalGames();
         			document.getElementById("num2").innerHTML = "PlayerWins" + db.getNumberofDraws(PlayerType.human);
         			document.getElementById("num3").innerHTML = "ComputerWins" + db.getWinsByPlaterType(PlayerType.ai);
         			document.getElementById("num4").innerHTML = "LargestNumberOfRounds"+ db.getLargestNumberOfRounds();
