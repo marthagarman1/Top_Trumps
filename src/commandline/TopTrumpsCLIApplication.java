@@ -384,7 +384,7 @@ public class TopTrumpsCLIApplication {
         }
     }
 
-    private static void markAsWinners(Collection<Player> players) {
+    public static void markAsWinners(Collection<Player> players) {
         for (Player player : players) {
             player.hasWon();
         }
