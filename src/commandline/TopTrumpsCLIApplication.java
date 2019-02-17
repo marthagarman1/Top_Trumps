@@ -13,20 +13,17 @@ import java.util.*;
  * @version 3/2/2019
  */
 public class TopTrumpsCLIApplication {
-
     public static String url = "jdbc:postgresql://yacata.dcs.gla.ac.uk:5432/";
-    public static String user = "m_18_2094641c";
-    public static String password = "2094641c";
+    private static String user = "m_18_2094641c";
+    private static String password = "2094641c";
 
     //public static String url = "jdbc:postgresql://manny.db.elephantsql.com:5432/onkrajux";
     //public static String user = "onkrajux";
     //public static String password = "toc8a9gWmmZO41dnETiNFS6Ju98QGKzq";
 
-
-
-    public static PlayerRepository playerRepository;
-    public static GameResultRepository gameRepository;
-    public static DbDriver driver;
+    private static PlayerRepository playerRepository;
+    private static GameResultRepository gameRepository;
+    private static DbDriver driver;
 
     static {
         try {
@@ -43,51 +40,52 @@ public class TopTrumpsCLIApplication {
      * This main method is called by TopTrumps.java when the user specifies that they want to run in
      * command line mode. The contents of args[0] is whether we should write game logs to a file.
      *
-     * @param args
-     * @throws IOException
+     * @param args used for user choices (writing logs)
+     * @throws IOException in Database connection.
      */
     public static void main(String[] args) throws Exception {
         //Test Log is launched from here :
-        boolean writeGameLogsToFile = false; // Should we write game logs to file?
+        boolean writeGameLogsToFile = true; // Should we write game logs to file?
 
         //if (args[0].equalsIgnoreCase("true")) writeGameLogsToFile = true; // Command line selection
 
         // flag to check whether the user wants to quit the application
         boolean userWantsToQuit = false;
 
-        
+
         /* Game Loop until the user wants to exit the game */
         while (!userWantsToQuit) {
             // Declare Variables used in Game Loop
-            /** ArrayList of cards that will be dealt into player's hands. */
+            /* ArrayList of cards that will be dealt into player's hands. */
             ArrayList<Card> deck;
-            /** Counts which round game is currently on. */
+            /* Counts which round game is currently on. */
             int roundCount = 1;
-            /** ArrayList that will be printed to log. */
+            /* ArrayList that will be printed to log. */
             ArrayList<String> fileOutput = new ArrayList<>();
-            /** Used to write fileOutput to toptrumps.log */
+            /* Used to write fileOutput to toptrumps.log */
             PrintWriter writer = new PrintWriter("toptrumps.log", "UTF-8");
-            /** Scanner for user Input in Game Loop. */
+            /* Scanner for user Input in Game Loop. */
             Scanner scan = new Scanner(System.in);
-            /** Keeps track of current player, after first round represents current Winner. */
+            /* Keeps track of current player, after first round represents current Winner. */
             String activePlayer = "";
-            /** Cards added to ArrayList after Draw. */
+            int nextPlayer = 0;
+            /* Cards added to ArrayList after Draw. */
             ArrayList<Card> commonPile = new ArrayList<>();
-            String playerName = "You";
+            /* Sets player name. */
+            final String playerName = "You";
 
-
-            /** Start the Game */
+            /* Start the Game */
             System.out.println("Game Start");
             // 1. Read in file and load information for cards
             File file = new File("StarCitizenDeck.txt");
-            ImportDeckInformation fI = new ImportDeckInformation(file);
+            ImportDeckInformation fi = new ImportDeckInformation(file);
             fileOutput.add("NEW GAME \nContents of new deck:"
-                    + fI.getDeck().toString().replace("[", "")
+                    + fi.getDeck().toString().replace("[", "")
                     .replace("]", "")
                     + "\n--------------------\n");
 
             // 2. Return a shuffled Deck
-            deck = fI.getShuffledDeck();
+            deck = fi.getShuffledDeck();
             fileOutput.add("\nShuffled Deck: "
                     + deck.toString().replace("[", "")
                     .replace("]", "")
@@ -99,7 +97,7 @@ public class TopTrumpsCLIApplication {
             // TODO ask for name via input
 
             HumanPlayer user = new HumanPlayer(playerDeck, playerName); // PLAYER YOU
-            fileOutput.add("\n" + user.getName() + "'s Deck:" + playerDeck.toString()
+            fileOutput.add("\n" + user.getName() + "r Deck:" + playerDeck.toString()
                     + "\n--------------------\n");
 
             playerDeck = new ArrayList<>(deck.subList(8, 16)); //16
@@ -124,28 +122,30 @@ public class TopTrumpsCLIApplication {
 
             // 4. Start new game by adding players and their decks to game.
             ArrayList<Player> playerList = new ArrayList<>();
-            ArrayList<Player> losers = new ArrayList();
+            ArrayList<Player> losers = new ArrayList<>();
             playerList.add(user);
             playerList.add(bot1);
             playerList.add(bot2);
             playerList.add(bot3);
             playerList.add(bot4);
 
+
             //savePlayers(playerList);
-            boolean newGame = false; 
+            boolean newGame = false;
             while (!newGame) {
                 //Start New Round
                 //Randomly selects first player during first round.
                 if (roundCount == 1) {
                     Collections.shuffle(playerList);
                     activePlayer = playerList.get(0).getName();
+
                 }
 
                 System.out.println("---------------- ROUND " + roundCount + " ----------------");
                 //get all drawn cards from players and make an arraylist of cards
                 ArrayList<Card> drawPile = new ArrayList<>();
-                for (int i = 0; i < playerList.size(); i++) {
-                    drawPile.add((playerList.get(i)).drawTopCard());
+                for (Player player1 : playerList) {
+                    drawPile.add(player1.drawTopCard());
                 }
                 fileOutput.add("\nCards in play this round:" + drawPile.toString()
                         + "\n--------------------");
@@ -157,13 +157,13 @@ public class TopTrumpsCLIApplication {
                     System.out.println("There are '" + user.numOfCards()
                             + " cards in your deck");
                 }
-                /**User's selected category represented by int. */
+                /* User's selected category represented by int. */
                 int userCatChoice = 0;
                 boolean repeat = false;
                 do {
                     //If the active player is Human, they can select a category.
                     if (activePlayer.equalsIgnoreCase(playerName)) {
-                        System.out.print("It is your turn to select a category, "
+                        System.out.print("\nIt is your turn to select a category, "
                                 + "the categories are: "
                                 + "\n\t1: " + (deck.get(0).getANames())[1]
                                 + "\n\t2: " + (deck.get(0).getANames())[2]
@@ -174,9 +174,10 @@ public class TopTrumpsCLIApplication {
                         try {
                             userCatChoice = scan.nextInt();
                             repeat = false;
-                            if(userCatChoice < 1 || userCatChoice > 5) {
+                            if (userCatChoice < 1 || userCatChoice > 5) {
                                 System.out.print("\nPlease enter a valid number between 1 - 5\n");
-                                repeat = true;}
+                                repeat = true;
+                            }
                         } catch (InputMismatchException e) {
                             System.out.print("\nInvalid Input, please enter a valid number.\n");
                             repeat = true;
@@ -184,16 +185,16 @@ public class TopTrumpsCLIApplication {
                         //If the active player is a bot, they will randomly select a category.
                     } else {
                         //Method for bots to choose category
-                        AIPlayer temp = bot1;
-                        userCatChoice = temp.pickCategory();
-
+                        //AIPlayer temp = bot1;
+                        //userCatChoice = temp.pickCategory();
+                        Random math = new Random();
+                        userCatChoice = math.nextInt((5 - 1) + 1) + 1;
                     }
-                } while(repeat);
+                } while (repeat);
 
 
-
-
-                System.out.println("\t" + activePlayer + " " +  "selected category " + userCatChoice);
+                System.out.println("~ " + activePlayer + " " + "selected category "
+                        + userCatChoice);
                 fileOutput.add("\nCatergory selected: "
                         + (drawPile.get(0)).getAName(userCatChoice)
                         + "\nCorresponding Values: ");
@@ -206,12 +207,14 @@ public class TopTrumpsCLIApplication {
 
                 //Compare all cards in chosen category
                 int currentWinner = 0;
+
                 boolean draw = false;
                 for (int i = 0; i < playerList.size() - 1; i++) {
 
                     if (drawPile.get(currentWinner).getStats(userCatChoice)
                             < drawPile.get(i + 1).getStats(userCatChoice)) {
                         currentWinner = i + 1;
+
                         draw = false;
                     } else if (drawPile.get(currentWinner).getStats(userCatChoice)
                             == drawPile.get(i + 1).getStats(userCatChoice)) {
@@ -220,12 +223,12 @@ public class TopTrumpsCLIApplication {
                     }
                 }
 
-                //return the winner --lose/draw/win
+                //return the winner --draw/win
                 if (draw) {
                     commonPile.addAll(drawPile);
                     System.out.println("Round " + roundCount + ": "
                             + "This round was a Draw, common pile now has "
-                            +  commonPile.size() + " cards");
+                            + commonPile.size() + " cards");
                     fileOutput.add("\nCards added to Common Pile: " + commonPile.toString()
                             + "\n--------------------");
                     drawPile.clear();
@@ -235,14 +238,27 @@ public class TopTrumpsCLIApplication {
                             + " won this round. ~~~~");
 
 
-                    activePlayer = playerList.get(currentWinner).getName();
+                    //if active player is the same as current winner, don't change the active player
+                    if (!activePlayer.equalsIgnoreCase(playerList.get(currentWinner).getName())) {
+                        //set next player, if at end of playerlist loop back
+                        if (nextPlayer >= playerList.size() - 1) {
+                            nextPlayer = 0;
+                        } //otherwise move on to next player in list
+                        else {
+                            ++nextPlayer;
+                        }
+                        activePlayer = playerList.get(nextPlayer).getName();
+                    }
 
                     //winner gets all of common pile cards and then remove all from drawPile
                     (playerList.get(currentWinner)).addCards(drawPile);
-                    (playerList.get(currentWinner)).addCards(commonPile);
+                    if (commonPile.size() > 0) {
+                        (playerList.get(currentWinner)).addCards(commonPile);
+                    }
+                    //includes draws
                     (playerList.get(currentWinner)).hasWon();
 
-                    if (commonPile != null) {
+                    if (commonPile.size() > 0 && !draw) {
                         fileOutput.add("\nCards removed from Common Pile: " + commonPile.toString()
                                 + "\n--------------------");
                     }
@@ -251,27 +267,24 @@ public class TopTrumpsCLIApplication {
                     //print winning card with selected category with an arrow
                     System.out.print("\tThe winning card was ");
                     drawPile.clear();
-                    //arrow
+                    //Prints with Arrow
                     System.out.println(playerList.get(currentWinner)
                             .drawTopCard().winnerToString(userCatChoice));
 
                 }
-
+                //Remove cards (simulate drawing cards)
                 for (Player player : playerList) {
                     if (player.numOfCards() != 0) {
                         player.removeCard(0);
                     }
                 }
-
                 //Log each deck after Round
-                for (int i = 0; i < playerList.size(); i++) {
+                for (Player player1 : playerList) {
                     fileOutput.add("\nAfter Round " + roundCount + "\n"
-                            + (playerList.get(i)).getName() + "'s Deck:"
-                            + (playerList.get(i)).getDeck().toString()
+                            + player1.getName() + "'s Deck:"
+                            + player1.getDeck().toString()
                             + "\n--------------------\n");
                 }
-
-
                 //End of round increase count
                 roundCount++;
 
@@ -289,69 +302,54 @@ public class TopTrumpsCLIApplication {
                 System.out.println("There are " + playerList.size() + " players left and "
                         + user.numOfCards() + " cards in your hand.\n");
 
-//                //Testing!!!!!REMOVE SIMULATE WINNER
-//                playerList.get(4).hasWon();
-//                losers.add(playerList.get(4));
-//                losers.add(playerList.get(3));
-//                losers.add(playerList.get(2));
-//                losers.add(playerList.get(1));
-//                playerList.remove(4);
-//                playerList.remove(3);
-//                playerList.remove(2);
-//                playerList.remove(1);
-                
-                
-                
-                //if only one player remains or there are cards in the commonPile, a winner is selected:
-                if (playerList.size() == 1 ) {
-                	
+                //if only one player remains or there are
+                // cards in the commonPile, a winner is selected:
+                if (playerList.size() == 1) {
+
                     //saveGameResults(roundCount, playerList.get(0), losers);
-                    
+
                     //TODO save game result and participants in the database here (Using GameResultRepository)
                     System.out.println("\n~~~~Game End~~~~\n");
                     System.out.println("The overall winner is " + playerList.get(0).getName());
                     fileOutput.add("\nThe overall winner is " + playerList.get(0).getName());
                     PlayerRoundComparator pC = new PlayerRoundComparator();
                     Collections.sort(losers, pC);
-                    System.out.println("Scores:\n" 
-                    		+ playerList.get(0).toString() //prints winner
-                    		+ losers.get(0).toString() //prints last place...
-                    		+ losers.get(1).toString()
-                    		+ losers.get(2).toString()
-                    		+ losers.get(3).toString());
-                    boolean endLoop = false; 
-                    while(!endLoop) {
-                    System.out.println("Do you want to see past results or play a game?"
-                    		+ "\n\t1: Print Game Statistics"
-                    		+ "\n\t2: Play New Game "
-                    		+ "\n\t3: Quit Game "
-                    		+ "\nEnter the number for your selection: ");  
-                    		int choice = scan.nextInt();  
-                    		
-                    		if(choice == 2) //User wants to play new game
-                    		{
-                    			endLoop = true; 
-                    			newGame = true;
-                    		}
-                    		else if (choice == 1) //User wants to print Game Stats
-                    		{
-                    			 System.out.println("Largest number of rounds: "+gameRepository.getLargestNumberOfRounds());
-                    		     System.out.println("Number of draws: "+gameRepository.getNumberOfDraws());
-                    		     System.out.println("AI wins: "+gameRepository.getWinsByPlayerType(PlayerType.ai));
-                    		     System.out.println("Human wins: "+gameRepository.getWinsByPlayerType(PlayerType.human));
-                    		     System.out.println("Total games: "+gameRepository.totalGames());
-                    			 
-                    		} 
-                    		else if (choice == 3) 
-                    		{
-                    		    System.out.println("Thanks for Playing!");
-                    			endLoop = true;
-                    			newGame = true;
-                    			userWantsToQuit = true; 
-                    			} 
+                    System.out.println("Scores:\n"
+                            + playerList.get(0).toString() //prints winner
+                            + losers.get(0).toString() //prints last place...
+                            + losers.get(1).toString()
+                            + losers.get(2).toString()
+                            + losers.get(3).toString());
+                    boolean endLoop = false;
+                    while (!endLoop) {
+                        System.out.println("Do you want to see past results or play a game?"
+                                + "\n\t1: Print Game Statistics"
+                                + "\n\t2: Play New Game "
+                                + "\n\t3: Quit Game "
+                                + "\nEnter the number for your selection: ");
+                        int choice = scan.nextInt();
+
+                        if (choice == 2) //User wants to play new game
+                        {
+                            endLoop = true;
+                            newGame = true;
+                        } else if (choice == 1) //User wants to print Game Stats
+                        {
+                            System.out.println("Largest number of rounds: " + gameRepository.getLargestNumberOfRounds());
+                            System.out.println("Number of draws: " + gameRepository.getNumberOfDraws());
+                            System.out.println("AI wins: " + gameRepository.getWinsByPlayerType(PlayerType.ai));
+                            System.out.println("Human wins: " + gameRepository.getWinsByPlayerType(PlayerType.human));
+                            System.out.println("Total games: " + gameRepository.totalGames());
+
+                        } else if (choice == 3) {
+                            System.out.println("Thanks for Playing!");
+                            endLoop = true;
+                            newGame = true;
+                            userWantsToQuit = true;
+                        }
                     }
                 }
-        
+
             }
 
             if (writeGameLogsToFile) {
@@ -363,7 +361,7 @@ public class TopTrumpsCLIApplication {
         }
     }
 
-    static void saveGameResults(int roundCount, Player winner, Collection<Player> losers ) throws Exception {
+    static void saveGameResults(int roundCount, Player winner, Collection<Player> losers) throws Exception {
         Collection<ParticipantDb> participants = new ArrayList<>();
         // add winner
         PlayerDb winnerDb = new PlayerDb(winner.getId(), winner.getName(), getType(winner));
@@ -377,27 +375,27 @@ public class TopTrumpsCLIApplication {
         gameRepository.save(result);
     }
 
-    static PlayerType getType(Player player) {
+    private static PlayerType getType(Player player) {
 
-       if (player instanceof HumanPlayer) {
+        if (player instanceof HumanPlayer) {
             return PlayerType.human;
-       } else {
+        } else {
             return PlayerType.ai;
         }
     }
 
-   static void markAsWinners(Collection<Player> players) {
-       for (Player player : players) {
-           player.hasWon();
-       }
-   }
+    private static void markAsWinners(Collection<Player> players) {
+        for (Player player : players) {
+            player.hasWon();
+        }
+    }
 
-   static void savePlayers(Collection<Player> players) throws Exception {
-       for (Player player : players) {
-           PlayerType type = getType(player);
-           PlayerDb db = new PlayerDb(player.name, type);
-           PlayerDb saved = playerRepository.save(db);
-           player.setId(saved.id);
+    static void savePlayers(Collection<Player> players) throws Exception {
+        for (Player player : players) {
+            PlayerType type = getType(player);
+            PlayerDb db = new PlayerDb(player.name, type);
+            PlayerDb saved = playerRepository.save(db);
+            player.setId(saved.id);
         }
     }
 
