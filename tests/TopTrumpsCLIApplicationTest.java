@@ -23,11 +23,16 @@ class TopTrumpsCLIApplicationTest {
 
     @Test
     void getTypeTest() {
-        assertEquals(playerType.ai, TopTrumpsCLIApplication.)
+        assertEquals(playerType.ai, TopTrumpsCLIApplication.getType(aip), "Should be equal, returning type AI")
     }
 
     @Test
-    void markAsWinners() {
+    void markAsWinnersTest() {
+        HumanPlayer hp = new HumanPlayer(name, deck);
+        Collection<Player> players = Arrays.asList(hp, aip);
+        TopTrumpsCLIApplication.markAsWinners(players);
+        assertTrue(hp.roundsWon == 1 && aip.roundsWon == 1, "Both players should now have one round won")
+
     }
 
     @Test
