@@ -33,10 +33,11 @@
 	
 	<!-- One of the requirements is to save results in a (mysql) database, so lets import the
 	     database connection driver libruary for that as well -->
+	<!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
 	<dependency>
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>5.1.38</version>
+	    <groupId>postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>9.1-901-1.jdbc4</version>
 	</dependency>
       <dependency>
           <groupId>org.junit.jupiter</groupId>
